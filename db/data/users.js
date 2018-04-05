@@ -1,6 +1,7 @@
 module.exports = [{
   email: '1@job.com',
   password: 'password',
+  passwordConfirmation: 'password',
   jobTitle: 'Web Developer',
   summary: 'I am a cool web developer',
   yearsExp: 1,
@@ -15,6 +16,7 @@ module.exports = [{
 }, {
   email: '2@job.com',
   password: 'password',
+  passwordConfirmation: 'password',
   jobTitle: 'Junior Web Developer',
   summary: 'I am an awesome junior web developer',
   yearsExp: 1,
@@ -29,6 +31,7 @@ module.exports = [{
 }, {
   email: '3@job.com',
   password: 'password',
+  passwordConfirmation: 'password',
   jobTitle: 'Full Stack Web Developer',
   summary: 'I am a full stack web developer',
   yearsExp: 4,
@@ -43,6 +46,7 @@ module.exports = [{
 }, {
   email: '4@job.com',
   password: 'password',
+  passwordConfirmation: 'password',
   jobTitle: 'Software Engineer',
   summary: 'I am a software engineer',
   yearsExp: 6,

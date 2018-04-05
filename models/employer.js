@@ -10,7 +10,8 @@ const employerSchema = new mongoose.Schema({
   photos: { type: Array },
   perks: { type: Array },
   listings: [{ type: mongoose.Schema.ObjectId, ref: 'Job'}],
-  location: { type: String, required: 'You must provide a location'}
+  location: { type: String, required: 'You must provide a location'},
+  type: { type: String, default: 'employer' }
 }, { timestamps: true });
 
 employerSchema
