@@ -42,13 +42,16 @@ class Navbar extends React.Component {
             {/* IF A TOKEN IS PRESENT, SHOW THESE LINKS */}
             {
               // Auth.isAuthenticated() &&
-              <a className="navbar-item" to="/login"
+              <a className="navbar-item" to="/"
               // onClick={this.handleLogout}
               >Logout</a>}
             {/* IF A TOKEN IS NOT PRESENT, SHOW THESE LINKS */}
             {
               // !Auth.isAuthenticated() &&
-              <Link className="navbar-item" to="/login">Login</Link>}
+              <div>
+                <Link className="navbar-item" to="/users/login">User Login</Link>
+                <Link className="navbar-item" to="/employers/login">Employer Login</Link>
+              </div>}
             {
               // !Auth.isAuthenticated() &&
               <Link className="navbar-item" to="/register">Register</Link>}

@@ -1,4 +1,6 @@
 module.exports = [{
+  email: 'google@google.com',
+  password: 'password',
   name: 'Google',
   logo: 'https://www.clicktorelease.com/tmp/google-svg/image.svg',
   info: 'We are the gods of Google',
