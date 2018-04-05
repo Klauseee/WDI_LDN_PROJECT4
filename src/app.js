@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/common/Navbar';
+import EmployerIndex from './components/employers/IndexRoute';
 
 import 'bulma';
 
@@ -15,12 +16,11 @@ class App extends React.Component {
           <Navbar />
           {/* <FlashMessages /> */}
           <section className="section">
-            <h1>Jibbly Jobbly</h1>
             <Switch>
-              {/* <Route path="/employers/:id/edit" component={EditRoute} />
-              <Route path="/employers/new" component={NewRoute} />
-              <Route path="/employers/:id" component={ShowRoute} />
-              <Route path="/employers" component={IndexRoute} /> */}
+              {/* <Route path="/employers/:id/edit" component={EditRoute} /> */}
+              {/* <Route path="/employers/new" component={NewRoute} /> */}
+              {/* <Route path="/employers/:id" component={ShowRoute} /> */}
+              <Route path="/employers" component={EmployerIndex} />
               {/* <Route path="/register" component={Register} /> */}
               {/* <Route path="/login" component={Login} /> */}
               {/* <Route component={NotFound} /> */}

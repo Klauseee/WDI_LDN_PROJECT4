@@ -38,7 +38,7 @@ class Navbar extends React.Component {
         </div>
         <div className={`navbar-menu ${this.state.navIsOpen ? 'is-active' : ''}`}>
           <div className="navbar-end">
-            <Link className="navbar-item" to="/bangers">All Employers</Link>
+            <Link className="navbar-item" to="/employers">All Employers</Link>
             {/* IF A TOKEN IS PRESENT, SHOW THESE LINKS */}
             {
               // Auth.isAuthenticated() &&
