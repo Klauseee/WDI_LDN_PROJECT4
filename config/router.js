@@ -8,7 +8,7 @@ const employers = require('../controllers/employers');
 // JOB ROUTES
 router.route('/jobs')
   .get(jobs.index)
-  .post(jobs.create);
+  // .post(jobs.create);
 
 router.route('/jobs/:id')
   .get(jobs.show)
@@ -18,7 +18,7 @@ router.route('/jobs/:id')
 // USER ROUTES
 router.route('/users')
   .get(users.index)
-  .post(users.create);
+  // .post(users.create);
 
 router.route('/users/:id')
   .get(users.show)
@@ -28,7 +28,7 @@ router.route('/users/:id')
 // EMPLOYER ROUTES
 router.route('/employers')
   .get(employers.index)
-  .post(employers.create);
+  // .post(employers.create);
 
 router.route('/employers/:id')
   .get(employers.show)
