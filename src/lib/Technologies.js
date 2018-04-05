@@ -11,5 +11,18 @@ export default {
   }, {
     name: 'SASS',
     icon: 'fab fa-sass'
+  }],
+  backend: [{
+    name: 'Node.js',
+    icon: 'fab fa-node'
+  }, {
+    name: 'PHP',
+    icon: 'fab fa-php'
+  }, {
+    name: 'Python',
+    icon: 'fab fa-python'
+  }, {
+    name: 'Erlang',
+    icon: 'fab fa-erlang'
   }]
 };

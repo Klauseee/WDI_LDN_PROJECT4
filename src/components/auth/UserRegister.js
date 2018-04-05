@@ -14,7 +14,7 @@ class UserRegister extends React.Component {
   };
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value }, () => console.log(this.state));
+    this.setState({ [name]: value });
   }
 
   handleCheck = ({ target: { name, value, checked }}) => {
@@ -26,7 +26,9 @@ class UserRegister extends React.Component {
       const index = newTechnologies.indexOf(value);
       newTechnologies.splice(index, 1);
     }
-    this.setState({ technologies: { [name]: newTechnologies}}, () => console.log(this.state.technologies.frontend));
+    let other;
+    name === 'frontend' ? other = 'backend' : other = 'frontend';
+    this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other]}});
   }
 
   handleSubmit = (e) => {
@@ -105,6 +107,23 @@ class UserRegister extends React.Component {
                 <input
                   type="checkbox"
                   name="frontend"
+                  onChange={this.handleCheck}
+                  value={technology.name}
+                />
+              </label>
+            </div>
+          )}
+
+        </div>
+        <div className="field">
+          <label htmlFor="backend">Backend Technologies</label>
+          {Technologies.backend.map((technology) =>
+            <div key={technology.name}>
+              <label className="checkbox">
+                <i className={technology.icon}></i>
+                <input
+                  type="checkbox"
+                  name="backend"
                   onChange={this.handleCheck}
                   value={technology.name}
                 />
