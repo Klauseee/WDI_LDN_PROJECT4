@@ -2,13 +2,31 @@ import React from 'react';
 import axios from 'axios';
 import Auth from '../../lib/Auth';
 // import Flash from '../../lib/Flash';
+import Technologies from '../../lib/Technologies';
 
 class UserRegister extends React.Component {
 
-  state = {};
+  state = {
+    technologies: {
+      frontend: [],
+      backend: []
+    }
+  };
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value }, () => console.log(this.state));
+  }
+
+  handleCheck = ({ target: { name, value, checked }}) => {
+    let newTechnologies;
+    if(checked) {
+      newTechnologies = this.state.technologies[name].concat(value);
+    } else {
+      newTechnologies = this.state.technologies[name].slice();
+      const index = newTechnologies.indexOf(value);
+      newTechnologies.splice(index, 1);
+    }
+    this.setState({ technologies: { [name]: newTechnologies}}, () => console.log(this.state.technologies.frontend));
   }
 
   handleSubmit = (e) => {
@@ -78,6 +96,24 @@ class UserRegister extends React.Component {
             onChange={this.handleChange}
           />
         </div>
+        <div className="field">
+          <label htmlFor="frontend">Frontend Technologies</label>
+          {Technologies.frontend.map((technology) =>
+            <div key={technology.name}>
+              <label className="checkbox">
+                <i className={technology.icon}></i>
+                <input
+                  type="checkbox"
+                  name="frontend"
+                  onChange={this.handleCheck}
+                  value={technology.name}
+                />
+              </label>
+            </div>
+          )}
+
+        </div>
+
         <button className="button is-primary">Submit</button>
       </form>
     );

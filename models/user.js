@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   jobTitle: { type: String, required: 'Job title is required.' },
   summary: { type: String, required: 'Include a summary of yourself.' },
   yearsExp: { type: Number, required: 'Include the number of years you have been practising.' },
-  skills: {
+  technologies: {
     frontend: [{ type: String }],
     backend: [{ type: String }]
   },
