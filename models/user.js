@@ -9,13 +9,12 @@ const userSchema = new mongoose.Schema({
   yearsExp: { type: Number, required: 'Include the number of years you have been practising.' },
   skills: {
     frontend: [{ type: String }],
-    backend: [{ type: String }],
-    database: [{ type: String }]
+    backend: [{ type: String }]
   },
   favouriteJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
   matchedJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
   cv: { type: String },
-  type: { type: String, default: 'user' }
+  user: { type: Boolean, default: true }
 }, {
   timestamps: true
 });

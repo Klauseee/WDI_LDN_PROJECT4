@@ -1,18 +1,20 @@
 import React from 'react';
 import axios from 'axios';
 // import _ from 'lodash';
+import Auth from '../../lib/Auth';
 
 import { Link } from 'react-router-dom';
 
 class IndexRoute extends React.Component {
 
   state = {
-    employers: []
+    employers: [],
+    currentUser: ''
   }
 
   componentDidMount() {
     axios.get('/api/employers')
-      .then(res => this.setState({ employers: res.data }, () => console.log(this.state)));
+      .then(res => this.setState({ employers: res.data, currentUser: Auth.getPayload().sub }, () => console.log(this.state)));
   }
 
   // handleChange = (e) => {

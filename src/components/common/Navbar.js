@@ -52,7 +52,11 @@ class Navbar extends React.Component {
               </div>}
             {
               // !Auth.isAuthenticated() &&
-              <Link className="navbar-item" to="/register">Register</Link>}
+              <div>
+                <Link className="navbar-item" to="/users/register">User Register</Link>
+                <Link className="navbar-item" to="/employers/register">Employer Register</Link>
+              </div>
+            }
           </div>
         </div>
       </nav>
