@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-// import Auth from '../../lib/Auth';
+import Auth from '../../lib/Auth';
 
 class Navbar extends React.Component {
   state = {
@@ -11,10 +11,10 @@ class Navbar extends React.Component {
     this.setState({ navIsOpen: !this.state.navIsOpen });
   }
 
-  // handleLogout = () => {
-  //   Auth.logout();
-  //   this.props.history.push('/bangers');
-  // }
+  handleLogout = () => {
+    Auth.logout();
+    this.props.history.push('/');
+  }
 
   componentWillUpdate() {
     this.state.navIsOpen && this.setState({ navIsOpen: false });
@@ -42,9 +42,7 @@ class Navbar extends React.Component {
             {/* IF A TOKEN IS PRESENT, SHOW THESE LINKS */}
             {
               // Auth.isAuthenticated() &&
-              <a className="navbar-item" to="/"
-              // onClick={this.handleLogout}
-              >Logout</a>}
+              <a className="navbar-item" to="/" onClick={this.handleLogout}>Logout</a>}
             {/* IF A TOKEN IS NOT PRESENT, SHOW THESE LINKS */}
             {
               // !Auth.isAuthenticated() &&
