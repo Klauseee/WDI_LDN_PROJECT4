@@ -8,7 +8,7 @@ function indexRoute(req,res,next){
 
 function createRoute(req,res,next){
   // req.body.admin = req.currentUser;
-  Event.create(req.body)
+  Job.create(req.body)
     .then(event => res.status(201).json(event))
     .catch(next);
 }
