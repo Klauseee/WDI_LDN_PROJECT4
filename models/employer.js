@@ -9,6 +9,6 @@ const employerSchema = new mongoose.Schema({
   perks: { type: Array },
   listings: [{ type: mongoose.Schema.ObjectId, ref: 'Job'}],
   location: { type: String, required: 'You must provide a location'}
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Employer', employerSchema);
