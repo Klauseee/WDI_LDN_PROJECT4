@@ -57,7 +57,7 @@ class IndexRoute extends React.Component {
                   </div>
                   <div className="card-content">
                     <h3 className="title is-4">{employer.name}</h3>
-                    <h4 className="subtitle">{employer.artist}</h4>
+                    <h4 className="subtitle">{employer.info}</h4>
                   </div>
                 </div>
               </Link>
