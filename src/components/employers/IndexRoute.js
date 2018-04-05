@@ -12,7 +12,7 @@ class IndexRoute extends React.Component {
 
   componentDidMount() {
     axios.get('/api/employers')
-      .then(res => this.setState({ employers: res.data }, () => console.log(this.state)));
+      .then(res => this.setState({ employers: res.data }));
   }
 
   // handleChange = (e) => {
@@ -55,7 +55,7 @@ class IndexRoute extends React.Component {
                   </div>
                   <div className="card-content">
                     <h3 className="title is-4">{employer.name}</h3>
-                    <h4 className="subtitle">{employer.artist}</h4>
+                    <h4 className="subtitle">{employer.info}</h4>
                   </div>
                 </div>
               </Link>
