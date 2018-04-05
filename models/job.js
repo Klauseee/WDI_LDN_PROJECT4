@@ -13,7 +13,6 @@ const jobSchema = new mongoose.Schema({
   summary: { type: String },
   interestedUsers: [{ type: mongoose.Schema.ObjectId, ref: 'User'}],
   salary: { type: Number, required: 'You must provide a motherfucking salary!'}
-
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Job', jobSchema);
