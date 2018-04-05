@@ -9,6 +9,9 @@ module.exports = [{
   perks: ['Free food and drinks', 'Your soul belongs to us'],
   location: '1-13 St Giles High St, London WC2H 8AG'
 }, {
+  email: 'amazon@amazon.com',
+  password: 'password',
+  passwordConfirmation: 'password',
   name: 'Amazon',
   logo: 'http://www.vmastoryboard.com/wp-content/uploads/2014/08/Amazon-A-Logo.jpg',
   info: 'We are Amazon',
