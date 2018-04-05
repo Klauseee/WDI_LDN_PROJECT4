@@ -6,6 +6,13 @@ function indexRoute(req,res,next){
     .catch(next);
 }
 
+function createRoute(req,res,next){
+  // req.body.admin = req.currentUser;
+  Event.create(req.body)
+    .then(event => res.status(201).json(event))
+    .catch(next);
+}
+
 function showRoute(req, res, next) {
   Job.findById(req.params.id)
     .then(user => res.json(user))
@@ -30,6 +37,7 @@ function deleteRoute(req, res, next) {
 
 module.exports = {
   index: indexRoute,
+  create: createRoute,
   show: showRoute,
   update: updateRoute,
   delete: deleteRoute
