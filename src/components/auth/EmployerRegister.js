@@ -26,7 +26,7 @@ class EmployerRegister extends React.Component {
       // .then(res => localStorage.setItem('token', res.data.token)) // replace using helper methods created in lib/Auth
       .then(res => Auth.setToken(res.data.token))
       // .then(() => Flash.setMessage('success', 'Thanks for registering!'))
-      .then(() => this.props.history.push('/bangers'));
+      .then(() => this.props.history.push('/employers'));
   }
 
   handleRepeaterChange = (property, array, index, e) => {

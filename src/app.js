@@ -4,8 +4,12 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/common/Navbar';
+
 import EmployerIndex from './components/employers/IndexRoute';
 import EmployerShow from './components/employers/ShowRoute';
+import EmployerEdit from './components/employers/EditRoute';
+
+import JobNew from './components/jobs/NewRoute';
 
 import Login from './components/auth/Login';
 import UserRegister from './components/auth/UserRegister';
@@ -23,8 +27,8 @@ class App extends React.Component {
           {/* <FlashMessages /> */}
           <section className="section">
             <Switch>
-              {/* <Route path="/employers/:id/edit" component={EditRoute} /> */}
-              {/* <Route path="/employers/new" component={NewRoute} /> */}
+              <Route path="/employers/:id/edit" component={EmployerEdit} />
+              <Route path="/jobs/new" component={JobNew} />
               <Route path="/employers/register" component={EmployerRegister} />
               <Route path="/users/register" component={UserRegister} />
               <Route path="/users/login" component={Login} />
