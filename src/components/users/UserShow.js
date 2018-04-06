@@ -9,7 +9,7 @@ class UserShow extends React.Component {
 
   componentDidMount() {
     axios.get(`/api/users/${this.props.match.params.id}`)
-      .then(res => this.setState({ user: res.data }, () => this.state.user));
+      .then(res => this.setState({ user: res.data }, () => console.log(this.state.user)));
   }
 
   render() {
