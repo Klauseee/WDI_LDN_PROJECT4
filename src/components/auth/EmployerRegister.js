@@ -9,7 +9,8 @@ class EmployerRegister extends React.Component {
 
   state = {
     photos: [''],
-    perks: ['']
+    perks: [''],
+    listings: []
   }
 
   handleChange = ({ target: { name, value }}) => {
@@ -31,15 +32,21 @@ class EmployerRegister extends React.Component {
   handleRepeaterChange = (property, array, index, e) => {
     const newArray = array.slice();
     newArray[index] = e.target.value;
-    this.setState({ [property]: newArray }, () => console.log(this.state[property]));
+    this.setState({ [property]: newArray }
+      // , () => console.log(this.state[property])
+    );
   }
 
   addRepeaterInput = (property, array) => {
-    this.setState({ [property]: array.concat('') }, () => console.log(this.state[property]));
+    this.setState({ [property]: array.concat('') }
+      // , () => console.log(this.state[property])
+    );
   }
 
   removeRepeaterInput = (property, array, index) => {
-    this.setState({ [property]: array.filter((item, i) => item[i] !== item[index])}, () => console.log(this.state[property]));
+    this.setState({ [property]: array.filter((item, i) => item[i] !== item[index])}
+      // , () => console.log(this.state[property])
+    );
   }
 
   render() {
@@ -112,7 +119,6 @@ class EmployerRegister extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-
           <div className="field">
             <label htmlFor="photos">Company Photos</label>
             <Repeater
@@ -133,11 +139,10 @@ class EmployerRegister extends React.Component {
               property='perks'
             />
           </div>
-
-          {/* 
-
-          listings: [{ type: mongoose.Schema.ObjectId, ref: 'Job'}],
-          type: { type: String, default: 'employer' } */}
+          <div className="field">
+            <label htmlFor="listings">Company Job Listings</label>
+            <p>Add a job, ADD FUNCTIONALITY FOR THIS TO HAPPEN, SAVE JOB ID TO THIS.STATE.LISTINGS ARRAY</p>
+          </div>
 
           <button className="button is-primary">Submit</button>
         </form>
