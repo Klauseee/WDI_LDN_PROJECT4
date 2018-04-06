@@ -6,7 +6,9 @@ import Auth from '../../lib/Auth';
 class Navbar extends React.Component {
   state = {
     navIsOpen: false,
-    currentUser: ''
+    currentUser: '',
+    loginRequest: false,
+    registerRequest: false
   }
 
   componentWillMount() {
@@ -16,6 +18,14 @@ class Navbar extends React.Component {
 
   handleToggle = () => {
     this.setState({ navIsOpen: !this.state.navIsOpen });
+  }
+
+  handleLoginRequest = () => {
+    this.setState({ loginRequest: !this.state.loginRequest });
+  }
+
+  handleRegisterRequest = () => {
+    this.setState({ registerRequest: !this.state.registerRequest });
   }
 
   componentWillUpdate() {
@@ -44,10 +54,24 @@ class Navbar extends React.Component {
             <Link className="navbar-item" to="/employers">All Employers</Link>
             {/* IF A TOKEN IS PRESENT, SHOW THESE LINKS */}
             {Auth.isAuthenticated() && <Link className="navbar-item" to="/employers" onClick={Auth.logout}>Logout</Link>}
-            {!Auth.isAuthenticated() && <Link className="navbar-item" to="/users/login">User Login</Link>}
-            {!Auth.isAuthenticated() && <Link className="navbar-item" to="/employers/login">Employer Login</Link>}
-            {!Auth.isAuthenticated() && <Link className="navbar-item" to="/users/register">User Register</Link>}
-            {!Auth.isAuthenticated() && <Link className="navbar-item" to="/employers/register">Employer Register</Link>}
+            {this.state.loginRequest && !Auth.isAuthenticated() ? (
+              <div>
+                <Link className="navbar-item" to="/users/login">User Login</Link>
+                <Link className="navbar-item" to="/employers/login">Employer Login</Link>
+                <a className="navbar-item" onClick={this.handleLoginRequest}>Cancel</a>
+              </div>
+            ) : (
+              <a className="navbar-item" onClick={this.handleLoginRequest}>Login</a>
+            )}
+            {this.state.registerRequest && !Auth.isAuthenticated() ? (
+              <div>
+                <Link className="navbar-item" to="/users/register">User Register</Link>
+                <Link className="navbar-item" to="/employers/register">Employer Register</Link>
+                <a className="navbar-item" onClick={this.handleRegisterRequest}>Cancel</a>
+              </div>
+            ) : (
+              <a className="navbar-item" onClick={this.handleRegisterRequest}>Register</a>
+            )}
 
 
           </div>
