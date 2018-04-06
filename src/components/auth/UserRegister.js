@@ -98,10 +98,10 @@ class UserRegister extends React.Component {
             onChange={this.handleChange}
           />
         </div>
-        <div className="field">
+        <div className="field columns is-multiline">
           <label htmlFor="frontend">Frontend Technologies</label>
           {Technologies.frontend.map((technology) =>
-            <div key={technology.name}>
+            <div key={technology.name} className="column">
               <label className="checkbox">
                 <i className={technology.icon}></i>
                 <input
@@ -115,10 +115,10 @@ class UserRegister extends React.Component {
           )}
 
         </div>
-        <div className="field">
+        <div className="field columns is-multiline">
           <label htmlFor="backend">Backend Technologies</label>
           {Technologies.backend.map((technology) =>
-            <div key={technology.name}>
+            <div key={technology.name} className="column">
               <label className="checkbox">
                 <i className={technology.icon}></i>
                 <input
@@ -130,7 +130,6 @@ class UserRegister extends React.Component {
               </label>
             </div>
           )}
-
         </div>
 
         <button className="button is-primary">Submit</button>
