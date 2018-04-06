@@ -11,13 +11,9 @@ class Navbar extends React.Component {
     registerRequest: false
   }
 
-  componentWillMount() {
-    this.setState({ currentUser: Auth.getPayload().role }, () => console.log(this.state.currentUser));
+  componentWillReceiveProps() {
+    if(Auth.isAuthenticated()) this.setState({ currentUser: Auth.getPayload().role }, () => console.log(this.state.currentUser));
   }
-
-  // handleNavigation = () => {
-  //   this.setState({ currentUser: Auth.getPayload().role }, () => console.log(this.state.currentUser));
-  // }
 
 
   handleToggle = () => {
