@@ -27,14 +27,12 @@ class App extends React.Component {
               {/* <Route path="/employers/:id/edit" component={EditRoute} /> */}
               {/* <Route path="/employers/new" component={NewRoute} /> */}
               <Route path="/employers/register" component={EmployerRegister} />
-              <Route path="/employers/:id" component={EmployerShow} />
-              <Route path="/employers" component={EmployerIndex} />
-
+              <Route path="/users/register" component={UserRegister} />
               <Route path="/users/login" component={Login} />
               <Route path="/employers/login" component={Login} />
-              <Route path="/users/register" component={UserRegister} />
-              {/* <Route path="/employers/register" component={EmployerRegister} /> */}
+              <Route path="/employers/:id" component={EmployerShow} />
               <Route path="/employers" component={EmployerIndex} />
+              {/* <Route path="/employers/register" component={EmployerRegister} /> */}
               {/* <Route component={NotFound} /> */}
             </Switch>
           </section>
