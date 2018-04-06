@@ -16,11 +16,10 @@ class Login extends React.Component {
     console.log(this.state);
     axios.post(`/api${this.props.location.pathname}`, this.state)
       .then(res => (Auth.setToken(res.data.token)))
-      .then(() => this.props.history.push('/'));
+      .then(() => this.props.history.push('/employers'));
   }
 
   render() {
-    console.log('rendering');
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="field">

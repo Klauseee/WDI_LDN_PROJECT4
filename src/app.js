@@ -16,6 +16,7 @@ import 'bulma';
 import './assets/scss/style.scss';
 
 class App extends React.Component {
+
   render() {
     return (
       <BrowserRouter>

@@ -8,13 +8,12 @@ import { Link } from 'react-router-dom';
 class IndexRoute extends React.Component {
 
   state = {
-    employers: [],
-    currentUser: ''
+    employers: []
   }
 
   componentDidMount() {
     axios.get('/api/employers')
-      .then(res => this.setState({ employers: res.data, currentUser: Auth.getPayload().sub }, () => console.log(this.state)));
+      .then(res => this.setState({ employers: res.data, currentUser: Auth.getPayload().sub }));
   }
 
   // handleChange = (e) => {
