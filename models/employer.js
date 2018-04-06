@@ -11,7 +11,7 @@ const employerSchema = new mongoose.Schema({
   perks: [{ type: String }],
   listings: [{ type: mongoose.Schema.ObjectId, ref: 'Job'}],
   location: { type: String, required: 'You must provide a location'},
-  employer: { type: Boolean, default: true }
+  user: { type: Boolean, default: false }
 }, { timestamps: true });
 
 employerSchema
