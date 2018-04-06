@@ -10,6 +10,8 @@ import EmployerIndex from './components/employers/IndexRoute';
 import EmployerShow from './components/employers/ShowRoute';
 
 import Login from './components/auth/Login';
+import UserRegister from './components/auth/UserRegister';
+// import EmployerRegister from './components/auth/EmployerRegister';
 
 import 'bulma';
 import './assets/scss/style.scss';
@@ -31,8 +33,9 @@ class App extends React.Component {
 
               <Route path="/users/login" component={Login} />
               <Route path="/employers/login" component={Login} />
-
-              {/* <Route path="/register" component={Register} /> */}
+              <Route path="/users/register" component={UserRegister} />
+              {/* <Route path="/employers/register" component={EmployerRegister} /> */}
+              <Route path="/employers" component={EmployerIndex} />
               {/* <Route component={NotFound} /> */}
             </Switch>
           </section>
