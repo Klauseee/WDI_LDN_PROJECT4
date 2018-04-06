@@ -1,45 +1,39 @@
 import React from 'react';
 import axios from 'axios';
+// import Form from './Form';
 import Auth from '../../lib/Auth';
-// import Flash from '../../lib/Flash';
 
-import Repeater from '../common/Repeater.js';
-
-class EmployerRegister extends React.Component {
+class NewRoute extends React.Component {
 
   state = {
-    photos: [''],
-    perks: ['']
-  }
-
-  handleChange = ({ target: { name, value }}) => {
-    this.setState({ [name]: value });
-    console.log(this.state);
+    // keep this hidden, grab the employers ID from somewhere else.
+    employer: '',
+    title: '',
+    location: '',
+    // permanent or contract
+    type: '',
+    skills: {
+      primary: [],
+      secondary: []
+    },
+    summary: '',
+    // show this only to the employer who made the job.
+    interestedUsers: [],
+    salary: 0
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('/api/employers/register', this.state)
-    // send the form data
-    // set token inside local storage
-      // .then(res => localStorage.setItem('token', res.data.token)) // replace using helper methods created in lib/Auth
-      .then(res => Auth.setToken(res.data.token))
-      // .then(() => Flash.setMessage('success', 'Thanks for registering!'))
-      .then(() => this.props.history.push('/bangers'));
+    axios.post('/api/jobs', this.state, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}` }
+    })
+      .then(() => this.props.history.push('/jobs'))
+      .catch(err => this.setState({ errors: err.response.data.errors }));
   }
 
-  handleRepeaterChange = (property, array, index, e) => {
-    const newArray = array.slice();
-    newArray[index] = e.target.value;
-    this.setState({ [property]: newArray }, () => console.log(this.state[property]));
-  }
-
-  addRepeaterInput = (property, array) => {
-    this.setState({ [property]: array.concat('') }, () => console.log(this.state[property]));
-  }
-
-  removeRepeaterInput = (property, array, index) => {
-    this.setState({ [property]: array.filter((item, i) => item[i] !== item[index])}, () => console.log(this.state[property]));
+  handleChange = ({ target: { name, value }}) => {
+    const errors = { ...this.state.errors, [name]: '' };
+    this.setState({ [name]: value, errors });
   }
 
   render() {
@@ -48,11 +42,11 @@ class EmployerRegister extends React.Component {
         <form onSubmit={this.handleSubmit}>
           {/* THIS WILL BE INITIAL REGISTER */}
           <div className="field">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="employer">Employer</label>
             <input
               className="input"
-              placeholder="example@email.com"
-              name="email"
+              placeholder="Employer ID"
+              name="employer"
               onChange={this.handleChange}
             />
           </div>
@@ -112,32 +106,14 @@ class EmployerRegister extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-
           <div className="field">
             <label htmlFor="photos">Company Photos</label>
-            <Repeater
-              handleRepeaterChange={this.handleRepeaterChange}
-              addRepeaterInput={this.addRepeaterInput}
-              removeRepeaterInput={this.removeRepeaterInput}
-              array={this.state.photos}
-              property='photos'
-            />
+            <Repeater />
           </div>
           <div className="field">
             <label htmlFor="photos">Company Perks</label>
-            <Repeater
-              handleRepeaterChange={this.handleRepeaterChange}
-              addRepeaterInput={this.addRepeaterInput}
-              removeRepeaterInput={this.removeRepeaterInput}
-              array={this.state.perks}
-              property='perks'
-            />
+            <Repeater />
           </div>
-
-          {/* 
-
-          listings: [{ type: mongoose.Schema.ObjectId, ref: 'Job'}],
-          type: { type: String, default: 'employer' } */}
 
           <button className="button is-primary">Submit</button>
         </form>
@@ -147,4 +123,4 @@ class EmployerRegister extends React.Component {
   }
 }
 
-export default EmployerRegister;
+export default NewRoute;

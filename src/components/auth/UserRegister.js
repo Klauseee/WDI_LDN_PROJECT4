@@ -21,65 +21,69 @@ class UserRegister extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="field">
-          <label htmlFor="jobTitle">Job Title</label>
-          <input className="input"
-            placeholder="Job Title"
-            name="jobTitle"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="email">Email</label>
-          <input
-            className="input"
-            placeholder="Email"
-            name="email"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="input"
-            placeholder="Password"
-            name="password"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="passwordConfirmation">Password Confirmation</label>
-          <input
-            type="password"
-            className="input"
-            placeholder="Password Confirmation"
-            name="passwordConfirmation"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="summary">Summary</label>
-          <textarea
-            className="input"
-            placeholder="Write a short summary about yourself"
-            name="summary"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="yearsExp">Years of Experience</label>
-          <input
-            type="number"
-            className="input"
-            placeholder="Years of experience"
-            name="yearsExp"
-            onChange={this.handleChange}
-          />
-        </div>
-        <button className="button is-primary">Submit</button>
-      </form>
+      <div className="container">
+        <form onSubmit={this.handleSubmit}>
+          <div className="field">
+            <label htmlFor="jobTitle">Job Title</label>
+            <input className="input"
+              placeholder="Job Title"
+              name="jobTitle"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="email">Email</label>
+            <input
+              className="input"
+              placeholder="Email"
+              name="email"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              className="input"
+              placeholder="Password"
+              name="password"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="passwordConfirmation">Password Confirmation</label>
+            <input
+              type="password"
+              className="input"
+              placeholder="Password Confirmation"
+              name="passwordConfirmation"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="summary">Summary</label>
+            <textarea
+              className="input"
+              placeholder="Write a short summary about yourself"
+              name="summary"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="yearsExp">Years of Experience</label>
+            <input
+              type="number"
+              className="input"
+              placeholder="Years of experience"
+              name="yearsExp"
+              onChange={this.handleChange}
+            />
+          </div>
+          <button className="button is-primary">Submit</button>
+        </form>
+
+      </div>
+
     );
   }
 }

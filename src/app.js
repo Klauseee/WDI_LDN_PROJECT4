@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-
 import Navbar from './components/common/Navbar';
 import EmployerIndex from './components/employers/IndexRoute';
 import EmployerShow from './components/employers/ShowRoute';
@@ -32,7 +31,6 @@ class App extends React.Component {
               <Route path="/employers/login" component={Login} />
               <Route path="/employers/:id" component={EmployerShow} />
               <Route path="/employers" component={EmployerIndex} />
-              {/* <Route path="/employers/register" component={EmployerRegister} /> */}
               {/* <Route component={NotFound} /> */}
             </Switch>
           </section>
