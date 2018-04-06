@@ -58,8 +58,8 @@ class Navbar extends React.Component {
             {Auth.isAuthenticated() && <Link className="navbar-item" to="/employers" onClick={Auth.logout}>Logout</Link>}
             {this.state.loginRequest && !Auth.isAuthenticated() ? (
               <div>
-                <Link className="navbar-item" to="/users/login">User Login</Link>
-                <Link className="navbar-item" to="/employers/login">Employer Login</Link>
+                <Link className="navbar-item" to="/users/login" onClick={this.handleLoginRequest}>User Login</Link>
+                <Link className="navbar-item" to="/employers/login" onClick={this.handleLoginRequest}>Employer Login</Link>
                 <a className="navbar-item" onClick={this.handleLoginRequest}>Cancel</a>
               </div>
             ) : (
@@ -67,15 +67,14 @@ class Navbar extends React.Component {
             )}
             {this.state.registerRequest && !Auth.isAuthenticated() ? (
               <div>
-                <Link className="navbar-item" to="/users/register">User Register</Link>
-                <Link className="navbar-item" to="/employers/register">Employer Register</Link>
+                <Link className="navbar-item" to="/users/register" onClick={this.handleRegisterRequest}>User Register</Link>
+                <Link className="navbar-item" to="/employers/register" onClick={this.handleRegisterRequest}>Employer Register</Link>
                 <a className="navbar-item" onClick={this.handleRegisterRequest}>Cancel</a>
               </div>
             ) : (
               <a className="navbar-item" onClick={this.handleRegisterRequest}>Register</a>
             )}
-
-
+            {Auth.isAuthenticated() && <Link className="navbar-item" to={`/${this.state.currentUser}/${Auth.getPayload().sub}`}>Profile</Link>}
           </div>
         </div>
       </nav>
