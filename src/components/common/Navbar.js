@@ -21,10 +21,12 @@ class Navbar extends React.Component {
   }
 
   handleLoginRequest = () => {
+    if(this.state.registerRequest) this.setState({ registerRequest: !this.state.registerRequest });
     this.setState({ loginRequest: !this.state.loginRequest });
   }
 
   handleRegisterRequest = () => {
+    if(this.state.loginRequest) this.setState({ loginRequest: !this.state.loginRequest });
     this.setState({ registerRequest: !this.state.registerRequest });
   }
 
