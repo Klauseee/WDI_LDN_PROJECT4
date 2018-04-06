@@ -20,6 +20,7 @@ class Login extends React.Component {
   }
 
   render() {
+    console.log('rendering');
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="field">

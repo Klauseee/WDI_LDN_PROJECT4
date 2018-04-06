@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import EmployerRegister from './components/auth/EmployerRegister';
 
 import Navbar from './components/common/Navbar';
 import EmployerIndex from './components/employers/IndexRoute';
@@ -11,7 +10,7 @@ import EmployerShow from './components/employers/ShowRoute';
 
 import Login from './components/auth/Login';
 import UserRegister from './components/auth/UserRegister';
-// import EmployerRegister from './components/auth/EmployerRegister';
+import EmployerRegister from './components/auth/EmployerRegister';
 
 import 'bulma';
 import './assets/scss/style.scss';
