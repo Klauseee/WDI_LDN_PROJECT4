@@ -17,9 +17,9 @@ class NewRoute extends React.Component {
       secondary: []
     },
     summary: '',
+    salary: 0,
     // show this only to the employer who made the job.
-    interestedUsers: [],
-    salary: 0
+    interestedUsers: []
   }
 
   handleSubmit = (e) => {
@@ -44,7 +44,7 @@ class NewRoute extends React.Component {
             <label htmlFor="employer">Employer</label>
             <input
               className="input"
-              placeholder="Employer ID, this will be hidden"
+              placeholder="Employer ID, this will be hidden/ value will be automatically assigned as the id of the logged in employer"
               name="employer"
               onChange={this.handleChange}
             />
@@ -68,7 +68,7 @@ class NewRoute extends React.Component {
             />
           </div>
           <div className="field">
-            <label htmlFor="type">Type of Role</label>
+            <label htmlFor="type">Type of Role</label><br />
             <label className="radio">
               <input
                 type="radio"
@@ -76,7 +76,7 @@ class NewRoute extends React.Component {
                 value="permanent"
                 onChange={this.handleChange}
               />
-              Permanent
+              &nbsp; Permanent
             </label>
             <label className="radio">
               <input
@@ -85,43 +85,36 @@ class NewRoute extends React.Component {
                 value="contract"
                 onChange={this.handleChange}
               />
-              Contract
+              &nbsp; Contract
             </label>
           </div>
           <div className="field">
-            <label htmlFor="logo">Company Logo</label>
+            <label htmlFor="logo">SKILLS CHECKBOXES GO HERE</label>
             <input
               className="input"
-              placeholder="In the form of a link.. REMEMBER TO ADD FILESTACK OPTION"
+              placeholder="skills > primary and skills > secondary checkboxes go here"
               name="logo"
               onChange={this.handleChange}
             />
           </div>
           <div className="field">
-            <label htmlFor="location">Company Location</label>
+            <label htmlFor="summary">Job Summary</label>
+            <textarea
+              className="textarea"
+              placeholder="Write a summary about this role"
+              name="summary"
+              onChange={this.handleChange}
+            ></textarea>
+          </div>
+          <div className="field">
+            <label htmlFor="salary">Salary</label>
             <input
+              type="number"
               className="input"
-              placeholder="Where are you situated?"
-              name="location"
+              placeholder="Pay per annum, make this change according to what was selected for type (ie: day rate/ annual wage)"
+              name="salary"
               onChange={this.handleChange}
             />
-          </div>
-          <div className="field">
-            <label htmlFor="info">Company Info</label>
-            <input
-              className="input"
-              placeholder="Write a little blurb about your company"
-              name="info"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="photos">Company Photos</label>
-            <Repeater />
-          </div>
-          <div className="field">
-            <label htmlFor="photos">Company Perks</label>
-            <Repeater />
           </div>
 
           <button className="button is-primary">Submit</button>
