@@ -19,7 +19,6 @@ router.route('/jobs/:id')
 // USER ROUTES
 router.route('/users')
   .get(users.index);
-// .post(users.create);
 
 router.route('/users/:id')
   .get(users.show)
@@ -35,7 +34,6 @@ router.route('/users/login')
 // EMPLOYER ROUTES
 router.route('/employers')
   .get(employers.index);
-// .post(employers.create);
 
 router.route('/employers/:id')
   .get(employers.show)

@@ -5,7 +5,7 @@ const { secret } = require('../config/environment');
 function register(req, res, next){
   User.create(req.body)
     .then(user => {
-      const token = jwt.sign({ sub: user._id}, secret, {expiresIn: '6h'});
+      const token = jwt.sign({ sub: user._id, role: 'users' }, secret, {expiresIn: '6h'});
       res.json({
         message: 'Thank you for registering',
         token
@@ -21,7 +21,7 @@ function login(req, res, next){
       if(!user || !user.validatePassword(req.body.password)){
         return res.status(401).json({ message: 'Unauthorised' });
       }
-      const token = jwt.sign({ sub: user._id}, secret, {expiresIn: '6h'});
+      const token = jwt.sign({ sub: user._id, role: 'users' }, secret, {expiresIn: '6h'});
       res.json({
         message: 'Welcome back',
         token

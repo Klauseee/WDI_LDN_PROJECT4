@@ -5,7 +5,7 @@ const { secret } = require('../config/environment');
 function register(req, res, next){
   Employer.create(req.body)
     .then(employer => {
-      const token = jwt.sign({ sub: employer._id}, secret, {expiresIn: '6h'});
+      const token = jwt.sign({ sub: employer._id, role: 'employers' }, secret, {expiresIn: '6h'});
       res.json({
         message: `Thank you for registering ${employer.name}`,
         token
@@ -20,7 +20,7 @@ function login(req, res, next){
       if(!employer || !employer.validatePassword(req.body.password)){
         return res.status(401).json({ message: 'Unauthorised' });
       }
-      const token = jwt.sign({ sub: employer._id}, secret, {expiresIn: '6h'});
+      const token = jwt.sign({ sub: employer._id, role: 'employers' }, secret, {expiresIn: '6h'});
       res.json({
         message: `Welcome back ${employer.name}`,
         token

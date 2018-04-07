@@ -11,6 +11,8 @@ import EmployerEdit from './components/employers/EditRoute';
 
 import JobNew from './components/jobs/NewRoute';
 
+import UserShow from './components/users/UserShow';
+
 import Login from './components/auth/Login';
 import UserRegister from './components/auth/UserRegister';
 import EmployerRegister from './components/auth/EmployerRegister';
@@ -19,6 +21,7 @@ import 'bulma';
 import './assets/scss/style.scss';
 
 class App extends React.Component {
+
   render() {
     return (
       <BrowserRouter>
@@ -34,6 +37,7 @@ class App extends React.Component {
               <Route path="/users/login" component={Login} />
               <Route path="/employers/login" component={Login} />
               <Route path="/employers/:id" component={EmployerShow} />
+              <Route path="/users/:id" component={UserShow} />
               <Route path="/employers" component={EmployerIndex} />
               {/* <Route component={NotFound} /> */}
             </Switch>
