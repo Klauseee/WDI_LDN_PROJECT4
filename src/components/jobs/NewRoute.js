@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 // import Form from './Form';
-import Auth from '../../lib/Auth';
+// import Auth from '../../lib/Auth';
 
 class NewRoute extends React.Component {
 
