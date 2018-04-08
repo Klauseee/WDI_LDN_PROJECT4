@@ -12,6 +12,7 @@ import EmployerEdit from './components/employers/EditRoute';
 import JobNew from './components/jobs/NewRoute';
 import JobShow from './components/jobs/JobShow';
 import JobIndex from './components/jobs/IndexRoute';
+import JobEdit from './components/jobs/JobEdit';
 
 import UserShow from './components/users/UserShow';
 import UserEdit from './components/users/UserEdit';
@@ -35,6 +36,7 @@ class App extends React.Component {
             <Switch>
               <Route path="/users/:id/edit" component={UserEdit} />
               <Route path="/employers/:id/edit" component={EmployerEdit} />
+              <Route path="/jobs/:id/edit" component={JobEdit}/>
               <Route path="/jobs/new" component={JobNew} />
               <Route path="/employers/register" component={EmployerRegister} />
               <Route path="/users/register" component={UserRegister} />

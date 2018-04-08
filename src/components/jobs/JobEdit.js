@@ -1,44 +1,27 @@
 import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
-// import Form from './Form';
-import Auth from '../../lib/Auth';
 
-class NewRoute extends React.Component {
-
+class JobEdit extends React.Component {
   state = {
-    // keep this hidden, grab the employers ID from somewhere else.
-    employer: '',
     title: '',
     location: '',
-    // permanent or contract
+    summary: '',
+    salary: '',
     type: '',
     technologies: {
       primary: [],
       secondary: []
-    },
-    summary: '',
-    salary: 0,
-    // show this only to the employer who made the job.
-    interestedUsers: []
+    }
   }
 
-  componentWillMount() {
-    this.setState({ employer: Auth.getPayload().sub }, () => console.log(Auth.getPayload().sub));
+  componentDidMount() {
+    axios.get(`/api/jobs/${this.props.match.params.id}`)
+      .then(res => this.setState(res.data, () => console.log(this.state)));
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post('/api/jobs', this.state
-    // { headers: { Authorization: `Bearer ${Auth.getToken()}` }}
-    )
-      .then(() => this.props.history.push('/jobs'))
-      .catch(err => this.setState({ errors: err.response.data.errors }));
-  }
-
-  handleChange = ({ target: { name, value }}) => {
-    const errors = { ...this.state.errors, [name]: '' };
-    this.setState({ [name]: value, errors });
+  handleChange = ({ target: { name, value } }) => {
+    this.setState({ [name]: value }, () => console.log(this.state));
   }
 
   handleCheck = ({ target: { name, value, checked }}) => {
@@ -51,11 +34,17 @@ class NewRoute extends React.Component {
       newTechnologies.splice(index, 1);
     }
     const other = name === 'primary' ? 'secondary' : 'primary';
-    this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other]}}, () => console.log(this.state.technologies));
+    this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other] }}, () => console.log(this.state.technologies));
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    axios.put(`/api/jobs/${this.state._id}`, this.state)
+      .then(() => this.props.history.push('/'));
   }
 
   render() {
-    return (
+    return(
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <div className="field">
@@ -65,6 +54,7 @@ class NewRoute extends React.Component {
               placeholder="Whats the title of this role?"
               name="title"
               onChange={this.handleChange}
+              value={this.state.title}
             />
           </div>
           <div className="field">
@@ -74,6 +64,7 @@ class NewRoute extends React.Component {
               placeholder="Where would this role be located?"
               name="location"
               onChange={this.handleChange}
+              value={this.state.location}
             />
           </div>
           <div className="field">
@@ -84,6 +75,7 @@ class NewRoute extends React.Component {
                 name="type"
                 value="permanent"
                 onChange={this.handleChange}
+                checked={this.state.type === 'permanent'}
               />
               &nbsp; Permanent
             </label>
@@ -93,6 +85,7 @@ class NewRoute extends React.Component {
                 name="type"
                 value="contract"
                 onChange={this.handleChange}
+                checked={this.state.type === 'contract'}
               />
               &nbsp; Contract
             </label>
@@ -108,6 +101,7 @@ class NewRoute extends React.Component {
                     name="primary"
                     onChange={this.handleCheck}
                     value={technology.name}
+                    checked={this.state.technologies.primary.includes(technology.name)}
                   />
                 </label>
               </div>
@@ -121,6 +115,7 @@ class NewRoute extends React.Component {
                     name="primary"
                     onChange={this.handleCheck}
                     value={technology.name}
+                    checked={this.state.technologies.primary.includes(technology.name)}
                   />
                 </label>
               </div>
@@ -137,6 +132,7 @@ class NewRoute extends React.Component {
                     name="secondary"
                     onChange={this.handleCheck}
                     value={technology.name}
+                    checked={this.state.technologies.secondary.includes(technology.name)}
                   />
                 </label>
               </div>
@@ -150,6 +146,7 @@ class NewRoute extends React.Component {
                     name="secondary"
                     onChange={this.handleCheck}
                     value={technology.name}
+                    checked={this.state.technologies.secondary.includes(technology.name)}
                   />
                 </label>
               </div>
@@ -162,6 +159,7 @@ class NewRoute extends React.Component {
               placeholder="Write a summary about this role"
               name="summary"
               onChange={this.handleChange}
+              value={this.state.summary}
             ></textarea>
           </div>
           <div className="field">
@@ -172,6 +170,7 @@ class NewRoute extends React.Component {
               placeholder="Pay per annum, make this change according to what was selected for type (ie: day rate/ annual wage)"
               name="salary"
               onChange={this.handleChange}
+              value={this.state.salary}
             />
           </div>
 
@@ -183,4 +182,4 @@ class NewRoute extends React.Component {
   }
 }
 
-export default NewRoute;
+export default JobEdit;
