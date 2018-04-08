@@ -22,6 +22,10 @@ class NewRoute extends React.Component {
     interestedUsers: []
   }
 
+  componentWillMount() {
+    this.setState({ employer: Auth.getPayload().sub }, () => console.log(Auth.getPayload().sub));
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     axios.post('/api/jobs', this.state
@@ -40,7 +44,7 @@ class NewRoute extends React.Component {
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>
-          <div className="field">
+          {/* <div className="field">
             <label htmlFor="employer">Employer</label>
             <input
               className="input"
@@ -48,7 +52,7 @@ class NewRoute extends React.Component {
               name="employer"
               onChange={this.handleChange}
             />
-          </div>
+          </div> */}
           <div className="field">
             <label htmlFor="title">Title</label>
             <input
