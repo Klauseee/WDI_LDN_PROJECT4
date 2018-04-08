@@ -8,6 +8,7 @@ import Navbar from './components/common/Navbar';
 import EmployerIndex from './components/employers/IndexRoute';
 import EmployerShow from './components/employers/ShowRoute';
 import UserShow from './components/users/UserShow';
+import UserEdit from './components/users/UserEdit';
 
 import Login from './components/auth/Login';
 import UserRegister from './components/auth/UserRegister';
@@ -27,7 +28,7 @@ class App extends React.Component {
           <section className="section">
             <Switch>
               {/* <Route path="/employers/:id/edit" component={EditRoute} /> */}
-              {/* <Route path="/employers/new" component={NewRoute} /> */}
+              <Route path="/users/:id/edit" component={UserEdit} />
               <Route path="/employers/register" component={EmployerRegister} />
               <Route path="/users/register" component={UserRegister} />
               <Route path="/users/login" component={Login} />
