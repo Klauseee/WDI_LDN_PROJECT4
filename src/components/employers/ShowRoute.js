@@ -17,7 +17,7 @@ class ShowRoute extends React.Component {
     // console.log(this.props); // everything here has been created by the router
     // console.log(this.props.match.params.id); // contains the :id parameter!
     axios.get(`/api/employers/${this.props.match.params.id}`)
-      .then(res => this.setState({ employer: res.data }));
+      .then(res => this.setState({ employer: res.data }, () => console.log(this.state)));
   }
 
   handleToggle = () => {
@@ -56,7 +56,7 @@ class ShowRoute extends React.Component {
           </ul>
           <ul>
             {this.state.employer.listings.map((listing, i) =>
-              <li key={i}>{listing}</li>
+              <li key={i}><Link to={`/jobs/${listing._id}`}>{listing.title}</Link></li>
             )}
           </ul>
 
