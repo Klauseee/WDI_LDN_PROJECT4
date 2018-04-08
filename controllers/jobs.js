@@ -15,6 +15,7 @@ function createRoute(req,res,next){
 
 function showRoute(req, res, next) {
   Job.findById(req.params.id)
+    .populate('employer')
     .then(user => res.json(user))
     .then(() => console.log(req.currentUser))
     .catch(next);

@@ -2,28 +2,22 @@ import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 
+import { Link } from 'react-router-dom';
+
 class JobShow extends React.Component {
   state = null
 
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
-      .then(res => this.setState(res.data))
-      .then(() => this.getEmployer());
+      .then(res => this.setState(res.data, () => console.log(this.state)));
   }
-
-  getEmployer() {
-    axios.get(`/api/employers/${this.state.employer}`)
-      .then(res => this.setState({ employerInfo: res.data }));
-  }
-
 
   render() {
     if(!this.state) return null;
-    console.log(this.state.employerInfo);
     return(
       <div className="container">
         <h1 className="title">{this.state.title}</h1>
-        {/* <h2 className="subtitle">{this.state.employerInfo.name}</h2> */}
+        <h2 className="subtitle"><Link to={`/employers/${this.state.employer._id}`}>{this.state.employer.name}</Link></h2>
         <h2 className="subtitle"><strong>Location:</strong> {this.state.location}</h2>
         <h2 className="subtitle"><strong>Employment type:</strong> {this.state.type}</h2>
         <h2 className="subtitle"><strong>Job summary</strong></h2>
