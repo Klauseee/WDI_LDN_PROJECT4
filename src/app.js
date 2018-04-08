@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-
 import Navbar from './components/common/Navbar';
+
 import EmployerIndex from './components/employers/IndexRoute';
 import EmployerShow from './components/employers/ShowRoute';
+import EmployerEdit from './components/employers/EditRoute';
+
+import JobNew from './components/jobs/NewRoute';
+
 import UserShow from './components/users/UserShow';
 import UserEdit from './components/users/UserEdit';
 
@@ -27,8 +31,9 @@ class App extends React.Component {
           {/* <FlashMessages /> */}
           <section className="section">
             <Switch>
-              {/* <Route path="/employers/:id/edit" component={EditRoute} /> */}
               <Route path="/users/:id/edit" component={UserEdit} />
+              <Route path="/employers/:id/edit" component={EmployerEdit} />
+              <Route path="/jobs/new" component={JobNew} />
               <Route path="/employers/register" component={EmployerRegister} />
               <Route path="/users/register" component={UserRegister} />
               <Route path="/users/login" component={Login} />
@@ -36,7 +41,6 @@ class App extends React.Component {
               <Route path="/employers/:id" component={EmployerShow} />
               <Route path="/users/:id" component={UserShow} />
               <Route path="/employers" component={EmployerIndex} />
-              {/* <Route path="/employers/register" component={EmployerRegister} /> */}
               {/* <Route component={NotFound} /> */}
             </Switch>
           </section>
