@@ -5,7 +5,7 @@ const jobSchema = new mongoose.Schema({
   title: { type: String, required: 'You must provide a job title' },
   location: { type: String, required: 'You must provide a location' },
   type: { type: String, enum: ['permanent', 'contract'], required: 'You must provide a job type' },
-  skills: {
+  technologies: {
     primary: [{ type: String }],
     secondary: [{ type: String }]
   },

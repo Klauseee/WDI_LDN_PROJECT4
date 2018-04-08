@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Technologies from '../../lib/Technologies';
 // import Form from './Form';
 import Auth from '../../lib/Auth';
 
@@ -12,7 +13,7 @@ class NewRoute extends React.Component {
     location: '',
     // permanent or contract
     type: '',
-    skills: {
+    technologies: {
       primary: [],
       secondary: []
     },
@@ -38,6 +39,19 @@ class NewRoute extends React.Component {
   handleChange = ({ target: { name, value }}) => {
     const errors = { ...this.state.errors, [name]: '' };
     this.setState({ [name]: value, errors });
+  }
+
+  handleCheck = ({ target: { name, value, checked }}) => {
+    let newTechnologies;
+    if(checked) {
+      newTechnologies = this.state.technologies[name].concat(value);
+    } else {
+      newTechnologies = this.state.technologies[name].slice();
+      const index = newTechnologies.indexOf(value);
+      newTechnologies.splice(index, 1);
+    }
+    const other = name === 'primary' ? 'secondary' : 'primary';
+    this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other]}}, () => console.log(this.state.technologies));
   }
 
   render() {
@@ -92,14 +106,63 @@ class NewRoute extends React.Component {
               &nbsp; Contract
             </label>
           </div>
-          <div className="field">
-            <label htmlFor="logo">SKILLS CHECKBOXES GO HERE</label>
-            <input
-              className="input"
-              placeholder="skills > primary and skills > secondary checkboxes go here"
-              name="logo"
-              onChange={this.handleChange}
-            />
+          <div className="field columns is-multiline">
+            <label htmlFor="logo">Primary Skills</label>
+            {Technologies.frontend.map(technology =>
+              <div key={technology.name} className="column">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    name="primary"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                  />
+                </label>
+              </div>
+            )}
+            {Technologies.backend.map(technology =>
+              <div key={technology.name} className="column">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    name="primary"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                  />
+                </label>
+              </div>
+            )}
+          </div>
+          <div className="field columns is-multiline">
+            <label htmlFor="logo">Secondary Skills</label>
+            {Technologies.frontend.map(technology =>
+              <div key={technology.name} className="column">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    name="secondary"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                  />
+                </label>
+              </div>
+            )}
+            {Technologies.backend.map(technology =>
+              <div key={technology.name} className="column">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    name="secondary"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                  />
+                </label>
+              </div>
+            )}
           </div>
           <div className="field">
             <label htmlFor="summary">Job Summary</label>
