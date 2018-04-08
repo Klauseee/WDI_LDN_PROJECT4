@@ -10,6 +10,7 @@ import EmployerShow from './components/employers/ShowRoute';
 import EmployerEdit from './components/employers/EditRoute';
 
 import JobNew from './components/jobs/NewRoute';
+import JobIndex from './components/jobs/IndexRoute';
 
 import UserShow from './components/users/UserShow';
 import UserEdit from './components/users/UserEdit';
@@ -40,6 +41,7 @@ class App extends React.Component {
               <Route path="/employers/login" component={Login} />
               <Route path="/employers/:id" component={EmployerShow} />
               <Route path="/users/:id" component={UserShow} />
+              <Route path="/jobs" component={JobIndex}/>
               <Route path="/employers" component={EmployerIndex} />
               {/* <Route component={NotFound} /> */}
             </Switch>
