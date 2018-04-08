@@ -64,44 +64,42 @@ class Navbar extends React.Component {
               Jobs
             </Link>
             {Auth.isAuthenticated() && <Link className="navbar-item" to="/employers" onClick={Auth.logout}>Logout</Link>}
-            {this.state.loginRequest && !Auth.isAuthenticated() ? (
-              <div>
-                <Link
-                  className="navbar-item"
-                  to="/users/login"
-                  onClick={this.handleLoginRequest}>
-                  User Login
-                </Link>
-                <Link
-                  className="navbar-item"
-                  to="/employers/login"
-                  onClick={this.handleLoginRequest}>
-                  Employer Login
-                </Link>
-                <a className="navbar-item" onClick={this.handleLoginRequest}>Cancel</a>
-              </div>
-            ) : (
-              <a className="navbar-item" onClick={this.handleLoginRequest}>Login</a>
-            )}
-            {this.state.registerRequest && !Auth.isAuthenticated() ? (
-              <div>
-                <Link
-                  className="navbar-item"
-                  to="/users/register"
-                  onClick={this.handleRegisterRequest}>
-                  User Register
-                </Link>
-                <Link
-                  className="navbar-item"
-                  to="/employers/register"
-                  onClick={this.handleRegisterRequest}>
-                  Employer Register
-                </Link>
-                <a className="navbar-item" onClick={this.handleRegisterRequest}>Cancel</a>
-              </div>
-            ) : (
-              <a className="navbar-item" onClick={this.handleRegisterRequest}>Register</a>
-            )}
+
+            {(this.state.loginRequest && !Auth.isAuthenticated()) && <div>
+              <Link
+                className="navbar-item"
+                to="/users/login"
+                onClick={this.handleLoginRequest}>
+                User Login
+              </Link>
+              <Link
+                className="navbar-item"
+                to="/employers/login"
+                onClick={this.handleLoginRequest}>
+                Employer Login
+              </Link>
+              <a className="navbar-item" onClick={this.handleLoginRequest}>Cancel</a>
+            </div>}
+            {(!this.state.loginRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleLoginRequest}>Login</a>}
+
+            {(this.state.registerRequest && !Auth.isAuthenticated()) && <div>
+              <Link
+                className="navbar-item"
+                to="/users/register"
+                onClick={this.handleRegisterRequest}>
+                User Register
+              </Link>
+              <Link
+                className="navbar-item"
+                to="/employers/register"
+                onClick={this.handleRegisterRequest}>
+                Employer Register
+              </Link>
+              <a className="navbar-item" onClick={this.handleRegisterRequest}>Cancel</a>
+            </div>}
+
+            {(!this.state.registerRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleRegisterRequest}>Register</a>}
+
             {Auth.isAuthenticated() &&
               <Link
                 className="navbar-item"
