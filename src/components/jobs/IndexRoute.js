@@ -3,18 +3,20 @@ import axios from 'axios';
 // import _ from 'lodash';
 import Auth from '../../lib/Auth';
 
+import moment from 'moment';
+
 import { Link } from 'react-router-dom';
 
 class IndexRoute extends React.Component {
 
   state = {
-    employers: [],
+    jobs: [],
     currentUser: ''
   }
 
   componentDidMount() {
-    axios.get('/api/employers')
-      .then(res => this.setState({ employers: res.data, currentUser: Auth.getPayload().sub }, () => console.log(this.state)));
+    axios.get('/api/jobs')
+      .then(res => this.setState({ jobs: res.data, currentUser: Auth.getPayload().sub }, () => console.log(this.state)));
   }
 
   // handleChange = (e) => {
@@ -46,18 +48,21 @@ class IndexRoute extends React.Component {
           </div>
         </form> */}
         <ul className="columns is-multiline">
-          {this.state.employers.map((employer, i) =>
-            <li key={i} className="column is-one-third">
-              <Link to={`/employers/${employer._id}`}>
+          {this.state.jobs.map((job, i) =>
+            <li key={i} className="column is-full-width">
+              <Link to={`/jobs/${job._id}`}>
                 <div className="card">
-                  <div className="card-image">
+                  {/* <div className="card-image">
                     <figure className="image is-4by3">
-                      <img src={employer.logo} alt={`${employer.name} logo`} />
+                      <img src={job.logo} alt={`${job.name} logo`} />
                     </figure>
-                  </div>
+                  </div> */}
                   <div className="card-content">
-                    <h3 className="title is-4">{employer.name}</h3>
-                    <h4 className="subtitle">{employer.info}</h4>
+                    <h3 className="title is-4">Job title: {job.title}</h3>
+                    <h4 className="subtitle">Location: {job.location}</h4>
+                    <h3 className="subtitle">Role type: {job.type}</h3>
+                    <h3 className="subtitle">Created at: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
+                    {job.skills.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
                   </div>
                 </div>
               </Link>
