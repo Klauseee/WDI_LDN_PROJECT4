@@ -26,8 +26,7 @@ class UserRegister extends React.Component {
       const index = newTechnologies.indexOf(value);
       newTechnologies.splice(index, 1);
     }
-    let other;
-    name === 'frontend' ? other = 'backend' : other = 'frontend';
+    const other = name === 'frontend' ? 'backend' : 'frontend';
     this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other]}});
   }
 
