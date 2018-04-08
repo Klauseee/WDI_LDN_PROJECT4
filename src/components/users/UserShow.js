@@ -2,15 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 
+import { Link } from 'react-router-dom';
+
 class UserShow extends React.Component {
 
   state = {
-    user: {
-      technologies: {
-        frontend: [],
-        backend: []
-      }
-    },
+    user: {},
     technologies: {
       frontend: [],
       backend: []
@@ -37,7 +34,9 @@ class UserShow extends React.Component {
   render() {
     return(
       <div className="container">
-        <h2 className="subtitle">Your Profile</h2>
+        <h2 className="title">{this.state.user.jobTitle}</h2>
+        <h2 className="subtitle">Summary</h2>
+        <p>{this.state.user.summary}</p>
         <h2 className="subtitle">Frontend Skills</h2>
         <ul>
           {this.state.technologies.frontend.map((technology, i) =>
@@ -50,6 +49,11 @@ class UserShow extends React.Component {
             <li key={i}>{technology.name}<i className={technology.icon}></i></li>
           )}
         </ul>
+        <Link
+          to={`/users/${this.state.user._id}/edit`}
+          className="button is-primary">
+          Edit
+        </Link>
       </div>
     );
   }

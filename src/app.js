@@ -10,8 +10,10 @@ import EmployerShow from './components/employers/ShowRoute';
 import EmployerEdit from './components/employers/EditRoute';
 
 import JobNew from './components/jobs/NewRoute';
+import JobIndex from './components/jobs/IndexRoute';
 
 import UserShow from './components/users/UserShow';
+import UserEdit from './components/users/UserEdit';
 
 import Login from './components/auth/Login';
 import UserRegister from './components/auth/UserRegister';
@@ -30,6 +32,7 @@ class App extends React.Component {
           {/* <FlashMessages /> */}
           <section className="section">
             <Switch>
+              <Route path="/users/:id/edit" component={UserEdit} />
               <Route path="/employers/:id/edit" component={EmployerEdit} />
               <Route path="/jobs/new" component={JobNew} />
               <Route path="/employers/register" component={EmployerRegister} />
@@ -38,6 +41,7 @@ class App extends React.Component {
               <Route path="/employers/login" component={Login} />
               <Route path="/employers/:id" component={EmployerShow} />
               <Route path="/users/:id" component={UserShow} />
+              <Route path="/jobs" component={JobIndex}/>
               <Route path="/employers" component={EmployerIndex} />
               {/* <Route component={NotFound} /> */}
             </Switch>
