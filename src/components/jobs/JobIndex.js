@@ -30,13 +30,15 @@ class JobIndex extends React.Component {
       this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.concat(jobId) }}, () => {
         axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
         // .then(() => Flash.setMessage('success', 'Job added to favorites'))
-          .then(() => this.props.history.push('/jobs'));
+          .then(() => this.props.history.push('/jobs'))
+          .then(() => console.log(this.state));
       });
     } else {
       this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.filter(job => job !== jobId) }}, () => {
         axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
         // .then(() => Flash.setMessage('success', 'Job added to favorites'))
-          .then(() => this.props.history.push('/jobs'));
+          .then(() => this.props.history.push('/jobs'))
+          .then(() => console.log(this.state));
       });
     }
   }
@@ -57,6 +59,8 @@ class JobIndex extends React.Component {
   render() {
     return (
       <div className="container">
+        <h1 className="title">Active jobs</h1>
+        <h2 className="subtitle">Add a job to your favorites or click through to see more.</h2>
         {/* search filter */}
         {/* <form>
           <div className="field">
@@ -74,22 +78,20 @@ class JobIndex extends React.Component {
             <li key={i} className="column is-full">
               <Link to={`/jobs/${job._id}`}>
                 <div className="card">
-                  {/* <div className="card-image">
-                    <figure className="image is-4by3">
-                      <img src={job.logo} alt={`${job.name} logo`} />
-                    </figure>
-                  </div> */}
                   <div className="card-content">
-                    <h3 className="title is-4">Job title: {job.title}</h3>
-                    <h4 className="subtitle">Location: {job.location}</h4>
-                    <h3 className="subtitle">Role type: {job.type}</h3>
-                    <h3 className="subtitle">Created at: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                    {job.technologies.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
+                    <h3><strong>{job.title}</strong></h3>
+                    <h3><strong>Location:</strong> {job.location}</h3>
+                    <h3><strong>Type:</strong> {job.type}</h3>
+                    <h3><strong>Created:</strong> {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
+                    <h3><strong>Primary skills required:</strong> </h3>
+                    <ul>
+                      {job.technologies.primary.map((skill, i) => <li key={i}>{skill} </li>)}
+                    </ul>
                   </div>
                 </div>
               </Link>
               {/* only show star to USERS */}
-              {Auth.getPayload().role === 'user' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
+              {Auth.getPayload().role === 'users' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
                 ?
                 <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="../../assets/images/favorite.svg"/></button>
                 :

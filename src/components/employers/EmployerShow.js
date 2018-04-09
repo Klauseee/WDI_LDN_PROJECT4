@@ -3,10 +3,12 @@ import axios from 'axios';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 
+import moment from 'moment';
+
 import { Link } from 'react-router-dom';
 
 // we need state so this will be a classical component
-class ShowRoute extends React.Component {
+class EmployerShow extends React.Component {
 
   state = {
     employer: null,
@@ -43,10 +45,36 @@ class ShowRoute extends React.Component {
           <h1 className="title">Welcome, {this.state.employer.name}</h1>
           <h2 className="subtitle">Looking for developers?</h2>
           <Link to={'/jobs/new'} className="button is-success">Add a Job</Link>
+          <h2 className="subtitle"><strong>Live Listings:</strong> </h2>
+          <ul>
+            {this.state.employer.listings.map((listing, i) =>
+              <li key={i} className="column is-full">
+                <Link to={`/jobs/${listing._id}`}>
+                  <div className="card">
+                    <div className="card-content">
+                      <h3 className="title is-4">Job title: {listing.title}</h3>
+                      <h4 className="subtitle">Location: {listing.location}</h4>
+                      <h3 className="subtitle">Role type: {listing.type}</h3>
+                      <h3 className="subtitle">Created at: {moment(listing.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
+                      {listing.technologies.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
+                    </div>
+                  </div>
+                </Link>
+                {/* only show star to USERS */}
+                {Auth.getPayload().role === 'user' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(listing._id)
+                  ?
+                  <button className="button is-primary" onClick={() => this.handleFavorite(listing._id)}><img  className="star" src="../../assets/images/favorite.svg"/></button>
+                  :
+                  <button className="button is-primary" onClick={() => this.handleFavorite(listing._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
+                }
+              </li>
+            )}
+          </ul>
+
           <hr />
           <h1 className="title">Heres what other users can see</h1>
           <img src={this.state.employer.logo}/>
-          <h2 className="subtitle"><strong>Name:</strong> {this.state.employer.name}</h2>
+          <h2 className="subtitle"><strong>Company:</strong> {this.state.employer.name}</h2>
           <h2 className="subtitle"><strong>Location:</strong> {this.state.employer.location}</h2>
           <h2 className="subtitle"><strong>Info:</strong> {this.state.employer.info}</h2>
           <h2 className="subtitle"><strong>Perks:</strong> </h2>
@@ -55,17 +83,12 @@ class ShowRoute extends React.Component {
               <li key={i} className="subtitle">{perk}</li>
             )}
           </ul>
+          <h2 className="subtitle"><strong>Photos:</strong> </h2>
           <ul>
             {this.state.employer.photos.map((photo, i) =>
               <li key={i} className="subtitle"><img src={photo} /></li>
             )}
           </ul>
-          <ul>
-            {this.state.employer.listings.map((listing) =>
-              <Link key={listing._id} to={`/jobs/${listing._id}`} className="subtitle"><li>{listing.title}</li></Link>
-            )}
-          </ul>
-
 
           {!this.state.deletePressed ? (
             <div>
@@ -91,4 +114,4 @@ class ShowRoute extends React.Component {
   }
 }
 
-export default ShowRoute;
+export default EmployerShow;
