@@ -9,10 +9,15 @@ const employerSchema = new mongoose.Schema({
   info: { type: String, required: 'You must provide information'},
   photos: [{ type: String }],
   perks: [{ type: String }],
-  listings: [{ type: mongoose.Schema.ObjectId, ref: 'Job'}],
   location: { type: String, required: 'You must provide a location'},
   user: { type: Boolean, default: false }
 }, { timestamps: true });
+
+employerSchema.virtual('listings', {
+  localField: '_id',
+  foreignField: 'employer',
+  ref: 'Job'
+});
 
 employerSchema
   .virtual('passwordConfirmation')
@@ -35,5 +40,7 @@ employerSchema.pre('save', function hashPassword(next) {
 employerSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
+
+employerSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('Employer', employerSchema);
