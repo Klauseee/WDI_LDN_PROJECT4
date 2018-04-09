@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 import Auth from '../../lib/Auth';
+import Flash from '../../lib/Flash';
 
 import { Link } from 'react-router-dom';
 
@@ -24,6 +25,7 @@ class JobShow extends React.Component {
     salary: 0,
     // show this only to the employer who made the job.
     interestedUsers: [],
+    deletePressed: false,
     currentUser: {}
   }
 
@@ -57,6 +59,20 @@ class JobShow extends React.Component {
     }
   }
 
+  handleDelete = () => {
+    axios({
+      method: 'DELETE',
+      url: `/api/jobs/${this.props.match.params.id}`,
+      headers: { Authorization: `Bearer ${Auth.getToken()}`}
+    })
+      .then(() => Flash.setMessage('success', 'Job listing deleted'))
+      .then(() => this.props.history.push('/'));
+  }
+
+  handleToggle = () => {
+    this.setState({ deletePressed: !this.state.deletePressed });
+  }
+
   render() {
     // console.log('employer', this.state.employer);
     if(!this.state) return null;
@@ -88,6 +104,7 @@ class JobShow extends React.Component {
         </ul>
         <h2 className="subtitle"><strong>Salary:</strong> £{this.state.salary}</h2>
 
+        {/* FAVOURITE STUFF */}
         {Auth.getPayload().role === 'users' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(this.state._id)
           ?
           <button className="button is-primary" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="../../assets/images/favorite.svg"/></button>
@@ -95,7 +112,21 @@ class JobShow extends React.Component {
           <button className="button is-primary" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
         }
 
-        {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button is-primary">Edit</Link>}
+        {/* EDIT & DELETE BUTTONS */}
+        {!this.state.deletePressed ? (
+          <div>
+            {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button is-primary">Edit</Link>}
+            {Auth.getPayload().sub === this.state.employer._id && <button className="button is-danger" onClick={this.handleToggle}>Delete</button>}
+          </div>
+        ) : (
+          <div>
+            <p>Are you sure?</p>
+            <button onClick={this.handleDelete} className="button is-danger">Delete</button>
+            {' '}
+            <button onClick={this.handleToggle} className="button">Cancel</button>
+          </div>
+        )}
+        
       </div>
     );
   }
