@@ -41,6 +41,7 @@ class JobShow extends React.Component {
           )}
         </ul>
         <h2 className="subtitle"><strong>Salary:</strong> £{this.state.salary}</h2>
+        {/* {Auth.} */}
       </div>
     );
   }
