@@ -3,7 +3,6 @@ import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 // import Form from './Form';
 import Auth from '../../lib/Auth';
-import Technologies from '../../lib/Technologies';
 
 class JobNew extends React.Component {
 

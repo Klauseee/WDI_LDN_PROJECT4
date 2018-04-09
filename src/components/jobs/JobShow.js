@@ -37,7 +37,7 @@ class JobShow extends React.Component {
     return(
       <div className="container">
         <h1 className="title">{this.state.title}</h1>
-        {/* <h2 className="subtitle"><Link to={`/employers/${this.state.employer}`}>{this.state.employer}</Link></h2> */}
+        <h2 className="subtitle"><Link to={`/employers/${this.state.employer.id}`}>{this.state.employer.name}</Link></h2>
         <h2 className="subtitle"><strong>Location:</strong> {this.state.location}</h2>
         <h2 className="subtitle"><strong>Employment type:</strong> {this.state.type}</h2>
         <h2 className="subtitle"><strong>Job summary</strong></h2>
