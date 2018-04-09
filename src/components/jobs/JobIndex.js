@@ -12,7 +12,9 @@ class JobIndex extends React.Component {
 
   state = {
     jobs: [],
-    currentUser: {}
+    currentUser: {},
+    minSalary: 0,
+    maxSalary: 100000000000000000
   }
 
   componentDidMount() {
@@ -59,8 +61,16 @@ class JobIndex extends React.Component {
     console.log('swipe occurred');
   }
 
-  handleChange = (e) => {
-    this.setState({ search: e.target.value });
+  handleLocation = (e) => {
+    this.setState({ searchLocation: e.target.value });
+  }
+
+  handleMinSalary = (e) => {
+    this.setState({ minSalary: e.target.value }, () => console.log(this.state));
+  }
+
+  handleMaxSalary = (e) => {
+    this.setState({ maxSalary: e.target.value }, () => console.log(this.state));
   }
 
   handleSort = (e) => {
@@ -70,10 +80,11 @@ class JobIndex extends React.Component {
 
   filterJobs = () => {
     // make a REGEX (case insensitive)
-    const regex = new RegExp(this.state.search, 'i');
+    const regex = new RegExp(this.state.searchLocation, 'i');
     // use _.filter to filter the bangers, second argument takes a function, array or object.
     let filtered = _.filter(this.state.jobs, (job) => regex.test(job.location));
     filtered = _.orderBy(filtered, ['salary'], [this.state.salarySort]);
+    filtered = _.filter(filtered, (job) => job.salary > this.state.minSalary && job.salary < this.state.maxSalary);
     return filtered;
   }
 
@@ -90,13 +101,31 @@ class JobIndex extends React.Component {
               type="text"
               name="search"
               placeholder="Search by location.."
-              onChange={this.handleChange}
+              onChange={this.handleLocation}
             />
           </div>
           <select onChange={this.handleSort}>
             <option value="asc">Salary: low to high</option>
             <option value="desc">Salary: high to low</option>
           </select>
+          <div className="field">
+            <input
+              className="input"
+              type="number"
+              name="search"
+              placeholder="Minimum salary"
+              onChange={this.handleMinSalary}
+            />
+          </div>
+          <div className="field">
+            <input
+              className="input"
+              type="number"
+              name="search"
+              placeholder="Minimum salary"
+              onChange={this.handleMaxSalary}
+            />
+          </div>
         </form>
         <ul className="columns is-mobile is-multiline">
           {this.filterJobs().map((job) =>
