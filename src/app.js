@@ -21,6 +21,9 @@ import Login from './components/auth/Login';
 import UserRegister from './components/auth/UserRegister';
 import EmployerRegister from './components/auth/EmployerRegister';
 
+import UserProtectedRoute from './components/common/UserProtectedRoute';
+import EmployerProtectedRoute from './components/common/EmployerProtectedRoute';
+
 import 'bulma';
 import './assets/scss/style.scss';
 
@@ -34,10 +37,10 @@ class App extends React.Component {
           {/* <FlashMessages /> */}
           <section className="section">
             <Switch>
-              <Route path="/users/:id/edit" component={UserEdit} />
-              <Route path="/employers/:id/edit" component={EmployerEdit} />
-              <Route path="/jobs/:id/edit" component={JobEdit}/>
-              <Route path="/jobs/new" component={JobNew} />
+              <UserProtectedRoute path="/users/:id/edit" component={UserEdit} />
+              <EmployerProtectedRoute path="/employers/:id/edit" component={EmployerEdit} />
+              <EmployerProtectedRoute path="/jobs/:id/edit" component={JobEdit}/>
+              <EmployerProtectedRoute path="/jobs/new" component={JobNew} />
               <Route path="/employers/register" component={EmployerRegister} />
               <Route path="/users/register" component={UserRegister} />
               <Route path="/users/login" component={Login} />
@@ -45,7 +48,7 @@ class App extends React.Component {
               <Route path="/employers/:id" component={EmployerShow} />
               <Route path="/jobs/:id" component={JobShow} />
               <Route path="/users/:id" component={UserShow} />
-              <Route path="/jobs" component={JobIndex}/>
+              <UserProtectedRoute path="/jobs" component={JobIndex}/>
               <Route path="/employers" component={EmployerIndex} />
               {/* <Route component={NotFound} /> */}
             </Switch>

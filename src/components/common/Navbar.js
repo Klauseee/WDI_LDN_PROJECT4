@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Auth from '../../lib/Auth';
-// import axios from 'axios';
 
 class Navbar extends React.Component {
   state = {
@@ -53,16 +52,16 @@ class Navbar extends React.Component {
         </div>
         <div className={`navbar-menu ${this.state.navIsOpen ? 'is-active' : ''}`}>
           <div className="navbar-end">
-            <Link
+            {(!Auth.isAuthenticated() || Auth.getPayload().role === 'users') && <Link
               className="navbar-item"
               to="/employers">
               All Employers
-            </Link>
-            <Link
+            </Link>}
+            {Auth.getPayload().role === 'users' && <Link
               className="navbar-item"
               to="/jobs">
               Jobs
-            </Link>
+            </Link>}
             {Auth.isAuthenticated() && <Link className="navbar-item" to="/employers" onClick={Auth.logout}>Logout</Link>}
 
             {(this.state.loginRequest && !Auth.isAuthenticated()) && <div>

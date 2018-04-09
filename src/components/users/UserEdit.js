@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 // import Auth from '../../lib/Auth';
-// import Flash from '../../lib/Flash';
+import Flash from '../../lib/Flash';
 import Technologies from '../../lib/Technologies';
 
 class UserEdit extends React.Component {
@@ -42,7 +42,7 @@ class UserEdit extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     axios.put(`/api/users/${this.state._id}`, this.state)
-      // .then(() => Flash.setMessage('success', 'Welcome to Jibbly Jobbly!'))
+      .then(() => Flash.setMessage('success', 'Profile updated'))
       .then(() => this.props.history.push('/'));
   }
 

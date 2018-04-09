@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Technologies from '../../lib/Technologies';
 // import Form from './Form';
 import Auth from '../../lib/Auth';
 import Technologies from '../../lib/Technologies';
@@ -55,19 +56,23 @@ class JobNew extends React.Component {
     this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other] }}, () => console.log(this.state.technologies));
   }
 
+  handleCheck = ({ target: { name, value, checked }}) => {
+    let newTechnologies;
+    if(checked) {
+      newTechnologies = this.state.technologies[name].concat(value);
+    } else {
+      newTechnologies = this.state.technologies[name].slice();
+      const index = newTechnologies.indexOf(value);
+      newTechnologies.splice(index, 1);
+    }
+    const other = name === 'primary' ? 'secondary' : 'primary';
+    this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other]}}, () => console.log(this.state.technologies));
+  }
+
   render() {
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>
-          {/* <div className="field">
-            <label htmlFor="employer">Employer</label>
-            <input
-              className="input"
-              placeholder="Employer ID, this will be hidden/ value will be automatically assigned as the id of the logged in employer"
-              name="employer"
-              onChange={this.handleChange}
-            />
-          </div> */}
           <div className="field">
             <label htmlFor="title">Title</label>
             <input
@@ -118,7 +123,6 @@ class JobNew extends React.Component {
                     name="primary"
                     onChange={this.handleCheck}
                     value={technology.name}
-                    checked={this.state.technologies.primary.includes(technology.name)}
                   />
                 </label>
               </div>
@@ -132,7 +136,6 @@ class JobNew extends React.Component {
                     name="primary"
                     onChange={this.handleCheck}
                     value={technology.name}
-                    checked={this.state.technologies.primary.includes(technology.name)}
                   />
                 </label>
               </div>
@@ -149,7 +152,6 @@ class JobNew extends React.Component {
                     name="secondary"
                     onChange={this.handleCheck}
                     value={technology.name}
-                    checked={this.state.technologies.secondary.includes(technology.name)}
                   />
                 </label>
               </div>
@@ -163,7 +165,6 @@ class JobNew extends React.Component {
                     name="secondary"
                     onChange={this.handleCheck}
                     value={technology.name}
-                    checked={this.state.technologies.secondary.includes(technology.name)}
                   />
                 </label>
               </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
+import Flash from '../../lib/Flash';
 
 class JobEdit extends React.Component {
   state = {
@@ -40,6 +41,7 @@ class JobEdit extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     axios.put(`/api/jobs/${this.state._id}`, this.state)
+      .then(() => Flash.setMessage('success', 'Job edited'))
       .then(() => this.props.history.push('/'));
   }
 

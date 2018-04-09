@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Auth from '../../lib/Auth';
-// import Flash from '../../lib/Flash';
+import Flash from '../../lib/Flash';
 
 import Repeater from '../common/Repeater.js';
 
@@ -15,17 +15,13 @@ class EmployerRegister extends React.Component {
 
   handleChange = ({ target: { name, value }}) => {
     this.setState({ [name]: value });
-    console.log(this.state);
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     axios.post('/api/employers/register', this.state)
-    // send the form data
-    // set token inside local storage
-      // .then(res => localStorage.setItem('token', res.data.token)) // replace using helper methods created in lib/Auth
       .then(res => Auth.setToken(res.data.token))
-      // .then(() => Flash.setMessage('success', 'Thanks for registering!'))
+      .then(() => Flash.setMessage('success', 'Thanks for registering!'))
       .then(() => this.props.history.push('/employers'));
   }
 
@@ -33,19 +29,16 @@ class EmployerRegister extends React.Component {
     const newArray = array.slice();
     newArray[index] = e.target.value;
     this.setState({ [property]: newArray }
-      // , () => console.log(this.state[property])
     );
   }
 
   addRepeaterInput = (property, array) => {
     this.setState({ [property]: array.concat('') }
-      // , () => console.log(this.state[property])
     );
   }
 
   removeRepeaterInput = (property, array, index) => {
     this.setState({ [property]: array.filter((item, i) => item[i] !== item[index])}
-      // , () => console.log(this.state[property])
     );
   }
 
