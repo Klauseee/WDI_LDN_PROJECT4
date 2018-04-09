@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // import _ from 'lodash';
 import Auth from '../../lib/Auth';
+import Hammer from 'react-hammerjs';
 
 import moment from 'moment';
 
@@ -41,6 +42,22 @@ class JobIndex extends React.Component {
     }
   }
 
+  handleSwipeLeft = (e) => {
+    e.target.classList.add('slideOutLeft');
+    setTimeout(() => this.swipeRemove(e.target), 700);
+  }
+
+  handleSwipeRight = (e) => {
+    this.handleFavorite(e.target.getAttribute('data-id'));
+    e.target.classList.add('slideOutRight');
+    setTimeout(() => this.swipeRemove(e.target), 700);
+  }
+
+  swipeRemove = (target) => {
+    target.parentNode.removeChild(target);
+    console.log('swipe occurred');
+  }
+
   // handleChange = (e) => {
   //   console.log(e.target.value);
   //   this.setState({ search: e.target.value });
@@ -69,33 +86,39 @@ class JobIndex extends React.Component {
             />
           </div>
         </form> */}
-        <ul className="columns is-multiline">
-          {this.state.jobs.map((job, i) =>
-            <li key={i} className="column is-full">
-              <Link to={`/jobs/${job._id}`}>
-                <div className="card">
-                  {/* <div className="card-image">
-                    <figure className="image is-4by3">
-                      <img src={job.logo} alt={`${job.name} logo`} />
-                    </figure>
-                  </div> */}
-                  <div className="card-content">
-                    <h3 className="title is-4">Job title: {job.title}</h3>
-                    <h4 className="subtitle">Location: {job.location}</h4>
-                    <h3 className="subtitle">Role type: {job.type}</h3>
-                    <h3 className="subtitle">Created at: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                    {job.technologies.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
+        <ul className="columns is-mobile is-multiline">
+          {this.state.jobs.map((job) =>
+            <Hammer
+              key={job.title}
+              onSwipeLeft={this.handleSwipeLeft}
+              onSwipeRight={this.handleSwipeRight}
+              className="column is-one-third-desktop is-full-mobile animated">
+              <li data-id={job._id}>
+                <Link to={`/jobs/${job._id}`}>
+                  <div className="card">
+                    {/* <div className="card-image">
+                      <figure className="image is-4by3">
+                        <img src={job.logo} alt={`${job.name} logo`} />
+                      </figure>
+                    </div> */}
+                    <div className="card-content">
+                      <h3 className="title is-4">Job title: {job.title}</h3>
+                      <h4 className="subtitle">Location: {job.location}</h4>
+                      <h3 className="subtitle">Role type: {job.type}</h3>
+                      <h3 className="subtitle">Created at: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
+                      {job.technologies.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
+                    </div>
                   </div>
-                </div>
-              </Link>
-              {/* only show star to USERS */}
-              {Auth.getPayload().role === 'user' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
-                ?
-                <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="../../assets/images/favorite.svg"/></button>
-                :
-                <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
-              }
-            </li>
+                </Link>
+                {/* only show star to USERS */}
+                {Auth.getPayload().role === 'user' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
+                  ?
+                  <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="../../assets/images/favorite.svg"/></button>
+                  :
+                  <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
+                }
+              </li>
+            </Hammer>
           )}
         </ul>
       </div>
