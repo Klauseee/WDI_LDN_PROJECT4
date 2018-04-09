@@ -49,7 +49,7 @@ class App extends React.Component {
               <Route path="/jobs/:id" component={JobShow} />
               <Route path="/users/:id" component={UserShow} />
               <UserProtectedRoute path="/jobs" component={JobIndex}/>
-              <UserProtectedRoute path="/employers" component={EmployerIndex} />
+              <Route path="/employers" component={EmployerIndex} />
               {/* <Route component={NotFound} /> */}
             </Switch>
           </section>
