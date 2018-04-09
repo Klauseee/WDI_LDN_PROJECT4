@@ -6,19 +6,38 @@ import Auth from '../../lib/Auth';
 import { Link } from 'react-router-dom';
 
 class JobShow extends React.Component {
-  state = null
+  state = {
+    // keep this hidden, grab the employers ID from somewhere else.
+    employer: {
+      _id: '',
+      name: ''
+    },
+    title: '',
+    location: '',
+    // permanent or contract
+    type: '',
+    technologies: {
+      primary: [],
+      secondary: []
+    },
+    summary: '',
+    salary: 0,
+    // show this only to the employer who made the job.
+    interestedUsers: []
+  }
 
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
-      .then(res => this.setState(res.data, () => console.log(this.state)));
+      .then(res => this.setState(res.data, () => console.log('res', res.data)));
   }
 
   render() {
+    console.log('employer', this.state.employer);
     if(!this.state) return null;
     return(
       <div className="container">
         <h1 className="title">{this.state.title}</h1>
-        <h2 className="subtitle"><Link to={`/employers/${this.state.employer._id}`}>{this.state.employer.name}</Link></h2>
+        <h2 className="subtitle"><Link to={`/employers/${this.state.employer.id}`}>{this.state.employer.name}</Link></h2>
         <h2 className="subtitle"><strong>Location:</strong> {this.state.location}</h2>
         <h2 className="subtitle"><strong>Employment type:</strong> {this.state.type}</h2>
         <h2 className="subtitle"><strong>Job summary</strong></h2>

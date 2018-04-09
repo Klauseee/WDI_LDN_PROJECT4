@@ -2,7 +2,10 @@ const Job = require('../models/job');
 
 function indexRoute(req,res,next){
   Job.find()
-    .then(users => res.json(users))
+    .then(jobs => {
+      console.log(jobs);
+      res.json(jobs);
+    })
     .catch(next);
 }
 
@@ -16,7 +19,10 @@ function createRoute(req,res,next){
 function showRoute(req, res, next) {
   Job.findById(req.params.id)
     .populate('employer')
-    .then(user => res.json(user))
+    .then(job => {
+      console.log(job);
+      res.json(job);
+    })
     .then(() => console.log(req.currentUser))
     .catch(next);
 }
