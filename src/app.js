@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/common/Navbar';
+import FlashMessages from './components/common/FlashMessages';
 
 import EmployerIndex from './components/employers/EmployerIndex';
 import EmployerShow from './components/employers/EmployerShow';
@@ -34,7 +35,7 @@ class App extends React.Component {
       <BrowserRouter>
         <main>
           <Navbar />
-          {/* <FlashMessages /> */}
+          <FlashMessages />
           <section className="section">
             <Switch>
               <UserProtectedRoute path="/users/:id/edit" component={UserEdit} />

@@ -28,11 +28,11 @@ class ShowRoute extends React.Component {
   handleDelete = () => {
     axios({
       method: 'DELETE',
-      url: `/api/bangers/${this.props.match.params.id}`,
+      url: `/api/employers/${this.props.match.params.id}`,
       headers: { Authorization: `Bearer ${Auth.getToken()}`}
     })
-      .then(() => Flash.setMessage('success', 'Banger deleted'))
-      .then(() => this.props.history.push('/bangers'));
+      .then(() => Flash.setMessage('success', 'Employer account deleted'))
+      .then(() => this.props.history.push('/'));
   }
 
   render() {
@@ -75,9 +75,10 @@ class ShowRoute extends React.Component {
             </div>
           ) : (
             <div>
-              <button onClick={this.handleDelete} className="button is-primary">I&apos;m sure</button>
+              <p>Are you sure?</p>
+              <button onClick={this.handleDelete} className="button is-primary">Delete</button>
               {' '}
-              <button onClick={this.handleToggle} className="button is-danger">Not yet</button>
+              <button onClick={this.handleToggle} className="button is-danger">Cancel</button>
             </div>
           )}
 

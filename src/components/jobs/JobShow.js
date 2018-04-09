@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 import Auth from '../../lib/Auth';
+import Flash from '../../lib/Flash';
 
 import { Link } from 'react-router-dom';
 
@@ -23,12 +24,27 @@ class JobShow extends React.Component {
     summary: '',
     salary: 0,
     // show this only to the employer who made the job.
-    interestedUsers: []
+    interestedUsers: [],
+    deletePressed: false
   }
 
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
       .then(res => this.setState(res.data));
+  }
+
+  handleDelete = () => {
+    axios({
+      method: 'DELETE',
+      url: `/api/jobs/${this.props.match.params.id}`,
+      headers: { Authorization: `Bearer ${Auth.getToken()}`}
+    })
+      .then(() => Flash.setMessage('success', 'Job listing deleted'))
+      .then(() => this.props.history.push('/'));
+  }
+
+  handleToggle = () => {
+    this.setState({ deletePressed: !this.state.deletePressed });
   }
 
   render() {
@@ -61,7 +77,19 @@ class JobShow extends React.Component {
           )}
         </ul>
         <h2 className="subtitle"><strong>Salary:</strong> £{this.state.salary}</h2>
-        {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button is-primary">Edit</Link>}
+        {!this.state.deletePressed ? (
+          <div>
+            {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button is-primary">Edit</Link>}
+            {Auth.getPayload().sub === this.state.employer._id && <button className="button is-danger" onClick={this.handleToggle}>Delete</button>}
+          </div>
+        ) : (
+          <div>
+            <p>Are you sure?</p>
+            <button onClick={this.handleDelete} className="button is-danger">Delete</button>
+            {' '}
+            <button onClick={this.handleToggle} className="button">Cancel</button>
+          </div>
+        )}
       </div>
     );
   }
