@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 // import Form from './Form';
 import Auth from '../../lib/Auth';
+import Technologies from '../../lib/Technologies';
 
-class NewRoute extends React.Component {
+class JobNew extends React.Component {
 
   state = {
     // keep this hidden, grab the employers ID from somewhere else.
@@ -12,7 +13,7 @@ class NewRoute extends React.Component {
     location: '',
     // permanent or contract
     type: '',
-    skills: {
+    technologies: {
       primary: [],
       secondary: []
     },
@@ -23,7 +24,7 @@ class NewRoute extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ employer: Auth.getPayload().sub }, () => console.log(Auth.getPayload().sub));
+    this.setState({ employer: Auth.getPayload().sub }, () => console.log('employerID', Auth.getPayload().sub));
   }
 
   handleSubmit = (e) => {
@@ -31,13 +32,27 @@ class NewRoute extends React.Component {
     axios.post('/api/jobs', this.state
     // { headers: { Authorization: `Bearer ${Auth.getToken()}` }}
     )
+      .then(res => console.log('saved job', res))
       .then(() => this.props.history.push('/jobs'))
       .catch(err => this.setState({ errors: err.response.data.errors }));
   }
 
   handleChange = ({ target: { name, value }}) => {
     const errors = { ...this.state.errors, [name]: '' };
-    this.setState({ [name]: value, errors });
+    this.setState({ [name]: value, errors }, () => console.log(this.state));
+  }
+
+  handleCheck = ({ target: { name, value, checked }}) => {
+    let newTechnologies;
+    if(checked) {
+      newTechnologies = this.state.technologies[name].concat(value);
+    } else {
+      newTechnologies = this.state.technologies[name].slice();
+      const index = newTechnologies.indexOf(value);
+      newTechnologies.splice(index, 1);
+    }
+    const other = name === 'primary' ? 'secondary' : 'primary';
+    this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other] }}, () => console.log(this.state.technologies));
   }
 
   render() {
@@ -92,14 +107,67 @@ class NewRoute extends React.Component {
               &nbsp; Contract
             </label>
           </div>
-          <div className="field">
-            <label htmlFor="logo">SKILLS CHECKBOXES GO HERE</label>
-            <input
-              className="input"
-              placeholder="skills > primary and skills > secondary checkboxes go here"
-              name="logo"
-              onChange={this.handleChange}
-            />
+          <div className="field columns is-multiline">
+            <label htmlFor="logo">Primary Skills</label>
+            {Technologies.frontend.map(technology =>
+              <div key={technology.name} className="column">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    name="primary"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                    checked={this.state.technologies.primary.includes(technology.name)}
+                  />
+                </label>
+              </div>
+            )}
+            {Technologies.backend.map(technology =>
+              <div key={technology.name} className="column">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    name="primary"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                    checked={this.state.technologies.primary.includes(technology.name)}
+                  />
+                </label>
+              </div>
+            )}
+          </div>
+          <div className="field columns is-multiline">
+            <label htmlFor="logo">Secondary Skills</label>
+            {Technologies.frontend.map(technology =>
+              <div key={technology.name} className="column">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    name="secondary"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                    checked={this.state.technologies.secondary.includes(technology.name)}
+                  />
+                </label>
+              </div>
+            )}
+            {Technologies.backend.map(technology =>
+              <div key={technology.name} className="column">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    name="secondary"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                    checked={this.state.technologies.secondary.includes(technology.name)}
+                  />
+                </label>
+              </div>
+            )}
           </div>
           <div className="field">
             <label htmlFor="summary">Job Summary</label>
@@ -129,4 +197,4 @@ class NewRoute extends React.Component {
   }
 }
 
-export default NewRoute;
+export default JobNew;

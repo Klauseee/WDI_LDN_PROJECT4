@@ -12,6 +12,7 @@ class IndexRoute extends React.Component {
   state = {
     jobs: [],
     currentUser: ''
+
   }
 
   componentDidMount() {
@@ -19,9 +20,11 @@ class IndexRoute extends React.Component {
       .then(res => this.setState({ jobs: res.data, currentUser: Auth.getPayload().sub }, () => console.log(this.state)));
   }
 
-  handleFavourite = () => {
-    // change color of star,
+  handleFavourite = (jobId) => {
     // add to the current logged in user's interested field
+    axios.put(`/api/users/${this.state.currentUser}`, { favouriteJobs: this.state.favouriteJobs.concat(jobId) })
+      .then(res => console.log(res.data));
+    // change color of star,
 
   }
 
@@ -68,9 +71,9 @@ class IndexRoute extends React.Component {
                     <h4 className="subtitle">Location: {job.location}</h4>
                     <h3 className="subtitle">Role type: {job.type}</h3>
                     <h3 className="subtitle">Created at: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                    {job.skills.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
+                    {job.technologies.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
                     {/* only show star to USERS */}
-                    <i className="far fa-star"></i>
+                    <i className="far fa-star" onClick={() => this.handleFavourite(job._id)}></i>
                   </div>
                 </div>
               </Link>
