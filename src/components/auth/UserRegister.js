@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Auth from '../../lib/Auth';
-// import Flash from '../../lib/Flash';
+import Flash from '../../lib/Flash';
 import Technologies from '../../lib/Technologies';
 
 class UserRegister extends React.Component {
@@ -34,7 +34,7 @@ class UserRegister extends React.Component {
     e.preventDefault();
     axios.post('/api/users/register', this.state)
       .then(res => Auth.setToken(res.data.token))
-      // .then(() => Flash.setMessage('success', 'Welcome to Jibbly Jobbly!'))
+      .then(() => Flash.setMessage('success', 'Welcome to Jibbly Jobbly!'))
       .then(() => this.props.history.push('/'));
   }
 

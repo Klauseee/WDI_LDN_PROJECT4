@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-// import Auth from '../../lib/Auth';
+import Auth from '../../lib/Auth';
+import Flash from '../../lib/Flash';
 
 import { Link } from 'react-router-dom';
 
@@ -25,13 +26,13 @@ class ShowRoute extends React.Component {
   }
 
   handleDelete = () => {
-    // const token = localStorage.getItem('token');
-    axios.delete(`/api/employers/${this.props.match.params.id}`
-    //   {
-    //   headers: { Authorization: `Bearer ${Auth.getToken()}` }
-    // }
-    )
-      .then(() => this.props.history.push('/employers'));
+    axios({
+      method: 'DELETE',
+      url: `/api/bangers/${this.props.match.params.id}`,
+      headers: { Authorization: `Bearer ${Auth.getToken()}`}
+    })
+      .then(() => Flash.setMessage('success', 'Banger deleted'))
+      .then(() => this.props.history.push('/bangers'));
   }
 
   render() {

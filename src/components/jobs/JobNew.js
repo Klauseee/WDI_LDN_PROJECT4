@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // import Form from './Form';
 import Auth from '../../lib/Auth';
+import Flash from '../../lib/Flash';
 
 class NewRoute extends React.Component {
 
@@ -28,9 +29,8 @@ class NewRoute extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('/api/jobs', this.state
-    // { headers: { Authorization: `Bearer ${Auth.getToken()}` }}
-    )
+    axios.post('/api/jobs', this.state)
+      .then(() => Flash.setMessage('success', 'Job listing created'))
       .then(() => this.props.history.push('/'))
       .catch(err => this.setState({ errors: err.response.data.errors }));
   }
@@ -44,15 +44,6 @@ class NewRoute extends React.Component {
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>
-          {/* <div className="field">
-            <label htmlFor="employer">Employer</label>
-            <input
-              className="input"
-              placeholder="Employer ID, this will be hidden/ value will be automatically assigned as the id of the logged in employer"
-              name="employer"
-              onChange={this.handleChange}
-            />
-          </div> */}
           <div className="field">
             <label htmlFor="title">Title</label>
             <input

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
+import Auth from '../../lib/Auth';
 
 import { Link } from 'react-router-dom';
 
@@ -49,11 +50,11 @@ class UserShow extends React.Component {
             <li key={i}>{technology.name}<i className={technology.icon}></i></li>
           )}
         </ul>
-        <Link
+        {Auth.getPayload().sub === this.state.user._id && <Link
           to={`/users/${this.state.user._id}/edit`}
           className="button is-primary">
           Edit
-        </Link>
+        </Link>}
       </div>
     );
   }

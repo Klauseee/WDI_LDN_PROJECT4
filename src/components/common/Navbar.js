@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Auth from '../../lib/Auth';
-// import axios from 'axios';
 
 class Navbar extends React.Component {
   state = {
