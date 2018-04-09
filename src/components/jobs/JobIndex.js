@@ -19,6 +19,12 @@ class IndexRoute extends React.Component {
       .then(res => this.setState({ jobs: res.data, currentUser: Auth.getPayload().sub }, () => console.log(this.state)));
   }
 
+  handleFavourite = () => {
+    // change color of star,
+    // add to the current logged in user's interested field
+
+  }
+
   // handleChange = (e) => {
   //   console.log(e.target.value);
   //   this.setState({ search: e.target.value });
@@ -63,6 +69,8 @@ class IndexRoute extends React.Component {
                     <h3 className="subtitle">Role type: {job.type}</h3>
                     <h3 className="subtitle">Created at: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
                     {job.skills.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
+                    {/* only show star to USERS */}
+                    <i className="far fa-star"></i>
                   </div>
                 </div>
               </Link>
