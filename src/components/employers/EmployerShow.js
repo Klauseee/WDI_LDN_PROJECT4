@@ -40,32 +40,35 @@ class ShowRoute extends React.Component {
       // to add a different screen whilst the employer is loading.. use a ternary operator
       this.state.employer ? (
         <div className="container">
-          <h1 className="title">{this.state.employer.name}</h1>
-          <h2 className="subtitle">{this.state.employer.info}</h2>
-          <h2 className="subtitle">{this.state.employer.location}</h2>
+          <h1 className="title">Welcome, {this.state.employer.name}</h1>
+          <h2 className="subtitle">Looking for developers?</h2>
+          <Link to={'/jobs/new'} className="button is-success">Add a Job</Link>
+          <hr />
+          <h1 className="title">Heres what other users can see</h1>
           <img src={this.state.employer.logo}/>
-          <h2 className="subtitle">Perks</h2>
+          <h2 className="subtitle"><strong>Name:</strong> {this.state.employer.name}</h2>
+          <h2 className="subtitle"><strong>Location:</strong> {this.state.employer.location}</h2>
+          <h2 className="subtitle"><strong>Info:</strong> {this.state.employer.info}</h2>
+          <h2 className="subtitle"><strong>Perks:</strong> </h2>
           <ul>
             {this.state.employer.perks.map((perk, i) =>
-              <li key={i}>{perk}</li>
+              <li key={i} className="subtitle">{perk}</li>
             )}
           </ul>
           <ul>
             {this.state.employer.photos.map((photo, i) =>
-              <li key={i}><img src={photo} /></li>
+              <li key={i} className="subtitle"><img src={photo} /></li>
             )}
           </ul>
           <ul>
             {this.state.employer.listings.map((listing) =>
-              <Link key={listing._id} to={`/jobs/${listing._id}`}><li>{listing.title}</li></Link>
+              <Link key={listing._id} to={`/jobs/${listing._id}`} className="subtitle"><li>{listing.title}</li></Link>
             )}
           </ul>
 
 
           {!this.state.deletePressed ? (
             <div>
-              {Auth.getPayload().sub === this.state.employer._id && <Link to={'/jobs/new'} className="button is-success">New Job</Link>}
-              {' '}
               {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button is-primary">Edit</Link>}
               {' '}
               {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button is-danger">Delete</button>}

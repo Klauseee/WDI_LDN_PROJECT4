@@ -9,7 +9,7 @@ function indexRoute(req,res,next){
 function createRoute(req,res,next){
   // req.body.admin = req.currentUser;
   Employer.create(req.body)
-    .then(event => res.status(201).json(event))
+    .then(user => res.status(201).json(user))
     .catch(next);
 }
 
