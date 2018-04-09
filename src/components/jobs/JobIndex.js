@@ -3,6 +3,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import Auth from '../../lib/Auth';
 import Hammer from 'react-hammerjs';
+import Technologies from '../../lib/Technologies';
 
 import moment from 'moment';
 
@@ -14,7 +15,8 @@ class JobIndex extends React.Component {
     jobs: [],
     currentUser: {},
     minSalary: 0,
-    maxSalary: 100000000000000000
+    maxSalary: 100000000000000000,
+    technologiesSearch: []
   }
 
   componentDidMount() {
@@ -61,6 +63,18 @@ class JobIndex extends React.Component {
     console.log('swipe occurred');
   }
 
+  handleCheck = ({ target: { value, checked }}) => {
+    let newTechnologies;
+    if(checked) {
+      newTechnologies = this.state.technologiesSearch.concat(value);
+    } else {
+      newTechnologies = this.state.technologiesSearch.slice();
+      const index = newTechnologies.indexOf(value);
+      newTechnologies.splice(index, 1);
+    }
+    this.setState({ technologiesSearch: newTechnologies }, () => console.log(this.state.technologiesSearch));
+  }
+
   handleLocation = (e) => {
     this.setState({ searchLocation: e.target.value });
   }
@@ -85,6 +99,7 @@ class JobIndex extends React.Component {
     let filtered = _.filter(this.state.jobs, (job) => regex.test(job.location));
     filtered = _.orderBy(filtered, ['salary'], [this.state.salarySort]);
     filtered = _.filter(filtered, (job) => job.salary > this.state.minSalary && job.salary < this.state.maxSalary);
+    filtered = _.filter(filtered, (job) => job.technologies.primary.some(technology => this.state.technologiesSearch.includes(technology)));
     return filtered;
   }
 
@@ -122,9 +137,35 @@ class JobIndex extends React.Component {
               className="input"
               type="number"
               name="search"
-              placeholder="Minimum salary"
+              placeholder="Maximum salary"
               onChange={this.handleMaxSalary}
             />
+          </div>
+          <div className="field columns is-multiline is-mobile">
+            {Technologies.frontend.map(technology =>
+              <div key={technology.name} className="column is-one-fifth-mobile">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                  />
+                </label>
+              </div>
+            )}
+            {Technologies.backend.map(technology =>
+              <div key={technology.name} className="column is-one-fifth-mobile">
+                <label className="checkbox">
+                  <i className={technology.icon}></i>
+                  <input
+                    type="checkbox"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                  />
+                </label>
+              </div>
+            )}
           </div>
         </form>
         <ul className="columns is-mobile is-multiline">
