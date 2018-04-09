@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
+import Auth from '../../lib/Auth';
 
 import { Link } from 'react-router-dom';
 
@@ -41,7 +42,7 @@ class JobShow extends React.Component {
           )}
         </ul>
         <h2 className="subtitle"><strong>Salary:</strong> £{this.state.salary}</h2>
-        {/* {Auth.} */}
+        {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button is-primary">Edit</Link>}
       </div>
     );
   }
