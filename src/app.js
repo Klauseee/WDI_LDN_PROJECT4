@@ -5,13 +5,13 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/common/Navbar';
 
-import EmployerIndex from './components/employers/IndexRoute';
-import EmployerShow from './components/employers/ShowRoute';
-import EmployerEdit from './components/employers/EditRoute';
+import EmployerIndex from './components/employers/EmployerIndex';
+import EmployerShow from './components/employers/EmployerShow';
+import EmployerEdit from './components/employers/EmployerEdit';
 
-import JobNew from './components/jobs/NewRoute';
+import JobNew from './components/jobs/JobNew';
 import JobShow from './components/jobs/JobShow';
-import JobIndex from './components/jobs/IndexRoute';
+import JobIndex from './components/jobs/JobIndex';
 import JobEdit from './components/jobs/JobEdit';
 
 import UserShow from './components/users/UserShow';

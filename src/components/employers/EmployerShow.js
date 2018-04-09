@@ -17,7 +17,7 @@ class ShowRoute extends React.Component {
     // console.log(this.props); // everything here has been created by the router
     // console.log(this.props.match.params.id); // contains the :id parameter!
     axios.get(`/api/employers/${this.props.match.params.id}`)
-      .then(res => this.setState({ employer: res.data }, () => console.log(this.state)));
+      .then(res => this.setState({ employer: res.data }));
   }
 
   handleToggle = () => {
@@ -56,14 +56,14 @@ class ShowRoute extends React.Component {
           </ul>
           <ul>
             {this.state.employer.listings.map((listing, i) =>
-              <li key={i}><Link to={`/jobs/${listing._id}`}>{listing.title}</Link></li>
+              <li key={i}>{listing}</li>
             )}
           </ul>
 
 
           {!this.state.deletePressed ? (
             <div>
-              <Link to={'/jobs/new'} className="button is-primary">New Job</Link>
+              <Link to={'/jobs/new'} className="button is-success">New Job</Link>
               {' '}
               <Link to={`/employers/${this.state.employer._id}/edit`} className="button is-primary">Edit</Link>
               {' '}
