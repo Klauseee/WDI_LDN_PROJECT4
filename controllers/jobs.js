@@ -2,6 +2,7 @@ const Job = require('../models/job');
 
 function indexRoute(req,res,next){
   Job.find()
+    // .populate('currentUser')
     .then(jobs => {
       console.log(jobs);
       res.json(jobs);

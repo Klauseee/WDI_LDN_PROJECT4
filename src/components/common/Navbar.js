@@ -62,6 +62,15 @@ class Navbar extends React.Component {
               to="/jobs">
               Jobs
             </Link>}
+
+            {Auth.isAuthenticated() &&
+              <Link
+                className="navbar-item"
+                to={`/${this.state.currentUser}/${Auth.getPayload().sub}`}>
+                Profile
+              </Link>
+            }
+
             {Auth.isAuthenticated() && <Link className="navbar-item" to="/employers" onClick={Auth.logout}>Logout</Link>}
 
             {(this.state.loginRequest && !Auth.isAuthenticated()) && <div>
@@ -99,13 +108,6 @@ class Navbar extends React.Component {
 
             {(!this.state.registerRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleRegisterRequest}>Register</a>}
 
-            {Auth.isAuthenticated() &&
-              <Link
-                className="navbar-item"
-                to={`/${this.state.currentUser}/${Auth.getPayload().sub}`}>
-                Profile
-              </Link>
-            }
           </div>
         </div>
       </nav>

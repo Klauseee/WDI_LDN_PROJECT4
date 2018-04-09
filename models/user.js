@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     frontend: [{ type: String }],
     backend: [{ type: String }]
   },
-  favouriteJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
+  favoriteJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
   matchedJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
   cv: { type: String },
   user: { type: Boolean, default: true }

@@ -7,25 +7,38 @@ import moment from 'moment';
 
 import { Link } from 'react-router-dom';
 
-class IndexRoute extends React.Component {
+class JobIndex extends React.Component {
 
   state = {
     jobs: [],
-    currentUser: ''
-
+    currentUser: {}
   }
 
   componentDidMount() {
     axios.get('/api/jobs')
-      .then(res => this.setState({ jobs: res.data, currentUser: Auth.getPayload().sub }, () => console.log(this.state)));
+      .then(res => this.setState({ jobs: res.data }, () => console.log(this.state)))
+      .then(() => axios.get(`/api/users/${Auth.getPayload().sub}`))
+      .then(res => this.setState({ currentUser: res.data }, () => console.log('state', this.state )));
   }
 
-  handleFavourite = (jobId) => {
+  handleFavorite = (jobId) => {
+    console.log('jobId', jobId);
+    // console.log(e.target);
     // add to the current logged in user's interested field
-    axios.put(`/api/users/${this.state.currentUser}`, { favouriteJobs: this.state.favouriteJobs.concat(jobId) })
-      .then(res => console.log(res.data));
-    // change color of star,
-
+    if(!this.state.currentUser.favoriteJobs.includes(jobId)) {
+      // add the job id if it doesnt exist
+      this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.concat(jobId) }}, () => {
+        axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
+        // .then(() => Flash.setMessage('success', 'Job added to favorites'))
+          .then(() => this.props.history.push('/jobs'));
+      });
+    } else {
+      this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.filter(job => job !== jobId) }}, () => {
+        axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
+        // .then(() => Flash.setMessage('success', 'Job added to favorites'))
+          .then(() => this.props.history.push('/jobs'));
+      });
+    }
   }
 
   // handleChange = (e) => {
@@ -58,7 +71,7 @@ class IndexRoute extends React.Component {
         </form> */}
         <ul className="columns is-multiline">
           {this.state.jobs.map((job, i) =>
-            <li key={i} className="column is-full-width">
+            <li key={i} className="column is-full">
               <Link to={`/jobs/${job._id}`}>
                 <div className="card">
                   {/* <div className="card-image">
@@ -72,11 +85,16 @@ class IndexRoute extends React.Component {
                     <h3 className="subtitle">Role type: {job.type}</h3>
                     <h3 className="subtitle">Created at: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
                     {job.technologies.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
-                    {/* only show star to USERS */}
-                    <i className="far fa-star" onClick={() => this.handleFavourite(job._id)}></i>
                   </div>
                 </div>
               </Link>
+              {/* only show star to USERS */}
+              {Auth.getPayload().role === 'user' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
+                ?
+                <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="../../assets/images/favorite.svg"/></button>
+                :
+                <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
+              }
             </li>
           )}
         </ul>
@@ -85,4 +103,4 @@ class IndexRoute extends React.Component {
   }
 }
 
-export default IndexRoute;
+export default JobIndex;

@@ -28,11 +28,11 @@ class JobShow extends React.Component {
 
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
-      .then(res => this.setState(res.data, () => console.log('res', res.data)));
+      .then(res => this.setState(res.data));
   }
 
   render() {
-    console.log('employer', this.state.employer);
+    // console.log('employer', this.state.employer);
     if(!this.state) return null;
     return(
       <div className="container">
