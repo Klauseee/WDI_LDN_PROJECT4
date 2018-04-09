@@ -40,7 +40,7 @@ class Navbar extends React.Component {
       <nav className="navbar">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
-          Jibbly Jobbly
+          Jibbly Jobbly (logged in as {Auth.getPayload().role})
           </Link>
           <div
             onClick={this.handleToggle}

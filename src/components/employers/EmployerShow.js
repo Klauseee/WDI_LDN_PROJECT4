@@ -63,7 +63,7 @@ class ShowRoute extends React.Component {
 
           {!this.state.deletePressed ? (
             <div>
-              <Link to={'/jobs/new'} className="button is-primary">New Job</Link>
+              <Link to={'/jobs/new'} className="button is-success">New Job</Link>
               {' '}
               <Link to={`/employers/${this.state.employer._id}/edit`} className="button is-primary">Edit</Link>
               {' '}
