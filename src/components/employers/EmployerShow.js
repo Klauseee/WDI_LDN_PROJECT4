@@ -56,8 +56,8 @@ class ShowRoute extends React.Component {
             )}
           </ul>
           <ul>
-            {this.state.employer.listings.map((listing, i) =>
-              <li key={i}>{listing}</li>
+            {this.state.employer.listings.map((listing) =>
+              <Link key={listing._id} to={`/jobs/${listing._id}`}><li>{listing.title}</li></Link>
             )}
           </ul>
 
