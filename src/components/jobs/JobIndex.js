@@ -30,19 +30,20 @@ class JobIndex extends React.Component {
       // add the job id if it doesnt exist
       this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.concat(jobId) }}, () => {
         axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
-        // .then(() => Flash.setMessage('success', 'Job added to favorites'))
-          .then(() => this.props.history.push('/jobs'));
+          .then(() => this.props.history.push('/jobs'))
+          .then(() => console.log(this.state));
       });
     } else {
       this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.filter(job => job !== jobId) }}, () => {
         axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
-        // .then(() => Flash.setMessage('success', 'Job added to favorites'))
-          .then(() => this.props.history.push('/jobs'));
+          .then(() => this.props.history.push('/jobs'))
+          .then(() => console.log(this.state));
       });
     }
   }
 
   handleSwipeLeft = (e) => {
+    this.handleFavorite(e.target.getAttribute('data-id'));
     e.target.classList.add('slideOutLeft');
     setTimeout(() => this.swipeRemove(e.target), 700);
   }
@@ -74,6 +75,8 @@ class JobIndex extends React.Component {
   render() {
     return (
       <div className="container">
+        <h1 className="title">Active jobs</h1>
+        <h2 className="subtitle">Add a job to your favorites or click through to see more.</h2>
         {/* search filter */}
         {/* <form>
           <div className="field">
