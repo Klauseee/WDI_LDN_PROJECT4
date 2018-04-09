@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-// import _ from 'lodash';
+import _ from 'lodash';
 import Auth from '../../lib/Auth';
 import Hammer from 'react-hammerjs';
 
@@ -59,18 +59,23 @@ class JobIndex extends React.Component {
     console.log('swipe occurred');
   }
 
-  // handleChange = (e) => {
-  //   console.log(e.target.value);
-  //   this.setState({ search: e.target.value });
-  // }
+  handleChange = (e) => {
+    this.setState({ search: e.target.value });
+  }
 
-  // filterBangers = () => {
-  //   // make a REGEX (case insensitive)
-  //   const regex = new RegExp(this.state.search, 'i');
-  //   // use _.filter to filter the bangers, second argument takes a function, array or object.
-  //   const filtered = _.filter(this.state.bangers, (banger) => regex.test(banger.name));
-  //   return filtered;
-  // }
+  handleSort = (e) => {
+    e.target.value === 'lth' ? _.orderBy(this.state.jobs, ['salary'], ['asc']) : _.orderBy(this.state.jobs, ['salary'], ['desc']);
+    this.setState({ salarySort: e.target.value }, () => console.log(this.state));
+  }
+
+  filterJobs = () => {
+    // make a REGEX (case insensitive)
+    const regex = new RegExp(this.state.search, 'i');
+    // use _.filter to filter the bangers, second argument takes a function, array or object.
+    let filtered = _.filter(this.state.jobs, (job) => regex.test(job.location));
+    filtered = _.orderBy(filtered, ['salary'], [this.state.salarySort]);
+    return filtered;
+  }
 
   render() {
     return (
@@ -78,19 +83,23 @@ class JobIndex extends React.Component {
         <h1 className="title">Active jobs</h1>
         <h2 className="subtitle">Add a job to your favorites or click through to see more.</h2>
         {/* search filter */}
-        {/* <form>
+        <form>
           <div className="field">
             <input
               className="input"
               type="text"
               name="search"
-              placeholder="Search.."
+              placeholder="Search by location.."
               onChange={this.handleChange}
             />
           </div>
-        </form> */}
+          <select onChange={this.handleSort}>
+            <option value="asc">Salary: low to high</option>
+            <option value="desc">Salary: high to low</option>
+          </select>
+        </form>
         <ul className="columns is-mobile is-multiline">
-          {this.state.jobs.map((job) =>
+          {this.filterJobs().map((job) =>
             <Hammer
               key={job.title}
               onSwipeLeft={this.handleSwipeLeft}
