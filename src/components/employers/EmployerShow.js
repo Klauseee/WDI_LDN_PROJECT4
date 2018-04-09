@@ -64,11 +64,11 @@ class ShowRoute extends React.Component {
 
           {!this.state.deletePressed ? (
             <div>
-              <Link to={'/jobs/new'} className="button is-success">New Job</Link>
+              {Auth.getPayload().sub === this.state.employer._id && <Link to={'/jobs/new'} className="button is-success">New Job</Link>}
               {' '}
               {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button is-primary">Edit</Link>}
               {' '}
-              <button onClick={this.handleToggle} className="button is-danger">Delete</button>
+              {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button is-danger">Delete</button>}
             </div>
           ) : (
             <div>
