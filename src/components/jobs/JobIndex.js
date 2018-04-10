@@ -216,9 +216,9 @@ class JobIndex extends React.Component {
                 {/* only show star to USERS */}
                 {Auth.getPayload().role === 'users' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
                   ?
-                  <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="../../assets/images/favorite.svg"/></button>
+                  <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="/assets/images/favorite.svg"/></button>
                   :
-                  <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
+                  <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
                 }
               </li>
             </Hammer>
