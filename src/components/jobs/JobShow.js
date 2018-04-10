@@ -3,12 +3,10 @@ import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
-<<<<<<< HEAD
 import User from '../../lib/User';
 
-=======
 import InterestedUser from './components/InterestedUser';
->>>>>>> development
+
 import { Link } from 'react-router-dom';
 
 class JobShow extends React.Component {
