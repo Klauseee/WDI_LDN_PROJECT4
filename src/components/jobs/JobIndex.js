@@ -47,7 +47,6 @@ class JobIndex extends React.Component {
   }
 
   handleSwipeLeft = (e) => {
-    this.handleFavorite(e.target.getAttribute('data-id'));
     e.target.classList.add('slideOutLeft');
     setTimeout(() => this.swipeRemove(e.target), 700);
   }
@@ -107,7 +106,7 @@ class JobIndex extends React.Component {
     return (
       <div className="container">
         <h1 className="title">Active jobs</h1>
-        <h2 className="subtitle">Add a job to your favorites or click through to see more.</h2>
+        <h2 className="subtitle">Add a job to your favorites or click through to see more. Swipe right to add to favourites, or swipe left to dismiss.</h2>
         {/* search filter */}
         <form>
           <div className="field">
