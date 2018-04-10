@@ -19,18 +19,6 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// userSchema.virtual('favoriteJobs', {
-//   localField: '_id',
-//   foreignField: 'interestedUsers',
-//   ref: 'Job'
-// });
-//
-// userSchema.virtual('matchedJobs', {
-//   localField: '_id',
-//   foreignField: 'matchedUsers',
-//   ref: 'Job'
-// });
-
 userSchema
   .virtual('passwordConfirmation')
   .set(function setPasswordConfirmation(passwordConfirmation) {

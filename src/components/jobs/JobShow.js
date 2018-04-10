@@ -3,8 +3,12 @@ import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
+<<<<<<< HEAD
 import User from '../../lib/User';
 
+=======
+import InterestedUser from './components/InterestedUser';
+>>>>>>> development
 import { Link } from 'react-router-dom';
 
 class JobShow extends React.Component {
@@ -26,6 +30,7 @@ class JobShow extends React.Component {
     salary: 0,
     // show this only to the employer who made the job.
     interestedUsers: [],
+    matchedUsers: [],
     deletePressed: false,
     currentUser: {}
   }
@@ -55,6 +60,33 @@ class JobShow extends React.Component {
           .then(() => console.log(this.state));
       });
     }
+  }
+
+  handleAccept = (user) => {
+    // find the user within the interestedusers array on the job
+    const userIndex = this.state.interestedUsers.indexOf(user);
+    // find the job within the favoriteJobs array of the interested user
+    const jobIndex = this.state.interestedUsers[userIndex].favoriteJobs.indexOf(this.state._id);
+    //clone favoritejobs array
+    const newFavoriteJobs = this.state.interestedUsers[userIndex].favoriteJobs.slice();
+    newFavoriteJobs.splice(jobIndex, 1);
+    console.log(userIndex, jobIndex, newFavoriteJobs);
+    axios.put(`/api/users/${user._id}`, { matchedJobs: this.state._id, favoriteJobs: newFavoriteJobs })
+      .then(res => console.log(res.data));
+  }
+
+  handleReject = (user) => {
+    console.log('rejected', user._id);
+    // find the user within the interestedusers array on the job
+    const userIndex = this.state.interestedUsers.indexOf(user);
+    // find the job within the favoriteJobs array of the interested user
+    const jobIndex = this.state.interestedUsers[userIndex].favoriteJobs.indexOf(this.state._id);
+    //clone favoritejobs array
+    const newFavoriteJobs = this.state.interestedUsers[userIndex].favoriteJobs.slice();
+    newFavoriteJobs.splice(jobIndex, 1);
+    console.log(userIndex, jobIndex, newFavoriteJobs);
+    axios.put(`/api/users/${user._id}`, { favoriteJobs: newFavoriteJobs })
+      .then(res => console.log(res.data));
   }
 
   handleDelete = () => {
@@ -124,7 +156,18 @@ class JobShow extends React.Component {
             <button onClick={this.handleToggle} className="button">Cancel</button>
           </div>
         )}
-
+        {/* LIST OF INTERESTED USERS */}
+        {Auth.getPayload().role === 'employers' &&
+        <div>
+          {this.state.interestedUsers.map((user) =>
+            <InterestedUser
+              key={user._id}
+              user={user}
+              handleAccept={this.handleAccept}
+              handleReject={this.handleReject}
+            />
+          )}
+        </div>}
       </div>
     );
   }
