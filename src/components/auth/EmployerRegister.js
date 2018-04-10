@@ -3,6 +3,8 @@ import axios from 'axios';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 
+import RegisterForm from './RegisterForm';
+
 import Repeater from '../common/Repeater.js';
 
 class EmployerRegister extends React.Component {
@@ -47,34 +49,9 @@ class EmployerRegister extends React.Component {
       <div className="container">
         <h1 className="title">Employer registration</h1>
         <form onSubmit={this.handleSubmit}>
+
           {/* THIS WILL BE INITIAL REGISTER */}
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input
-              className="input"
-              placeholder="example@email.com"
-              name="email"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="password">Password</label>
-            <input
-              className="input"
-              placeholder="********"
-              name="password"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="passwordConfirmation">Confirm Password</label>
-            <input
-              className="input"
-              placeholder="********"
-              name="passwordConfirmation"
-              onChange={this.handleChange}
-            />
-          </div>
+          <RegisterForm handleChange={this.handleChange}/><br/>
 
           {/* REST OF THE HENCH FORM */}
           <div className="field">

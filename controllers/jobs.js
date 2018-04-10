@@ -4,7 +4,7 @@ function indexRoute(req,res,next){
   Job.find()
     .populate('employer interestedUsers matchedUsers')
     .then(jobs => {
-      console.log(jobs);
+      // console.log(jobs);
       res.json(jobs);
     })
     .catch(next);
@@ -21,10 +21,10 @@ function showRoute(req, res, next) {
   Job.findById(req.params.id)
     .populate('employer interestedUsers matchedUsers')
     .then(job => {
-      console.log(job);
+      // console.log(job);
       res.json(job);
     })
-    .then(() => console.log(req.currentUser))
+    // .then(() => console.log(req.currentUser))
     .catch(next);
 }
 

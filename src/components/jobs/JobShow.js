@@ -5,7 +5,7 @@ import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 import User from '../../lib/User';
 
-import InterestedUser from './components/InterestedUser';
+import InterestedUser from './InterestedUser';
 
 import { Link } from 'react-router-dom';
 

@@ -1,10 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+
+import ReactFilestack from 'filestack-react';
+
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 import Technologies from '../../lib/Technologies';
 
-import ReactFilestack from 'filestack-react';
+import RegisterForm from './RegisterForm';
 
 class UserRegister extends React.Component {
 
@@ -16,7 +19,7 @@ class UserRegister extends React.Component {
   };
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value }, () => console.log(this.state));
+    this.setState({ [name]: value });
   }
 
   handleCheck = ({ target: { name, value, checked }}) => {
@@ -47,9 +50,6 @@ class UserRegister extends React.Component {
   };
 
   handleFilestack = (result) => {
-    // handle result here
-    console.log(result);
-    console.log(result.filesUploaded[0].url);
     this.setState({ cv: result.filesUploaded[0].url });
   }
 
@@ -58,6 +58,9 @@ class UserRegister extends React.Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <h1 className="title">User registration</h1>
+
+          <RegisterForm handleChange={this.handleChange}/><br/>
+
           <div className="field">
             <label htmlFor="jobTitle">Job Title</label>
             <input className="input"
@@ -66,35 +69,7 @@ class UserRegister extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input
-              className="input"
-              placeholder="Email"
-              name="email"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              className="input"
-              placeholder="Password"
-              name="password"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="passwordConfirmation">Password Confirmation</label>
-            <input
-              type="password"
-              className="input"
-              placeholder="Password Confirmation"
-              name="passwordConfirmation"
-              onChange={this.handleChange}
-            />
-          </div>
+
           <div className="field">
             <label htmlFor="summary">Summary</label>
             <textarea
@@ -146,6 +121,7 @@ class UserRegister extends React.Component {
                 </label>
               </div>
             )}
+
           </div>
           <div className="field">
             <label htmlFor="cv">Upload your CV</label> <br />
