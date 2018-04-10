@@ -37,13 +37,14 @@ class UserShow extends React.Component {
   handleApply = (jobId) => {
     console.log(jobId);
     //function for applying for job goes in here
+    window.open('mailto:test@test.com');
   }
 
   handleDismiss = (jobId) => {
     const newMatchedJobs = _.filter(this.state.user.matchedJobs, (job) => job._id !== jobId);
-    this.setState({ user: { matchedJobs: newMatchedJobs}});
-    axios.put(`/api/users/${this.props.match.params.id}`, { matchedJobs: this.state.user.matchedJobs})
-      .then(res => console.log(res.data));
+    this.setState({ user: { matchedJobs: newMatchedJobs}}, () => axios.put(`/api/users/${this.props.match.params.id}`, { matchedJobs: this.state.user.matchedJobs})
+      .then(res => console.log(res.data)));
+
   }
 
   render() {
