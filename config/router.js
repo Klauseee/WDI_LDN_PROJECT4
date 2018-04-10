@@ -24,6 +24,7 @@ router.route('/users/:id')
   .get(users.show)
   .put(users.update)
   .delete(users.delete);
+  // .post(users.email);
 
 router.route('/users/register')
   .post(userAuth.register);

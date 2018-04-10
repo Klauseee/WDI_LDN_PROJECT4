@@ -14,7 +14,8 @@ class UserShow extends React.Component {
     technologies: {
       frontend: [],
       backend: []
-    }
+    },
+    mailOptions: {}
   }
 
   //
@@ -35,9 +36,13 @@ class UserShow extends React.Component {
   }
 
   handleApply = (jobId) => {
-    console.log(jobId);
-    //function for applying for job goes in here
-    window.open('mailto:test@test.com');
+    this.setState({ mailOptions: {
+      from: 'nicholaswilson3010@gmail.com',
+      to: 'suii_shum@hotmail.com',
+      subject: `Application from ${this.state.user.email}`,
+      text: 'Please consider the following applicant. CV is attached'
+    }}, () => axios.post(`/api/users/${this.state.user._id}`));
+    // console.log(mailOptions);
   }
 
   handleDismiss = (jobId) => {

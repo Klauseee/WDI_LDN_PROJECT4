@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Emailer = require('../lib/Emailer');
 
 function indexRoute(req,res,next){
   User.find()
@@ -16,11 +17,24 @@ function createRoute(req,res,next){
 
 function showRoute(req, res, next) {
   User.findById(req.params.id)
-    .populate('favoriteJobs matchedJobs')
+    .populate('favoriteJobs')
+    .populate({
+      path: 'matchedJobs',
+      populate: {
+        path: 'employer',
+        model: 'Employer'
+      }
+    })
     .then(user => res.json(user))
     .then(() => console.log(req.currentUser))
     .catch(next);
 }
+
+// function email(req, res, next) {
+//   User.findById(req.params.id)
+//     .then(() => console.log(req.body))
+//     .catch(next);
+// }
 
 function updateRoute(req, res, next) {
   User.findById(req.params.id)
@@ -41,6 +55,7 @@ module.exports = {
   index: indexRoute,
   create: createRoute,
   show: showRoute,
+  // email: email,
   update: updateRoute,
   delete: deleteRoute
 };
