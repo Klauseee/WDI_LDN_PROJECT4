@@ -41,6 +41,7 @@ class UserRegister extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
+        <h1 className="title">User registration</h1>
         <div className="field">
           <label htmlFor="jobTitle">Job Title</label>
           <input className="input"
@@ -81,7 +82,7 @@ class UserRegister extends React.Component {
         <div className="field">
           <label htmlFor="summary">Summary</label>
           <textarea
-            className="input"
+            className="textarea"
             placeholder="Write a short summary about yourself"
             name="summary"
             onChange={this.handleChange}

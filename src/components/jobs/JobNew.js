@@ -33,7 +33,7 @@ class JobNew extends React.Component {
     // { headers: { Authorization: `Bearer ${Auth.getToken()}` }}
     )
       .then(res => console.log('saved job', res))
-      .then(() => this.props.history.push('/jobs'))
+      .then(() => this.props.history.push(`/employers/${Auth.getPayload().sub}`))
       .catch(err => this.setState({ errors: err.response.data.errors }));
   }
 
@@ -42,18 +42,18 @@ class JobNew extends React.Component {
     this.setState({ [name]: value, errors }, () => console.log(this.state));
   }
 
-  handleCheck = ({ target: { name, value, checked }}) => {
-    let newTechnologies;
-    if(checked) {
-      newTechnologies = this.state.technologies[name].concat(value);
-    } else {
-      newTechnologies = this.state.technologies[name].slice();
-      const index = newTechnologies.indexOf(value);
-      newTechnologies.splice(index, 1);
-    }
-    const other = name === 'primary' ? 'secondary' : 'primary';
-    this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other] }}, () => console.log(this.state.technologies));
-  }
+  // handleCheck = ({ target: { name, value, checked }}) => {
+  //   let newTechnologies;
+  //   if(checked) {
+  //     newTechnologies = this.state.technologies[name].concat(value);
+  //   } else {
+  //     newTechnologies = this.state.technologies[name].slice();
+  //     const index = newTechnologies.indexOf(value);
+  //     newTechnologies.splice(index, 1);
+  //   }
+  //   const other = name === 'primary' ? 'secondary' : 'primary';
+  //   this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other] }}, () => console.log(this.state.technologies));
+  // }
 
   handleCheck = ({ target: { name, value, checked }}) => {
     let newTechnologies;
@@ -71,6 +71,7 @@ class JobNew extends React.Component {
   render() {
     return (
       <div className="container">
+        <h1 className="title">Create a new listing</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="field">
             <label htmlFor="title">Title</label>

@@ -4,16 +4,15 @@ import Auth from '../../lib/Auth';
 
 class Navbar extends React.Component {
   state = {
-    navIsOpen: false,
     currentUser: '',
+    navIsOpen: false,
     loginRequest: false,
     registerRequest: false
   }
 
   componentWillReceiveProps() {
-    if(Auth.isAuthenticated()) this.setState({ currentUser: Auth.getPayload().role }, () => console.log(this.state.currentUser));
+    if(Auth.isAuthenticated()) this.setState({ currentUser: Auth.getPayload().role }, () => console.log('current user navbar', this.state.currentUser));
   }
-
 
   handleToggle = () => {
     this.setState({ navIsOpen: !this.state.navIsOpen });

@@ -3,7 +3,10 @@ import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
+import User from '../../lib/User';
+
 import InterestedUser from './components/InterestedUser';
+
 import { Link } from 'react-router-dom';
 
 class JobShow extends React.Component {
@@ -30,9 +33,11 @@ class JobShow extends React.Component {
     currentUser: {}
   }
 
+  // GET JOB OBJECT AND THE CURRENT USER (for favorites logic)
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
-      .then(res => this.setState(res.data, () => console.log(this.state)));
+      .then(res => this.setState(res.data))
+      .then(() => this.setState({ currentUser: User.getUser() }, () => console.log(this.state)));
   }
 
   handleFavorite = (jobId) => {

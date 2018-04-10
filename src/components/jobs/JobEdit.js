@@ -16,15 +16,18 @@ class JobEdit extends React.Component {
     }
   }
 
+  // GET THE JOB OBJECT
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
       .then(res => this.setState(res.data, () => console.log(this.state)));
   }
 
+  // SET STATE AFTER CHANGES TO THE JOB OBJECT IS MADE
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value }, () => console.log(this.state));
   }
 
+  // HANDLE CHECKBOXES
   handleCheck = ({ target: { name, value, checked }}) => {
     let newTechnologies;
     if(checked) {
@@ -38,16 +41,18 @@ class JobEdit extends React.Component {
     this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other] }}, () => console.log(this.state.technologies));
   }
 
+  // UPDATE JOB RECORD
   handleSubmit = (e) => {
     e.preventDefault();
     axios.put(`/api/jobs/${this.state._id}`, this.state)
       .then(() => Flash.setMessage('success', 'Job edited'))
-      .then(() => this.props.history.push('/'));
+      .then(() => this.props.history.push(`/jobs/${this.props.match.params.id}`));
   }
 
   render() {
     return(
       <div className="container">
+        <h1 className="title">Edit your job listing</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="field">
             <label htmlFor="title">Title</label>
