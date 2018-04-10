@@ -43,6 +43,7 @@ class UserRegister extends React.Component {
       .then(() => this.props.history.push('/'));
   }
 
+  // FILESTACK SETTINGS/ FUNCTIONS ================================================
   options = {
     fromSources: ['local_file_system','url','facebook','googledrive','dropbox','evernote','github','gmail','onedrive'],
     accept: ['.pdf','.doc','.docx','.docm','text/plain'],
@@ -52,6 +53,7 @@ class UserRegister extends React.Component {
   handleFilestack = (result) => {
     this.setState({ cv: result.filesUploaded[0].url });
   }
+  // ==============================================================================
 
   render() {
     return (

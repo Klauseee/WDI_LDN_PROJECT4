@@ -157,6 +157,7 @@ class JobShow extends React.Component {
             <button onClick={this.handleToggle} className="button">Cancel</button>
           </div>
         )}
+        
         {/* LIST OF INTERESTED USERS */}
         {Auth.getPayload().role === 'employers' &&
         <div>

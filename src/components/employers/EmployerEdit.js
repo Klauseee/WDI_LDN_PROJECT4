@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import ReactFilestack from 'filestack-react';
 // import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 
 import Repeater from '../common/Repeater.js';
 
-class EditRoute extends React.Component {
+class EmployerEdit extends React.Component {
 
   state = {
     email: '',
@@ -61,6 +62,24 @@ class EditRoute extends React.Component {
   }
   // ==============================================================================
 
+  // FILESTACK SETTINGS/ FUNCTIONS ================================================
+  options = {
+    fromSources: ['local_file_system','url','imagesearch','facebook','instagram','googledrive','dropbox','gmail'],
+    accept: ['image/*','.pdf'],
+    maxFiles: 1,
+    transformations: {
+      crop: {
+        force: true,
+        aspectRatio: 1
+      }
+    }
+  }
+
+  handleFilestack = (result) => {
+    this.setState({ logo: result.filesUploaded[0].url });
+  }
+  // ==============================================================================
+
   render() {
     return (
       <div className="container">
@@ -77,10 +96,11 @@ class EditRoute extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="field">
+
+          {/* <div className="field">
             <label htmlFor="password">Password</label>
             <p>GIVE OPTION TO CHANGE PASSWORD HERE?</p>
-          </div>
+          </div> */}
 
           {/* REST OF THE HENCH FORM */}
           <div className="field">
@@ -93,16 +113,21 @@ class EditRoute extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="field">
-            <label htmlFor="logo">Company Logo</label>
-            <input
-              className="input"
-              placeholder="In the form of a link.. REMEMBER TO ADD FILESTACK OPTION"
-              name="logo"
-              value={this.state.logo}
-              onChange={this.handleChange}
-            />
+
+          <div className="field columns">
+            <div className="column">
+              <label htmlFor="logo">Upload Company Logo</label><br />
+              <ReactFilestack
+                apikey='AWp9DCV3vTIOqEGF0KjsPz'
+                buttonText="Click to upload"
+                buttonClass="button"
+                options={this.options}
+                onSuccess={res => this.handleFilestack(res)}
+              />
+            </div>
+            {this.state.logo && <p className="column">Preview your current logo: <br/> <img src={this.state.logo} /></p>}
           </div>
+
           <div className="field">
             <label htmlFor="location">Company Location</label>
             <input
@@ -113,6 +138,7 @@ class EditRoute extends React.Component {
               onChange={this.handleChange}
             />
           </div>
+
           <div className="field">
             <label htmlFor="info">Company Info</label>
             <input
@@ -123,6 +149,7 @@ class EditRoute extends React.Component {
               onChange={this.handleChange}
             />
           </div>
+
           <div className="field">
             <label htmlFor="photos">Company Photos</label>
             <Repeater
@@ -133,6 +160,7 @@ class EditRoute extends React.Component {
               property='photos'
             />
           </div>
+
           <div className="field">
             <label htmlFor="photos">Company Perks</label>
             <Repeater
@@ -143,10 +171,6 @@ class EditRoute extends React.Component {
               property='perks'
             />
           </div>
-          {/* <div className="field">
-            <label htmlFor="listings">Company Job Listings</label>
-            <p>Add a job, ADD FUNCTIONALITY FOR THIS TO HAPPEN, SAVE JOB ID TO THIS.STATE.LISTINGS ARRAY</p>
-          </div> */}
 
           <button className="button is-primary">Submit</button>
         </form>
@@ -156,4 +180,4 @@ class EditRoute extends React.Component {
   }
 }
 
-export default EditRoute;
+export default EmployerEdit;

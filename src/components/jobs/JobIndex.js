@@ -28,8 +28,6 @@ class JobIndex extends React.Component {
   }
 
   handleFavorite = (jobId) => {
-    console.log('jobId', jobId);
-    // console.log(e.target);
     // add to the current logged in user's interested field
     if(!this.state.currentUser.favoriteJobs.includes(jobId)) {
       // add the job id if it doesnt exist
@@ -47,6 +45,7 @@ class JobIndex extends React.Component {
     }
   }
 
+  // GESTURE FUNCTIONS ============================================================
   handleSwipeLeft = (e) => {
     e.target.classList.add('slideOutLeft');
     setTimeout(() => this.swipeRemove(e.target), 700);
@@ -62,6 +61,7 @@ class JobIndex extends React.Component {
     target.parentNode.removeChild(target);
     console.log('swipe occurred');
   }
+  // ==============================================================================
 
   handleCheck = ({ target: { name, checked }}) => {
     let newTechnologies;
@@ -209,10 +209,7 @@ class JobIndex extends React.Component {
                       <h3><strong>Location:</strong> {job.location}</h3>
                       <h3><strong>Type:</strong> {job.type}</h3>
                       <h3><strong>Created:</strong> {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                      <h3><strong>Primary skills required:</strong> </h3>
-                      <ul>
-                        {job.technologies.primary.map((skill, i) => <li key={i}>{skill} </li>)}
-                      </ul>
+                      <h3><strong>Primary skills required:</strong> {job.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
                     </div>
                   </div>
                 </Link>

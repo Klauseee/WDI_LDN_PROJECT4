@@ -54,6 +54,7 @@ class JobEdit extends React.Component {
       <div className="container">
         <h1 className="title">Edit your job listing</h1>
         <form onSubmit={this.handleSubmit}>
+
           <div className="field">
             <label htmlFor="title">Title</label>
             <input
@@ -64,6 +65,7 @@ class JobEdit extends React.Component {
               value={this.state.title}
             />
           </div>
+
           <div className="field">
             <label htmlFor="location">Location</label>
             <input
@@ -74,6 +76,7 @@ class JobEdit extends React.Component {
               value={this.state.location}
             />
           </div>
+
           <div className="field">
             <label htmlFor="type">Type of Role</label><br />
             <label className="radio">
@@ -97,8 +100,11 @@ class JobEdit extends React.Component {
               &nbsp; Contract
             </label>
           </div>
+
           <div className="field columns is-multiline">
+
             <label htmlFor="logo">Primary Skills</label>
+
             {Technologies.frontend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">
@@ -113,6 +119,7 @@ class JobEdit extends React.Component {
                 </label>
               </div>
             )}
+
             {Technologies.backend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">
@@ -127,9 +134,13 @@ class JobEdit extends React.Component {
                 </label>
               </div>
             )}
+
           </div>
+
           <div className="field columns is-multiline">
+
             <label htmlFor="logo">Secondary Skills</label>
+            
             {Technologies.frontend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">
@@ -144,6 +155,7 @@ class JobEdit extends React.Component {
                 </label>
               </div>
             )}
+
             {Technologies.backend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">
@@ -158,7 +170,9 @@ class JobEdit extends React.Component {
                 </label>
               </div>
             )}
+
           </div>
+
           <div className="field">
             <label htmlFor="summary">Job Summary</label>
             <textarea
@@ -169,6 +183,7 @@ class JobEdit extends React.Component {
               value={this.state.summary}
             ></textarea>
           </div>
+
           <div className="field">
             <label htmlFor="salary">Salary</label>
             <input

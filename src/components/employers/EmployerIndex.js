@@ -5,7 +5,7 @@ import Auth from '../../lib/Auth';
 
 import { Link } from 'react-router-dom';
 
-class IndexRoute extends React.Component {
+class EmployerIndex extends React.Component {
 
   state = {
     employers: []
@@ -16,7 +16,6 @@ class IndexRoute extends React.Component {
     axios.get('/api/employers')
       .then(res => this.setState({ employers: res.data, currentUser: Auth.getPayload().sub }));
   }
-
 
   // handleChange = (e) => {
   //   console.log(e.target.value);
@@ -71,4 +70,4 @@ class IndexRoute extends React.Component {
   }
 }
 
-export default IndexRoute;
+export default EmployerIndex;
