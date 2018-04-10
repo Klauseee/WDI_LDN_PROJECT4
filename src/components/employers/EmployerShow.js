@@ -13,17 +13,12 @@ class EmployerShow extends React.Component {
   state = {
     employer: null,
     deletePressed: false
-    // currentUser: {}
   };
 
+  // GET THE EMPLOYER OBJECT
   componentDidMount() {
-    // react router has given us props in the background.
-    // console.log(this.props); // everything here has been created by the router
-    // console.log(this.props.match.params.id); // contains the :id parameter!
     axios.get(`/api/employers/${this.props.match.params.id}`)
       .then(res => this.setState({ employer: res.data }, () => console.log(this.state)));
-      // .then(() => axios.get(`/api/users/${Auth.getPayload().sub}`))
-      // .then(res => this.setState({ currentUser: res.data }, () => console.log(this.state )));
   }
 
   handleToggle = () => {

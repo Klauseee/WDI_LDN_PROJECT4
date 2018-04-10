@@ -11,10 +11,12 @@ class IndexRoute extends React.Component {
     employers: []
   }
 
+  // GET ALL EMPLOYERS
   componentDidMount() {
     axios.get('/api/employers')
       .then(res => this.setState({ employers: res.data, currentUser: Auth.getPayload().sub }));
   }
+
 
   // handleChange = (e) => {
   //   console.log(e.target.value);
@@ -44,6 +46,7 @@ class IndexRoute extends React.Component {
             />
           </div>
         </form> */}
+        <h1 className="title">Registered employers</h1>
         <ul className="columns is-mobile is-multiline">
           {this.state.employers.map((employer) =>
             <li key={employer.name} className="column is-one-third-desktop is-full-mobile animated">

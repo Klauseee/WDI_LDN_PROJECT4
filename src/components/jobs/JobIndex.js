@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Auth from '../../lib/Auth';
 import Hammer from 'react-hammerjs';
 import Technologies from '../../lib/Technologies';
+import User from '../../lib/User';
 
 import moment from 'moment';
 
@@ -20,11 +21,10 @@ class JobIndex extends React.Component {
     filtersApplied: false
   }
 
+  // GET ALL JOBS AND CURRENT USER
   componentDidMount() {
     axios.get('/api/jobs')
-      .then(res => this.setState({ jobs: res.data }, () => console.log(this.state)))
-      .then(() => axios.get(`/api/users/${Auth.getPayload().sub}`))
-      .then(res => this.setState({ currentUser: res.data }, () => console.log('state', this.state )));
+      .then(res => this.setState({ jobs: res.data, currentUser: User.getUser() }, () => console.log(this.state)));
   }
 
   handleFavorite = (jobId) => {
@@ -125,7 +125,7 @@ class JobIndex extends React.Component {
       <div className="container">
         <h1 className="title">Active jobs</h1>
         <h2 className="subtitle">Add a job to your favorites or click through to see more. Swipe right to add to favourites, or swipe left to dismiss.</h2>
-        {/* search filter */}
+        {/* SEARCH FILTER */}
         <form>
           <div className="field">
             <input
@@ -137,10 +137,12 @@ class JobIndex extends React.Component {
               value={this.state.searchLocation}
             />
           </div>
-          <select onChange={this.handleSort}>
-            <option value="asc">Salary: low to high</option>
-            <option value="desc">Salary: high to low</option>
-          </select>
+          <div className="select is-primary">
+            <select onChange={this.handleSort}>
+              <option value="asc">Salary: low to high</option>
+              <option value="desc">Salary: high to low</option>
+            </select>
+          </div>
           <div className="field">
             <input
               className="input"
@@ -191,13 +193,14 @@ class JobIndex extends React.Component {
           </div>
           <button className="button" onClick={this.toggleFilters}>{this.state.filtersApplied ? 'Clear Filters' : 'Apply Filters'}</button>
         </form>
+        <hr />
         <ul className="columns is-mobile is-multiline">
           {this.filterJobs().map((job) =>
             <Hammer
               key={job.title}
               onSwipeLeft={this.handleSwipeLeft}
               onSwipeRight={this.handleSwipeRight}
-              className="column is-one-third-desktop is-full-mobile animated">
+              className="column is-one-third-desktop is-half-tablet is-full-mobile animated">
               <li data-id={job._id}>
                 <Link to={`/jobs/${job._id}`}>
                   <div className="card">

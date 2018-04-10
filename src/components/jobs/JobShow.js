@@ -3,6 +3,7 @@ import axios from 'axios';
 import Technologies from '../../lib/Technologies';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
+import User from '../../lib/User';
 
 import { Link } from 'react-router-dom';
 
@@ -29,15 +30,14 @@ class JobShow extends React.Component {
     currentUser: {}
   }
 
+  // GET JOB OBJECT AND THE CURRENT USER (for favorites logic)
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
-      .then(res => this.setState(res.data));
+      .then(res => this.setState(res.data))
+      .then(() => this.setState({ currentUser: User.getUser() }, () => console.log(this.state)));
   }
 
   handleFavorite = (jobId) => {
-    console.log(Auth.getPayload().role);
-    // console.log('jobId', jobId);
-    // console.log(e.target);
     // add to the current logged in user's interested field
     if(!this.state.currentUser.favoriteJobs.includes(jobId)) {
       // add the job id if it doesnt exist

@@ -45,6 +45,7 @@ class EmployerRegister extends React.Component {
   render() {
     return (
       <div className="container">
+        <h1 className="title">Employer registration</h1>
         <form onSubmit={this.handleSubmit}>
           {/* THIS WILL BE INITIAL REGISTER */}
           <div className="field">
@@ -105,8 +106,8 @@ class EmployerRegister extends React.Component {
           </div>
           <div className="field">
             <label htmlFor="info">Company Info</label>
-            <input
-              className="input"
+            <textarea
+              className="textarea"
               placeholder="Write a little blurb about your company"
               name="info"
               onChange={this.handleChange}

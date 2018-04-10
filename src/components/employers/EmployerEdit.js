@@ -19,16 +19,18 @@ class EditRoute extends React.Component {
     employer: ''
   }
 
+  // GET EXISTING EMPLOYER OBJECT & SET IN STATE
   componentDidMount() {
-    // console.log(this.props); // everything here has been created by the router
     axios.get(`/api/employers/${this.props.match.params.id}`)
       .then(res => this.setState( res.data ));
   }
 
+  // FUNCTION TO MAKE CHANGES TO EXISTING EMPLOYER OBJECT.
   handleChange = ({ target: { name, value }}) => {
     this.setState({ [name]: value });
   }
 
+  // UPDATE RECORD IN DATABASE
   handleSubmit = (e) => {
     e.preventDefault();
     axios.put(`/api/employers/${this.props.match.params.id}`, this.state)
@@ -40,6 +42,7 @@ class EditRoute extends React.Component {
       .then(() => this.props.history.push(`/employers/${this.props.match.params.id}`));
   }
 
+  // REPEATER COMPONENT FUNCTIONS =================================================
   handleRepeaterChange = (property, array, index, e) => {
     const newArray = array.slice();
     newArray[index] = e.target.value;
@@ -56,13 +59,14 @@ class EditRoute extends React.Component {
     this.setState({ [property]: array.filter((item, i) => item[i] !== item[index])}
     );
   }
+  // ==============================================================================
 
   render() {
     return (
       <div className="container">
+        <h1 className="title">Edit your employer profile</h1>
         <form onSubmit={this.handleSubmit}>
 
-          {/* THIS WILL BE INITIAL REGISTER */}
           <div className="field">
             <label htmlFor="email">Email</label>
             <input

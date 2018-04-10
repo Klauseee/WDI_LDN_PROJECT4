@@ -15,7 +15,7 @@ class UserShow extends React.Component {
     }
   }
 
-
+  //
   componentDidMount() {
     axios.get(`/api/users/${this.props.match.params.id}`)
       .then(res => this.setState({ user: res.data }))
@@ -35,7 +35,8 @@ class UserShow extends React.Component {
   render() {
     return(
       <div className="container">
-        <h2 className="title">{this.state.user.jobTitle}</h2>
+        <h1 className="title">Your user profile</h1>
+        <h1 className="title">{this.state.user.jobTitle}</h1>
         <h2 className="subtitle">Summary</h2>
         <p>{this.state.user.summary}</p>
         <h2 className="subtitle">Frontend Skills</h2>
