@@ -13,6 +13,7 @@ const employerSchema = new mongoose.Schema({
   user: { type: Boolean, default: false }
 }, { timestamps: true });
 
+// search through Jobs collection, check employer field, look for matching id.
 employerSchema.virtual('listings', {
   localField: '_id',
   foreignField: 'employer',

@@ -19,6 +19,18 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
+// userSchema.virtual('favoriteJobs', {
+//   localField: '_id',
+//   foreignField: 'interestedUsers',
+//   ref: 'Job'
+// });
+//
+// userSchema.virtual('matchedJobs', {
+//   localField: '_id',
+//   foreignField: 'matchedUsers',
+//   ref: 'Job'
+// });
+
 userSchema
   .virtual('passwordConfirmation')
   .set(function setPasswordConfirmation(passwordConfirmation) {
@@ -40,5 +52,7 @@ userSchema.pre('save', function hashPassword(next) {
 userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
+
+userSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('User', userSchema);

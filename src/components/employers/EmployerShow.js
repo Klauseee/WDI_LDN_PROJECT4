@@ -13,6 +13,7 @@ class EmployerShow extends React.Component {
   state = {
     employer: null,
     deletePressed: false
+    // currentUser: {}
   };
 
   componentDidMount() {
@@ -21,6 +22,8 @@ class EmployerShow extends React.Component {
     // console.log(this.props.match.params.id); // contains the :id parameter!
     axios.get(`/api/employers/${this.props.match.params.id}`)
       .then(res => this.setState({ employer: res.data }, () => console.log(this.state)));
+      // .then(() => axios.get(`/api/users/${Auth.getPayload().sub}`))
+      // .then(res => this.setState({ currentUser: res.data }, () => console.log(this.state )));
   }
 
   handleToggle = () => {
@@ -53,20 +56,14 @@ class EmployerShow extends React.Component {
                   <div className="card">
                     <div className="card-content">
                       <h3 className="title is-4">Job title: {listing.title}</h3>
-                      <h4 className="subtitle">Location: {listing.location}</h4>
+                      <h3 className="subtitle">Location: {listing.location}</h3>
                       <h3 className="subtitle">Role type: {listing.type}</h3>
                       <h3 className="subtitle">Created at: {moment(listing.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                      {listing.technologies.primary.map((skill, i) => <p key={i}>{skill}, </p>)}
+                      <h3 className="subtitle">Primary skills: {listing.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}
+                      </h3>
                     </div>
                   </div>
                 </Link>
-                {/* only show star to USERS */}
-                {Auth.getPayload().role === 'user' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(listing._id)
-                  ?
-                  <button className="button is-primary" onClick={() => this.handleFavorite(listing._id)}><img  className="star" src="../../assets/images/favorite.svg"/></button>
-                  :
-                  <button className="button is-primary" onClick={() => this.handleFavorite(listing._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
-                }
               </li>
             )}
           </ul>

@@ -31,14 +31,12 @@ class JobShow extends React.Component {
 
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
-      .then(res => this.setState(res.data))
-      .then(() => console.log(this.state))
-      .then(() => axios.get(`/api/users/${Auth.getPayload().sub}`))
-      .then(res => this.setState({ currentUser: res.data }, () => console.log(this.state )));
+      .then(res => this.setState(res.data));
   }
 
   handleFavorite = (jobId) => {
-    console.log('jobId', jobId);
+    console.log(Auth.getPayload().role);
+    // console.log('jobId', jobId);
     // console.log(e.target);
     // add to the current logged in user's interested field
     if(!this.state.currentUser.favoriteJobs.includes(jobId)) {
@@ -79,7 +77,7 @@ class JobShow extends React.Component {
     return(
       <div className="container">
         <h1 className="title">{this.state.title}</h1>
-        <h2 className="subtitle"><Link to={`/employers/${this.state.employer.id}`}>{this.state.employer.name}</Link></h2>
+        <h2 className="subtitle"><Link to={`/employers/${this.state.employer.id}`}>Click here to see more about  {this.state.employer.name}</Link></h2>
         <h2 className="subtitle"><strong>Location:</strong> {this.state.location}</h2>
         <h2 className="subtitle"><strong>Employment type:</strong> {this.state.type}</h2>
         <h2 className="subtitle"><strong>Job summary</strong></h2>
@@ -107,9 +105,9 @@ class JobShow extends React.Component {
         {/* FAVOURITE STUFF */}
         {Auth.getPayload().role === 'users' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(this.state._id)
           ?
-          <button className="button is-primary" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="../../assets/images/favorite.svg"/></button>
+          <button className="button is-primary" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/favorite.svg"/></button>
           :
-          <button className="button is-primary" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
+          <button className="button is-primary" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
         }
 
         {/* EDIT & DELETE BUTTONS */}
@@ -126,7 +124,7 @@ class JobShow extends React.Component {
             <button onClick={this.handleToggle} className="button">Cancel</button>
           </div>
         )}
-        
+
       </div>
     );
   }

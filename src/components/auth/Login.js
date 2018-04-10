@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
+import User from '../../lib/User';
+
 
 class Login extends React.Component {
 
@@ -15,7 +17,12 @@ class Login extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     axios.post(`/api${this.props.location.pathname}`, this.state)
-      .then(res => Auth.setToken(res.data.token))
+      .then(res => {
+        Auth.setToken(res.data.token);
+        User.setUser(res.data.user);
+        // console.log(Auth.getPayload().sub);
+        console.log(res.data);
+      })
       .then(() => Flash.setMessage('success', 'Welcome back!'))
       .then(() => this.props.history.push('/'));
   }

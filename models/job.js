@@ -10,8 +10,23 @@ const jobSchema = new mongoose.Schema({
     secondary: [{ type: String }]
   },
   summary: { type: String },
-  interestedUsers: [{ type: mongoose.Schema.ObjectId, ref: 'User'}],
+  // interestedUsers: [{ type: mongoose.Schema.ObjectId, ref: 'User'}],
+  // matchedUsers: [{ type: mongoose.Schema.ObjectId, ref: 'User'}],
   salary: { type: Number, required: 'You must provide a motherfucking salary!'}
 }, { timestamps: true });
+
+jobSchema.virtual('interestedUsers', {
+  localField: '_id',
+  foreignField: 'favoriteJobs',
+  ref: 'User'
+});
+
+jobSchema.virtual('matchedUsers', {
+  localField: '_id',
+  foreignField: 'matchedJobs',
+  ref: 'User'
+});
+
+jobSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('Job', jobSchema);

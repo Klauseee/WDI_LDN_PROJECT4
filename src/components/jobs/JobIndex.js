@@ -30,6 +30,7 @@ class JobIndex extends React.Component {
       this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.concat(jobId) }}, () => {
         axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
         // .then(() => Flash.setMessage('success', 'Job added to favorites'))
+        // ADD THIS USER TO INTERESTED USERS IN THE JOB RECORD (DONE IN THE BACKEND)
           .then(() => this.props.history.push('/jobs'))
           .then(() => console.log(this.state));
       });
@@ -37,6 +38,7 @@ class JobIndex extends React.Component {
       this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.filter(job => job !== jobId) }}, () => {
         axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
         // .then(() => Flash.setMessage('success', 'Job added to favorites'))
+        // REMOVE THIS USER FROM INTERESTED USERS IN THE JOB RECORD (DONE IN THE BACKEND)
           .then(() => this.props.history.push('/jobs'))
           .then(() => console.log(this.state));
       });
@@ -79,23 +81,20 @@ class JobIndex extends React.Component {
               <Link to={`/jobs/${job._id}`}>
                 <div className="card">
                   <div className="card-content">
-                    <h3><strong>{job.title}</strong></h3>
+                    <h3 className="subtitle"><strong>{job.title}</strong></h3>
                     <h3><strong>Location:</strong> {job.location}</h3>
                     <h3><strong>Type:</strong> {job.type}</h3>
                     <h3><strong>Created:</strong> {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                    <h3><strong>Primary skills required:</strong> </h3>
-                    <ul>
-                      {job.technologies.primary.map((skill, i) => <li key={i}>{skill} </li>)}
-                    </ul>
+                    <h3><strong>Primary skills required:</strong> {job.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
                   </div>
                 </div>
               </Link>
               {/* only show star to USERS */}
               {Auth.getPayload().role === 'users' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
                 ?
-                <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="../../assets/images/favorite.svg"/></button>
+                <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="/assets/images/favorite.svg"/></button>
                 :
-                <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img className="star" src="../../assets/images/unfavorite.svg"/></button>
+                <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
               }
             </li>
           )}
