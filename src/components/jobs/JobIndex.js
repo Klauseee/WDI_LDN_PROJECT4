@@ -16,7 +16,8 @@ class JobIndex extends React.Component {
     currentUser: {},
     minSalary: 0,
     maxSalary: 100000000000000000,
-    technologiesSearch: []
+    technologiesSearch: [],
+    filtersApplied: false
   }
 
   componentDidMount() {
@@ -47,7 +48,6 @@ class JobIndex extends React.Component {
   }
 
   handleSwipeLeft = (e) => {
-    this.handleFavorite(e.target.getAttribute('data-id'));
     e.target.classList.add('slideOutLeft');
     setTimeout(() => this.swipeRemove(e.target), 700);
   }
@@ -72,35 +72,46 @@ class JobIndex extends React.Component {
       const index = newTechnologies.indexOf(value);
       newTechnologies.splice(index, 1);
     }
-    this.setState({ technologiesSearch: newTechnologies }, () => console.log(this.state.technologiesSearch));
+    this.setState({ technologiesSearch: newTechnologies, filtersApplied: true }, () => console.log(this.state.technologiesSearch));
   }
 
   handleLocation = (e) => {
-    this.setState({ searchLocation: e.target.value });
+    this.setState({ searchLocation: e.target.value, filtersApplied: true });
   }
 
   handleMinSalary = (e) => {
-    this.setState({ minSalary: e.target.value }, () => console.log(this.state));
+    this.setState({ minSalary: e.target.value, filtersApplied: true }, () => console.log(this.state));
   }
 
   handleMaxSalary = (e) => {
-    this.setState({ maxSalary: e.target.value }, () => console.log(this.state));
+    this.setState({ maxSalary: e.target.value, filtersApplied: true }, () => console.log(this.state));
   }
 
   handleSort = (e) => {
     e.target.value === 'lth' ? _.orderBy(this.state.jobs, ['salary'], ['asc']) : _.orderBy(this.state.jobs, ['salary'], ['desc']);
-    this.setState({ salarySort: e.target.value }, () => console.log(this.state));
+    this.setState({ salarySort: e.target.value, filtersApplied: true }, () => console.log(this.state));
+  }
+
+  clearFilters = () => {
+    document.queryselector('form').reset();
+    this.setState({
+      minSalary: 0,
+      maxSalary: 100000000000000000,
+      technologiesSearch: [],
+      filtersApplied: false });
   }
 
   filterJobs = () => {
-    // make a REGEX (case insensitive)
-    const regex = new RegExp(this.state.searchLocation, 'i');
-    // use _.filter to filter the bangers, second argument takes a function, array or object.
-    let filtered = _.filter(this.state.jobs, (job) => regex.test(job.location));
-    filtered = _.orderBy(filtered, ['salary'], [this.state.salarySort]);
-    filtered = _.filter(filtered, (job) => job.salary > this.state.minSalary && job.salary < this.state.maxSalary);
-    filtered = _.filter(filtered, (job) => job.technologies.primary.some(technology => this.state.technologiesSearch.includes(technology)));
-    return filtered;
+    if(this.state.filtersApplied) {
+      // make a REGEX (case insensitive)
+      const regex = new RegExp(this.state.searchLocation, 'i');
+      let filtered = _.filter(this.state.jobs, (job) => regex.test(job.location));
+      filtered = _.orderBy(filtered, ['salary'], [this.state.salarySort]);
+      filtered = _.filter(filtered, (job) => job.salary > this.state.minSalary && job.salary < this.state.maxSalary);
+      filtered = _.filter(filtered, (job) => job.technologies.primary.some(technology => this.state.technologiesSearch.includes(technology)));
+      return filtered;
+    }
+    return this.state.jobs;
   }
 
   render() {
@@ -167,6 +178,7 @@ class JobIndex extends React.Component {
               </div>
             )}
           </div>
+          <button className="button" >Clear Filters</button>
         </form>
         <ul className="columns is-mobile is-multiline">
           {this.filterJobs().map((job) =>
