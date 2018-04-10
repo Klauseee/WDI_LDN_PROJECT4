@@ -51,6 +51,7 @@ class UserShow extends React.Component {
             <li key={i}>{technology.name}<i className={technology.icon}></i></li>
           )}
         </ul>
+        <h2 className="subtitle"><a target="_blank" href={this.state.user.cv}>View your CV</a></h2>
         {Auth.getPayload().sub === this.state.user._id && <Link
           to={`/users/${this.state.user._id}/edit`}
           className="button is-primary">

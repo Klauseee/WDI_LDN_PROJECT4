@@ -4,6 +4,8 @@ import axios from 'axios';
 import Flash from '../../lib/Flash';
 import Technologies from '../../lib/Technologies';
 
+import ReactFilestack from 'filestack-react';
+
 class UserEdit extends React.Component {
 
   state = {
@@ -75,7 +77,7 @@ class UserEdit extends React.Component {
           <div className="field">
             <label htmlFor="summary">Summary</label>
             <textarea
-              className="input"
+              className="textarea"
               placeholder="Write a short summary about yourself"
               name="summary"
               value={this.state.summary}
@@ -127,6 +129,17 @@ class UserEdit extends React.Component {
                 </label>
               </div>
             )}
+          </div>
+          <div className="field">
+            <label htmlFor="cv">Upload your CV</label> <br />
+            {this.state.cv && <p><a target="_blank" href={this.state.cv}>Preview your CV here</a></p>}
+            <ReactFilestack
+              apikey='AWp9DCV3vTIOqEGF0KjsPz'
+              buttonText="Click to upload"
+              buttonClass="button"
+              options={this.options}
+              onSuccess={res => this.handleFilestack(res)}
+            />
           </div>
 
           <button className="button is-primary">Submit</button>
