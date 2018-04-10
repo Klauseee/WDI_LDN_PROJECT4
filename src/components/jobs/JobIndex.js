@@ -63,42 +63,48 @@ class JobIndex extends React.Component {
     console.log('swipe occurred');
   }
 
-  handleCheck = ({ target: { value, checked }}) => {
+  handleCheck = ({ target: { name, checked }}) => {
     let newTechnologies;
     if(checked) {
-      newTechnologies = this.state.technologiesSearch.concat(value);
+      newTechnologies = this.state.technologiesSearch.concat(name);
     } else {
       newTechnologies = this.state.technologiesSearch.slice();
-      const index = newTechnologies.indexOf(value);
+      const index = newTechnologies.indexOf(name);
       newTechnologies.splice(index, 1);
     }
-    this.setState({ technologiesSearch: newTechnologies, filtersApplied: true }, () => console.log(this.state.technologiesSearch));
+    this.setState({ technologiesSearch: newTechnologies }, () => console.log(this.state.technologiesSearch));
   }
 
   handleLocation = (e) => {
-    this.setState({ searchLocation: e.target.value, filtersApplied: true });
+    this.setState({ searchLocation: e.target.value });
   }
 
   handleMinSalary = (e) => {
-    this.setState({ minSalary: e.target.value, filtersApplied: true }, () => console.log(this.state));
+    this.setState({ minSalary: e.target.value }, () => console.log(this.state));
   }
 
   handleMaxSalary = (e) => {
-    this.setState({ maxSalary: e.target.value, filtersApplied: true }, () => console.log(this.state));
+    this.setState({ maxSalary: e.target.value }, () => console.log(this.state));
   }
 
   handleSort = (e) => {
     e.target.value === 'lth' ? _.orderBy(this.state.jobs, ['salary'], ['asc']) : _.orderBy(this.state.jobs, ['salary'], ['desc']);
-    this.setState({ salarySort: e.target.value, filtersApplied: true }, () => console.log(this.state));
+    this.setState({ salarySort: e.target.value }, () => console.log(this.state));
   }
 
-  clearFilters = () => {
-    document.queryselector('form').reset();
-    this.setState({
-      minSalary: 0,
-      maxSalary: 100000000000000000,
-      technologiesSearch: [],
-      filtersApplied: false });
+
+  toggleFilters = (e) => {
+    e.preventDefault();
+    if(this.state.filtersApplied) {
+      document.querySelectorAll('.techBox').forEach(box => box.checked = false);
+      this.setState({
+        minSalary: 0,
+        maxSalary: 100000000000000000,
+        technologiesSearch: [],
+        filtersApplied: false });
+    } else {
+      this.setState({ filtersApplied: true });
+    }
   }
 
   filterJobs = () => {
@@ -128,6 +134,7 @@ class JobIndex extends React.Component {
               name="search"
               placeholder="Search by location.."
               onChange={this.handleLocation}
+              value={this.state.searchLocation}
             />
           </div>
           <select onChange={this.handleSort}>
@@ -141,6 +148,7 @@ class JobIndex extends React.Component {
               name="search"
               placeholder="Minimum salary"
               onChange={this.handleMinSalary}
+              value={this.state.minSalary}
             />
           </div>
           <div className="field">
@@ -150,35 +158,38 @@ class JobIndex extends React.Component {
               name="search"
               placeholder="Maximum salary"
               onChange={this.handleMaxSalary}
+              value={this.state.maxSalary}
             />
           </div>
           <div className="field columns is-multiline is-mobile">
-            {Technologies.frontend.map(technology =>
+            {Technologies.frontend.map((technology) =>
               <div key={technology.name} className="column is-one-fifth-mobile">
                 <label className="checkbox">
                   <i className={technology.icon}></i>
                   <input
+                    className="techBox"
                     type="checkbox"
                     onChange={this.handleCheck}
-                    value={technology.name}
+                    name={technology.name}
                   />
                 </label>
               </div>
             )}
-            {Technologies.backend.map(technology =>
+            {Technologies.backend.map((technology) =>
               <div key={technology.name} className="column is-one-fifth-mobile">
                 <label className="checkbox">
                   <i className={technology.icon}></i>
                   <input
+                    className="techBox"
                     type="checkbox"
                     onChange={this.handleCheck}
-                    value={technology.name}
+                    name={technology.name}
                   />
                 </label>
               </div>
             )}
           </div>
-          <button className="button" >Clear Filters</button>
+          <button className="button" onClick={this.toggleFilters}>{this.state.filtersApplied ? 'Clear Filters' : 'Apply Filters'}</button>
         </form>
         <ul className="columns is-mobile is-multiline">
           {this.filterJobs().map((job) =>
