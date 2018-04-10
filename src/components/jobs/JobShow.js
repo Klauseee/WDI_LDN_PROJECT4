@@ -36,8 +36,6 @@ class JobShow extends React.Component {
   }
 
   handleFavorite = (jobId) => {
-    // console.log('jobId', jobId);
-    // console.log(e.target);
     // add to the current logged in user's interested field
     if(!this.state.currentUser.favoriteJobs.includes(jobId)) {
       // add the job id if it doesnt exist
@@ -65,13 +63,14 @@ class JobShow extends React.Component {
     //clone favoritejobs array
     const newFavoriteJobs = this.state.interestedUsers[userIndex].favoriteJobs.slice();
     newFavoriteJobs.splice(jobIndex, 1);
-    console.log(userIndex, jobIndex, newFavoriteJobs);
+    const newInterestedUsers = this.state.interestedUsers.slice();
+    newInterestedUsers.splice(userIndex, 1);
     axios.put(`/api/users/${user._id}`, { matchedJobs: this.state._id, favoriteJobs: newFavoriteJobs })
       .then(res => console.log(res.data));
+    this.setState({ interestedUsers: newInterestedUsers });
   }
 
   handleReject = (user) => {
-    console.log('rejected', user._id);
     // find the user within the interestedusers array on the job
     const userIndex = this.state.interestedUsers.indexOf(user);
     // find the job within the favoriteJobs array of the interested user
@@ -79,9 +78,11 @@ class JobShow extends React.Component {
     //clone favoritejobs array
     const newFavoriteJobs = this.state.interestedUsers[userIndex].favoriteJobs.slice();
     newFavoriteJobs.splice(jobIndex, 1);
-    console.log(userIndex, jobIndex, newFavoriteJobs);
+    const newInterestedUsers = this.state.interestedUsers.slice();
+    newInterestedUsers.splice(userIndex, 1);
     axios.put(`/api/users/${user._id}`, { favoriteJobs: newFavoriteJobs })
       .then(res => console.log(res.data));
+    this.setState({ interestedUsers: newInterestedUsers });
   }
 
   handleDelete = () => {
