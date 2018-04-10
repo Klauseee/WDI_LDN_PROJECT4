@@ -2,6 +2,7 @@ const User = require('../models/user');
 
 function indexRoute(req,res,next){
   User.find()
+    .populate('favoriteJobs matchedJobs')
     .then(users => res.json(users))
     .catch(next);
 }
@@ -15,6 +16,7 @@ function createRoute(req,res,next){
 
 function showRoute(req, res, next) {
   User.findById(req.params.id)
+    .populate('favoriteJobs matchedJobs')
     .then(user => res.json(user))
     .then(() => console.log(req.currentUser))
     .catch(next);

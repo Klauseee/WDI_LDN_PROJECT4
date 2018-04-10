@@ -9,7 +9,6 @@ class Login extends React.Component {
 
   state = {};
 
-
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
   }
@@ -20,8 +19,6 @@ class Login extends React.Component {
       .then(res => {
         Auth.setToken(res.data.token);
         User.setUser(res.data.user);
-        // console.log(Auth.getPayload().sub);
-        console.log(res.data);
       })
       .then(() => Flash.setMessage('success', 'Welcome back!'))
       .then(() => this.props.history.push('/'));

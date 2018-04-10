@@ -139,10 +139,10 @@ class EditRoute extends React.Component {
               property='perks'
             />
           </div>
-          <div className="field">
+          {/* <div className="field">
             <label htmlFor="listings">Company Job Listings</label>
             <p>Add a job, ADD FUNCTIONALITY FOR THIS TO HAPPEN, SAVE JOB ID TO THIS.STATE.LISTINGS ARRAY</p>
-          </div>
+          </div> */}
 
           <button className="button is-primary">Submit</button>
         </form>
