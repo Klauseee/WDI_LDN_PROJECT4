@@ -9,12 +9,12 @@ const employerAuth = require('../controllers/employerAuth');
 // JOB ROUTES
 router.route('/jobs')
   .get(jobs.index)
-  .post(jobs.create);
+  .post(secureRoute, jobs.create);
 
 router.route('/jobs/:id')
   .get(jobs.show)
   .put(jobs.update)
-  .delete(jobs.delete);
+  .delete(secureRoute, jobs.delete);
 
 router.post('/jobs/:id/apply', secureRoute, jobs.apply);
 

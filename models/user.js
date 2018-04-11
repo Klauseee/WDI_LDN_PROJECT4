@@ -13,8 +13,7 @@ const userSchema = new mongoose.Schema({
   },
   favoriteJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
   matchedJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
-  cv: { type: String },
-  user: { type: Boolean, default: true }
+  cv: { type: String }
 }, {
   timestamps: true
 });
