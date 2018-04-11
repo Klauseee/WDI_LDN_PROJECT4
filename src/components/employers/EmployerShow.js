@@ -40,52 +40,63 @@ class EmployerShow extends React.Component {
     return (
       // to add a different screen whilst the employer is loading.. use a ternary operator
       this.state.employer ? (
-        // SHOW JOB LISTINGS IF THE EMPLOYER _ID IS THE SAME AS THE ID OF THE LOGGED IN EMPLOYER
         <div>
+          {/* VIEW FOR SHOW PAGE OWNER */}
           {Auth.getPayload().sub === this.state.employer._id && (
-            <div className="container">
+            <div className="container extra">
               <EmployerJobListings employer={this.state.employer} moment={moment} Link={Link}/>
               <hr />
-              <h1 className="title">Here&apos;s what other users can see</h1>
+              <div className="cta-caddy">
+                <h1 className="title cta-partner">Here&apos;s what other users can see</h1>
+                {!this.state.deletePressed ? (
+                  <div className="cta">
+                    {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button">Edit</Link>}
+                    {' '}
+                    {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button">Delete</button>}
+                  </div>
+                ) : (
+                  <div className="cta">
+                    {/* <p>Are you sure?</p> */}
+                    <button onClick={this.handleDelete} className="button">Confirm</button>
+                    {' '}
+                    <button onClick={this.handleToggle} className="button">Cancel</button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
-          <div className="container">
+          {/* VIEW FOR USERS */}
+          <div className="container extra">
             {Auth.getPayload().role === 'users' && <h1 className="title">Employer profile</h1>}
-            <img src={this.state.employer.logo}/>
-            <h2 className="subtitle"><strong>Company:</strong> {this.state.employer.name}</h2>
-            <h2 className="subtitle"><strong>Location:</strong> {this.state.employer.location}</h2>
-            <h2 className="subtitle"><strong>Info:</strong> {this.state.employer.info}</h2>
-            <h2 className="subtitle"><strong>Perks:</strong> </h2>
-            <ul>
-              {this.state.employer.perks.map((perk, i) =>
-                <li key={i} className="subtitle">{perk}</li>
-              )}
-            </ul>
-            <h2 className="subtitle"><strong>Photos:</strong> </h2>
-            <ul>
-              {this.state.employer.photos.map((photo, i) =>
-                <li key={i} className="subtitle"><img src={photo} /></li>
-              )}
-            </ul>
+            <div className="columns">
+              <div className='column'>
+                <img className="employer-logo" src={this.state.employer.logo}/>
+                {/* <h2 className="subtitle"><strong>Company:</strong> {this.state.employer.name}</h2> */}
+                <h2 className="subtitle">Location: <strong>{this.state.employer.location}</strong></h2>
+                <h2 className="subtitle">Info: <strong>{this.state.employer.info}</strong></h2>
+                <h2 className="subtitle">Perks:
+                <ul>
+                  {this.state.employer.perks.map((perk, i) =>
+                    <li key={i}>{perk}</li>
+                  )}
+                </ul>
+                </h2>
+              </div>
+              <div className="column">
+                {/* <h2 className="subtitle"><strong>Photos:</strong> </h2> */}
+                <ul>
+                  {this.state.employer.photos.map((photo, i) =>
+                    <li key={i} className="subtitle"><img src={photo} /></li>
+                  )}
+                </ul>
 
-            {!this.state.deletePressed ? (
-              <div>
-                {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button is-primary">Edit</Link>}
-                {' '}
-                {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button is-danger">Delete</button>}
               </div>
-            ) : (
-              <div>
-                <p>Are you sure?</p>
-                <button onClick={this.handleDelete} className="button is-primary">Delete</button>
-                {' '}
-                <button onClick={this.handleToggle} className="button is-danger">Cancel</button>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       ) : (
-        <div className="container">
+        // LOADING VIEW
+        <div className="container extra">
           <h1 className="title">LOADING</h1>
         </div>
       )

@@ -1,3 +1,87 @@
+$first-color: #032139; // background,
+$second-color: #47AECC;
+$third-color: #134D72; // border detail,
+$fourth-color: #5CBAD7; // navbar hover color,
+$fifth-color: #8C7DFC;
+$sixth-color: #3C67A6;
+$seventh-color: #8C93FE;
+$eigth-color: #DEECF9;
+$ninth-color: #ECF4FE; // text color against first color,
+
+body {
+  // BROAD STYLES
+  background-color: $first-color;
+  width: 100vw;
+  min-height: 100vh;
+  .container {
+    background-color: $eigth-color;
+    &.extra {
+      padding: 8px;
+    }
+    // ~ .container.extra {
+    //   margin-top: -24px;
+    // }
+  }
+
+  // NAVBAR STYLES
+  nav.navbar {
+    background-color: $first-color;
+    border-bottom: 2px solid $third-color;
+    color: $ninth-color;
+    a {
+      color: $ninth-color;
+      transition: 0.4s;
+      &:hover {
+        background-color: $fourth-color;
+        color: $first-color;
+        transition: 0.4s;
+      }
+    }
+  }
+  .navbar-menu.is-active {
+    text-align: center;
+    background-color: $first-color;
+  }
+
+  // RESIZING IMAGES ON EMPLOYERS INDEX
+  .card-img {
+    height: 200px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  // EMPLOYER SHOW PAGE
+  .employer-logo {
+    width: 100%;
+  }
+
+  // EMPLOYER REGISTER/ EDIT
+  .textAreaPad {
+    padding-left: 35px;
+  }
+
+  // REUSABLE STYLES
+  .cta-caddy {
+    position: relative;
+    min-height: 40px;
+    .cta-partner {
+      max-width: calc(100% - 140px);
+    }
+    .cta {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+}
+
+
+
 // .repeater-input {
 //   display: inline-block;
 //   width: 93vw;

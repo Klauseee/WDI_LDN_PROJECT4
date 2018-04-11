@@ -81,94 +81,112 @@ class EmployerEdit extends React.Component {
   // ==============================================================================
 
   render() {
+    // GIVE OPTION TO CHANGE PASSWORD HERE?
     return (
-      <div className="container">
+      <div className="container extra">
         <h1 className="title">Edit your employer profile</h1>
         <form onSubmit={this.handleSubmit}>
 
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input
-              className="input"
-              placeholder="example@email.com"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </div>
+          <div className="columns">
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
 
-          {/* <div className="field">
-            <label htmlFor="password">Password</label>
-            <p>GIVE OPTION TO CHANGE PASSWORD HERE?</p>
-          </div> */}
+              <div className="field">
+                {/* <label htmlFor="email">Email</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    className="input"
+                    placeholder="Email"
+                    name="email"
+                    onChange={this.handleChange}
+                    value={this.state.email}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-envelope"></i></span>
+                </div>
+              </div>
 
-          {/* REST OF THE HENCH FORM */}
-          <div className="field">
-            <label htmlFor="name">Company Name</label>
-            <input
-              className="input"
-              placeholder="My company"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-          </div>
+              <div className="field columns">
+                <div className="column">
+                  <label htmlFor="logo"><i className="fas fa-upload"></i>&nbsp; Upload Company Logo</label><br />
+                  <ReactFilestack
+                    apikey='AWp9DCV3vTIOqEGF0KjsPz'
+                    buttonText="Click to upload"
+                    buttonClass="button"
+                    options={this.options}
+                    onSuccess={res => this.handleFilestack(res)}
+                  />
+                </div>
+                {this.state.logo && <p className="column">Preview your current logo: <br/> <img src={this.state.logo} /></p>}
+              </div>
 
-          <div className="field columns">
-            <div className="column">
-              <label htmlFor="logo">Upload Company Logo</label><br />
-              <ReactFilestack
-                apikey='AWp9DCV3vTIOqEGF0KjsPz'
-                buttonText="Click to upload"
-                buttonClass="button"
-                options={this.options}
-                onSuccess={res => this.handleFilestack(res)}
-              />
             </div>
-            {this.state.logo && <p className="column">Preview your current logo: <br/> <img src={this.state.logo} /></p>}
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+
+              <div className="field">
+                {/* <label htmlFor="name">Company Name</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    className="input"
+                    placeholder="Company Name"
+                    name="name"
+                    onChange={this.handleChange}
+                    value={this.state.name}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-building"></i></span>
+                </div>
+              </div>
+              <div className="field">
+                {/* <label htmlFor="location">Company Location</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    className="input"
+                    placeholder="Company location"
+                    name="location"
+                    onChange={this.handleChange}
+                    value={this.state.location}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-map-marker"></i></span>
+                </div>
+              </div>
+              <div className="field">
+                {/* <label htmlFor="info">Company Info</label> */}
+                <div className="control has-icons-left">
+                  <textarea
+                    className="textarea textAreaPad"
+                    placeholder="A little blurb about your company"
+                    name="info"
+                    onChange={this.handleChange}
+                    value={this.state.info}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-info-circle"></i></span>
+                </div>
+              </div>
+
+            </div>
           </div>
 
           <div className="field">
-            <label htmlFor="location">Company Location</label>
-            <input
-              className="input"
-              placeholder="Where are you situated?"
-              name="location"
-              value={this.state.location}
-              onChange={this.handleChange}
-            />
-          </div>
-
-          <div className="field">
-            <label htmlFor="info">Company Info</label>
-            <input
-              className="input"
-              placeholder="Write a little blurb about your company"
-              name="info"
-              value={this.state.info}
-              onChange={this.handleChange}
-            />
-          </div>
-
-          <div className="field">
-            <label htmlFor="photos">Company Photos</label>
+            {/* <label htmlFor="photos">Company Photos</label> */}
             <Repeater
               handleRepeaterChange={this.handleRepeaterChange}
               addRepeaterInput={this.addRepeaterInput}
               removeRepeaterInput={this.removeRepeaterInput}
               array={this.state.photos}
               property='photos'
+              placeholderText='Company photo link'
+              icon='image'
             />
           </div>
 
           <div className="field">
-            <label htmlFor="photos">Company Perks</label>
+            {/* <label htmlFor="photos">Company Perks</label> */}
             <Repeater
               handleRepeaterChange={this.handleRepeaterChange}
               addRepeaterInput={this.addRepeaterInput}
               removeRepeaterInput={this.removeRepeaterInput}
               array={this.state.perks}
               property='perks'
+              placeholderText='Company perks'
+              icon='thumbs-up'
             />
           </div>
 
