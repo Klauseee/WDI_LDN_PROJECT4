@@ -1,5 +1,4 @@
 const User = require('../models/user');
-const Emailer = require('../lib/Emailer');
 
 function indexRoute(req,res,next){
   User.find()
@@ -29,12 +28,6 @@ function showRoute(req, res, next) {
     .then(() => console.log(req.currentUser))
     .catch(next);
 }
-
-// function email(req, res, next) {
-//   User.findById(req.params.id)
-//     .then(() => console.log(req.body))
-//     .catch(next);
-// }
 
 function updateRoute(req, res, next) {
   User.findById(req.params.id)

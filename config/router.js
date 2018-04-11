@@ -1,5 +1,5 @@
 const router = require('express').Router();
-// const secureRoute = require('../lib/secureRoute');
+const secureRoute = require('../lib/secureRoute');
 const jobs = require('../controllers/jobs');
 const users = require('../controllers/users');
 const employers = require('../controllers/employers');
@@ -16,6 +16,8 @@ router.route('/jobs/:id')
   .put(jobs.update)
   .delete(jobs.delete);
 
+router.post('/jobs/:id/apply', secureRoute, jobs.apply);
+
 // USER ROUTES
 router.route('/users')
   .get(users.index);
@@ -24,7 +26,6 @@ router.route('/users/:id')
   .get(users.show)
   .put(users.update)
   .delete(users.delete);
-  // .post(users.email);
 
 router.route('/users/register')
   .post(userAuth.register);
@@ -46,6 +47,7 @@ router.route('/employers/register')
 
 router.route('/employers/login')
   .post(employerAuth.login);
+
 
 router.route('/*')
   .all((req, res) => res.status(404).json({ message: 'Not found' }));

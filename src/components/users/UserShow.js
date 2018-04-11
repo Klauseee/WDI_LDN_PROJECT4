@@ -35,14 +35,11 @@ class UserShow extends React.Component {
       });
   }
 
-  handleApply = (jobId) => {
-    this.setState({ mailOptions: {
-      from: 'nicholaswilson3010@gmail.com',
-      to: 'suii_shum@hotmail.com',
-      subject: `Application from ${this.state.user.email}`,
-      text: 'Please consider the following applicant. CV is attached'
-    }}, () => axios.post(`/api/users/${this.state.user._id}`));
-    // console.log(mailOptions);
+  handleApply = (job) => {
+    axios.post(`/api/jobs/${job._id}/apply`, null, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}` }
+    })
+      .then(res => console.log(res));
   }
 
   handleDismiss = (jobId) => {
