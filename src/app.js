@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/common/Navbar';
 import FlashMessages from './components/common/FlashMessages';
+import NotFound from './components/common/NotFound';
+import Homepage from './components/common/Homepage';
 
 import EmployerIndex from './components/employers/EmployerIndex';
 import EmployerShow from './components/employers/EmployerShow';
@@ -51,7 +53,8 @@ class App extends React.Component {
               <Route path="/users/:id" component={UserShow} />
               <UserProtectedRoute path="/jobs" component={JobIndex}/>
               <Route path="/employers" component={EmployerIndex} />
-              {/* <Route component={NotFound} /> */}
+              <Route path="/" component={Homepage} />
+              <Route component={NotFound} />
             </Switch>
           </section>
         </main>
