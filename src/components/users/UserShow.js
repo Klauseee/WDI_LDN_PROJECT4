@@ -14,7 +14,8 @@ class UserShow extends React.Component {
     technologies: {
       frontend: [],
       backend: []
-    }
+    },
+    mailOptions: {}
   }
 
   //
@@ -34,17 +35,17 @@ class UserShow extends React.Component {
       });
   }
 
-  handleApply = (jobId) => {
-    console.log(jobId);
-    //function for applying for job goes in here
-    window.open('mailto:test@test.com');
+  handleApply = (job) => {
+    axios.post(`/api/jobs/${job._id}/apply`, null, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}` }
+    })
+      .then(res => console.log(res));
   }
 
   handleDismiss = (jobId) => {
     const newMatchedJobs = _.filter(this.state.user.matchedJobs, (job) => job._id !== jobId);
     this.setState({ user: { matchedJobs: newMatchedJobs}}, () => axios.put(`/api/users/${this.props.match.params.id}`, { matchedJobs: this.state.user.matchedJobs})
       .then(res => console.log(res.data)));
-
   }
 
   render() {

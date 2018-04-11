@@ -16,7 +16,14 @@ function createRoute(req,res,next){
 
 function showRoute(req, res, next) {
   User.findById(req.params.id)
-    .populate('favoriteJobs matchedJobs')
+    .populate('favoriteJobs')
+    .populate({
+      path: 'matchedJobs',
+      populate: {
+        path: 'employer',
+        model: 'Employer'
+      }
+    })
     .then(user => res.json(user))
     // .then(() => console.log(req.currentUser))
     .catch(next);
@@ -41,6 +48,7 @@ module.exports = {
   index: indexRoute,
   create: createRoute,
   show: showRoute,
+  // email: email,
   update: updateRoute,
   delete: deleteRoute
 };
