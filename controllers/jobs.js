@@ -54,7 +54,7 @@ function applyRoute(req, res, next) {
         to: 'nicholaswilson3010@gmail.com',
         replyTo: req.currentUser.email,
         subject: 'Job Application',
-        text: `Someone has applied for role of ${job.title}. Please contact them by replying to this email.`
+        text: `Someone has applied for role of ${job.title}. Please review their CV at ${req.currentUser.cv}. Please contact them by replying to this email. `
       });
     })
     .then(info => console.log(info))
