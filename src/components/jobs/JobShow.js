@@ -5,7 +5,7 @@ import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 import User from '../../lib/User';
 
-import InterestedUser from './components/InterestedUser';
+import InterestedUser from './InterestedUser';
 
 import { Link } from 'react-router-dom';
 
@@ -157,6 +157,7 @@ class JobShow extends React.Component {
             <button onClick={this.handleToggle} className="button">Cancel</button>
           </div>
         )}
+        
         {/* LIST OF INTERESTED USERS */}
         {Auth.getPayload().role === 'employers' &&
         <div>

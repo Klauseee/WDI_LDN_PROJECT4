@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
-import UserMatchedJobs from './components/UserMatchedJobs';
+import UserMatchedJobs from './UserMatchedJobs';
 import Auth from '../../lib/Auth';
 import _ from 'lodash';
 
@@ -46,7 +46,6 @@ class UserShow extends React.Component {
     const newMatchedJobs = _.filter(this.state.user.matchedJobs, (job) => job._id !== jobId);
     this.setState({ user: { matchedJobs: newMatchedJobs}}, () => axios.put(`/api/users/${this.props.match.params.id}`, { matchedJobs: this.state.user.matchedJobs})
       .then(res => console.log(res.data)));
-
   }
 
   render() {

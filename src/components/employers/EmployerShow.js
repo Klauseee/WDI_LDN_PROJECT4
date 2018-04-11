@@ -5,6 +5,8 @@ import Flash from '../../lib/Flash';
 
 import moment from 'moment';
 
+import EmployerJobListings from './EmployerJobListings';
+
 import { Link } from 'react-router-dom';
 
 // we need state so this will be a classical component
@@ -39,64 +41,49 @@ class EmployerShow extends React.Component {
     return (
       // to add a different screen whilst the employer is loading.. use a ternary operator
       this.state.employer ? (
-        <div className="container">
-          <h1 className="title">Welcome, {this.state.employer.name}</h1>
-          <h2 className="subtitle">Looking for developers?</h2>
-          <Link to={'/jobs/new'} className="button is-success">Add a Job</Link>
-          <h2 className="subtitle"><strong>Live Listings:</strong> </h2>
-          <ul>
-            {this.state.employer.listings.map((listing, i) =>
-              <li key={i} className="column is-full">
-                <Link to={`/jobs/${listing._id}`}>
-                  <div className="card">
-                    <div className="card-content">
-                      <h3 className="title is-4">Job title: {listing.title}</h3>
-                      <h3 className="subtitle">Location: {listing.location}</h3>
-                      <h3 className="subtitle">Role type: {listing.type}</h3>
-                      <h3 className="subtitle">Created at: {moment(listing.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                      <h3 className="subtitle">Primary skills: {listing.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}
-                      </h3>
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            )}
-          </ul>
-
-          <hr />
-          <h1 className="title">Heres what other users can see</h1>
-          <img src={this.state.employer.logo}/>
-          <h2 className="subtitle"><strong>Company:</strong> {this.state.employer.name}</h2>
-          <h2 className="subtitle"><strong>Location:</strong> {this.state.employer.location}</h2>
-          <h2 className="subtitle"><strong>Info:</strong> {this.state.employer.info}</h2>
-          <h2 className="subtitle"><strong>Perks:</strong> </h2>
-          <ul>
-            {this.state.employer.perks.map((perk, i) =>
-              <li key={i} className="subtitle">{perk}</li>
-            )}
-          </ul>
-          <h2 className="subtitle"><strong>Photos:</strong> </h2>
-          <ul>
-            {this.state.employer.photos.map((photo, i) =>
-              <li key={i} className="subtitle"><img src={photo} /></li>
-            )}
-          </ul>
-
-          {!this.state.deletePressed ? (
-            <div>
-              {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button is-primary">Edit</Link>}
-              {' '}
-              {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button is-danger">Delete</button>}
-            </div>
-          ) : (
-            <div>
-              <p>Are you sure?</p>
-              <button onClick={this.handleDelete} className="button is-primary">Delete</button>
-              {' '}
-              <button onClick={this.handleToggle} className="button is-danger">Cancel</button>
+        // SHOW JOB LISTINGS IF THE EMPLOYER _ID IS THE SAME AS THE ID OF THE LOGGED IN EMPLOYER
+        <div>
+          {Auth.getPayload().sub === this.state.employer._id && (
+            <div className="container">
+              <EmployerJobListings employer={this.state.employer} moment={moment} Link={Link}/>
+              <hr />
+              <h1 className="title">Here&apos;s what other users can see</h1>
             </div>
           )}
+          <div className="container">
+            {Auth.getPayload().role === 'users' && <h1 className="title">Employer profile</h1>}
+            <img src={this.state.employer.logo}/>
+            <h2 className="subtitle"><strong>Company:</strong> {this.state.employer.name}</h2>
+            <h2 className="subtitle"><strong>Location:</strong> {this.state.employer.location}</h2>
+            <h2 className="subtitle"><strong>Info:</strong> {this.state.employer.info}</h2>
+            <h2 className="subtitle"><strong>Perks:</strong> </h2>
+            <ul>
+              {this.state.employer.perks.map((perk, i) =>
+                <li key={i} className="subtitle">{perk}</li>
+              )}
+            </ul>
+            <h2 className="subtitle"><strong>Photos:</strong> </h2>
+            <ul>
+              {this.state.employer.photos.map((photo, i) =>
+                <li key={i} className="subtitle"><img src={photo} /></li>
+              )}
+            </ul>
 
+            {!this.state.deletePressed ? (
+              <div>
+                {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button is-primary">Edit</Link>}
+                {' '}
+                {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button is-danger">Delete</button>}
+              </div>
+            ) : (
+              <div>
+                <p>Are you sure?</p>
+                <button onClick={this.handleDelete} className="button is-primary">Delete</button>
+                {' '}
+                <button onClick={this.handleToggle} className="button is-danger">Cancel</button>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <div className="container">

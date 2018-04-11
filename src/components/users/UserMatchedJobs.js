@@ -13,7 +13,7 @@ const UserMatchedJobs = ({ jobs, handleApply, handleDismiss }) => {
             <h2 className="subtitle">{job.location}</h2>
             <p>{job.summary}</p>
             <h2 className="subtitle"><strong>Salary:</strong> £{job.salary}</h2>
-            <button className="button is-primary" onClick={() => handleApply(job)}>Accept</button>
+            <button className="button is-primary" onClick={() => handleApply(job)}>Apply</button>
             <button className="button is-danger" onClick={() => handleDismiss(job)}>Dismiss</button>
           </div>
         </div>

@@ -42,19 +42,6 @@ class JobNew extends React.Component {
     this.setState({ [name]: value, errors }, () => console.log(this.state));
   }
 
-  // handleCheck = ({ target: { name, value, checked }}) => {
-  //   let newTechnologies;
-  //   if(checked) {
-  //     newTechnologies = this.state.technologies[name].concat(value);
-  //   } else {
-  //     newTechnologies = this.state.technologies[name].slice();
-  //     const index = newTechnologies.indexOf(value);
-  //     newTechnologies.splice(index, 1);
-  //   }
-  //   const other = name === 'primary' ? 'secondary' : 'primary';
-  //   this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other] }}, () => console.log(this.state.technologies));
-  // }
-
   handleCheck = ({ target: { name, value, checked }}) => {
     let newTechnologies;
     if(checked) {
@@ -73,6 +60,7 @@ class JobNew extends React.Component {
       <div className="container">
         <h1 className="title">Create a new listing</h1>
         <form onSubmit={this.handleSubmit}>
+
           <div className="field">
             <label htmlFor="title">Title</label>
             <input
@@ -82,6 +70,7 @@ class JobNew extends React.Component {
               onChange={this.handleChange}
             />
           </div>
+
           <div className="field">
             <label htmlFor="location">Location</label>
             <input
@@ -91,6 +80,7 @@ class JobNew extends React.Component {
               onChange={this.handleChange}
             />
           </div>
+
           <div className="field">
             <label htmlFor="type">Type of Role</label><br />
             <label className="radio">
@@ -112,8 +102,11 @@ class JobNew extends React.Component {
               &nbsp; Contract
             </label>
           </div>
+
           <div className="field columns is-multiline">
+
             <label htmlFor="logo">Primary Skills</label>
+
             {Technologies.frontend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">
@@ -127,6 +120,7 @@ class JobNew extends React.Component {
                 </label>
               </div>
             )}
+
             {Technologies.backend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">
@@ -140,9 +134,13 @@ class JobNew extends React.Component {
                 </label>
               </div>
             )}
+
           </div>
+
           <div className="field columns is-multiline">
+
             <label htmlFor="logo">Secondary Skills</label>
+
             {Technologies.frontend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">
@@ -156,6 +154,7 @@ class JobNew extends React.Component {
                 </label>
               </div>
             )}
+
             {Technologies.backend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">
@@ -169,7 +168,9 @@ class JobNew extends React.Component {
                 </label>
               </div>
             )}
+
           </div>
+
           <div className="field">
             <label htmlFor="summary">Job Summary</label>
             <textarea
@@ -179,6 +180,7 @@ class JobNew extends React.Component {
               onChange={this.handleChange}
             ></textarea>
           </div>
+          
           <div className="field">
             <label htmlFor="salary">Salary</label>
             <input

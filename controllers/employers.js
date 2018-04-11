@@ -17,7 +17,7 @@ function showRoute(req, res, next) {
   Employer.findById(req.params.id)
     .populate('listings')
     .then(user => res.json(user))
-    .then(() => console.log(req.currentUser))
+    // .then(() => console.log(req.currentUser))
     .catch(next);
 }
 
