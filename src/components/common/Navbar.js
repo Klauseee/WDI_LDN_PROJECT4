@@ -4,14 +4,14 @@ import Auth from '../../lib/Auth';
 
 class Navbar extends React.Component {
   state = {
-    currentUser: '',
+    userType: '',
     navIsOpen: false,
     loginRequest: false,
     registerRequest: false
   }
 
   componentWillReceiveProps() {
-    if(Auth.isAuthenticated()) this.setState({ currentUser: Auth.getPayload().role }, () => console.log('current user navbar', this.state.currentUser));
+    if(Auth.isAuthenticated()) this.setState({ userType: Auth.getPayload().role }, () => console.log('current user type', this.state.userType));
   }
 
   handleToggle = () => {
@@ -38,7 +38,7 @@ class Navbar extends React.Component {
       <nav className="navbar">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
-          Jibbly Jobbly (logged in as {Auth.getPayload().role})
+          Jobbly (logged in as {Auth.getPayload().role})
           </Link>
           <div
             onClick={this.handleToggle}
@@ -65,7 +65,7 @@ class Navbar extends React.Component {
             {Auth.isAuthenticated() &&
               <Link
                 className="navbar-item"
-                to={`/${this.state.currentUser}/${Auth.getPayload().sub}`}>
+                to={`/${this.state.userType}/${Auth.getPayload().sub}`}>
                 Profile
               </Link>
             }

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Technologies from '../../lib/Technologies';
-import UserMatchedJobs from './components/UserMatchedJobs';
+import UserMatchedJobs from './UserMatchedJobs';
 import Auth from '../../lib/Auth';
 import _ from 'lodash';
 
