@@ -45,7 +45,7 @@ class JobEdit extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     axios.put(`/api/jobs/${this.state._id}`, this.state)
-      .then(() => Flash.setMessage('success', 'Job edited'))
+      .then(() => Flash.setMessage('success', 'Your changes have been saved!'))
       .then(() => this.props.history.push(`/jobs/${this.props.match.params.id}`));
   }
 
@@ -140,7 +140,7 @@ class JobEdit extends React.Component {
           <div className="field columns is-multiline">
 
             <label htmlFor="logo">Secondary Skills</label>
-            
+
             {Technologies.frontend.map(technology =>
               <div key={technology.name} className="column">
                 <label className="checkbox">

@@ -1,10 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import Auth from '../../lib/Auth';
 import Hammer from 'react-hammerjs';
-import Technologies from '../../lib/Technologies';
+
+import Auth from '../../lib/Auth';
 import User from '../../lib/User';
+// import Technologies from '../../lib/Technologies';
+
+import SearchFilter from './SearchFilter';
 
 import moment from 'moment';
 
@@ -15,16 +18,20 @@ class JobIndex extends React.Component {
   state = {
     jobs: [],
     currentUser: {},
-    minSalary: 0,
-    maxSalary: 100000000000000000,
-    technologiesSearch: [],
-    filtersApplied: false
+    // searchEmployerName: '',
+    // searchTitle: '',
+    // searchLocation: '',
+    // searchType: '',
+    // searchMinSalary: '',
+    // searchMaxSalary: '',
+    // orderBy: ''
+    searchTech: []
   }
 
   // GET ALL JOBS AND CURRENT USER
   componentDidMount() {
     axios.get('/api/jobs')
-      .then(res => this.setState({ jobs: res.data, currentUser: User.getUser() }, () => console.log(this.state)));
+      .then(res => this.setState({ jobs: res.data, currentUser: User.getUser() }));
   }
 
   handleFavorite = (jobId) => {
@@ -33,19 +40,17 @@ class JobIndex extends React.Component {
       // add the job id if it doesnt exist
       this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.concat(jobId) }}, () => {
         axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
-          .then(() => this.props.history.push('/jobs'))
-          .then(() => console.log(this.state));
+          .then(res => User.setUser(res.data));
       });
     } else {
       this.setState({ currentUser: { favoriteJobs: this.state.currentUser.favoriteJobs.filter(job => job !== jobId) }}, () => {
         axios.put(`/api/users/${Auth.getPayload().sub}`, this.state.currentUser)
-          .then(() => this.props.history.push('/jobs'))
-          .then(() => console.log(this.state));
+          .then(res => User.setUser(res.data));
       });
     }
   }
 
-  // GESTURE FUNCTIONS ============================================================
+  // HAMMER GESTURE FUNCTIONS =====================================================
   handleSwipeLeft = (e) => {
     e.target.classList.add('slideOutLeft');
     setTimeout(() => this.swipeRemove(e.target), 700);
@@ -63,136 +68,64 @@ class JobIndex extends React.Component {
   }
   // ==============================================================================
 
+  // FILTER FUNCTIONS =============================================================
+  handleSearchInput = (e, searchAttribute) => {
+    console.log(`${searchAttribute}: ${e.target.value}`);
+    this.setState({ [searchAttribute]: e.target.value });
+  }
+
   handleCheck = ({ target: { name, checked }}) => {
     let newTechnologies;
     if(checked) {
-      newTechnologies = this.state.technologiesSearch.concat(name);
+      newTechnologies = this.state.searchTech.concat(name);
     } else {
-      newTechnologies = this.state.technologiesSearch.slice();
+      newTechnologies = this.state.searchTech.slice();
       const index = newTechnologies.indexOf(name);
       newTechnologies.splice(index, 1);
     }
-    this.setState({ technologiesSearch: newTechnologies }, () => console.log(this.state.technologiesSearch));
-  }
-
-  handleLocation = (e) => {
-    this.setState({ searchLocation: e.target.value });
-  }
-
-  handleMinSalary = (e) => {
-    this.setState({ minSalary: e.target.value }, () => console.log(this.state));
-  }
-
-  handleMaxSalary = (e) => {
-    this.setState({ maxSalary: e.target.value }, () => console.log(this.state));
-  }
-
-  handleSort = (e) => {
-    e.target.value === 'lth' ? _.orderBy(this.state.jobs, ['salary'], ['asc']) : _.orderBy(this.state.jobs, ['salary'], ['desc']);
-    this.setState({ salarySort: e.target.value }, () => console.log(this.state));
-  }
-
-
-  toggleFilters = (e) => {
-    e.preventDefault();
-    if(this.state.filtersApplied) {
-      document.querySelectorAll('.techBox').forEach(box => box.checked = false);
-      this.setState({
-        minSalary: 0,
-        maxSalary: 100000000000000000,
-        technologiesSearch: [],
-        filtersApplied: false });
-    } else {
-      this.setState({ filtersApplied: true });
-    }
+    this.setState({ searchTech: newTechnologies });
   }
 
   filterJobs = () => {
-    if(this.state.filtersApplied) {
-      // make a REGEX (case insensitive)
-      const regex = new RegExp(this.state.searchLocation, 'i');
-      let filtered = _.filter(this.state.jobs, (job) => regex.test(job.location));
-      filtered = _.orderBy(filtered, ['salary'], [this.state.salarySort]);
-      filtered = _.filter(filtered, (job) => job.salary > this.state.minSalary && job.salary < this.state.maxSalary);
-      filtered = _.filter(filtered, (job) => job.technologies.primary.some(technology => this.state.technologiesSearch.includes(technology)));
-      return filtered;
+    // convert search queries to regex
+    const employerNameRegex = new RegExp(this.state.searchEmployerName, 'i');
+    const titleRegex = new RegExp(this.state.searchTitle, 'i');
+    const locationRegex = new RegExp(this.state.searchLocation, 'i');
+    const typeRegex = new RegExp(this.state.searchType, 'i');
+    // filtering
+    let filtered = [];
+    if (this.state.searchType) {
+      filtered = _.filter(this.state.jobs, (job) => typeRegex.test(job.type));
+    } else {
+      filtered = this.state.jobs;
     }
-    return this.state.jobs;
+    filtered = _.filter(filtered, (job) => employerNameRegex.test(job.employer.name));
+    filtered = _.filter(filtered, (job) => titleRegex.test(job.title));
+    filtered = _.filter(filtered, (job) => locationRegex.test(job.location));
+    if (this.state.searchMinSalary) {
+      filtered = _.filter(filtered, (job) => job.salary > this.state.searchMinSalary);
+    }
+    if (this.state.searchMaxSalary) {
+      filtered = _.filter(filtered, (job) => job.salary < this.state.searchMaxSalary);
+    }
+    filtered = _.filter(filtered, (job) => {
+      const allSkills = job.technologies.primary.concat(job.technologies.secondary);
+      return _.intersection(allSkills, this.state.searchTech).length === this.state.searchTech.length;
+    });
+    filtered = this.state.orderBy === 'asc' ? _.orderBy(filtered, ['salary'], ['asc']) : _.orderBy(filtered, ['salary'], ['desc']);
+    return filtered;
   }
+  // ==============================================================================
 
   render() {
     return (
       <div className="container">
         <h1 className="title">Active jobs</h1>
         <h2 className="subtitle">Add a job to your favorites or click through to see more. Swipe right to add to favourites, or swipe left to dismiss.</h2>
+        <hr />
         {/* SEARCH FILTER */}
-        <form>
-          <div className="field">
-            <input
-              className="input"
-              type="text"
-              name="search"
-              placeholder="Search by location.."
-              onChange={this.handleLocation}
-              value={this.state.searchLocation}
-            />
-          </div>
-          <div className="select is-primary">
-            <select onChange={this.handleSort}>
-              <option value="asc">Salary: low to high</option>
-              <option value="desc">Salary: high to low</option>
-            </select>
-          </div>
-          <div className="field">
-            <input
-              className="input"
-              type="number"
-              name="search"
-              placeholder="Minimum salary"
-              onChange={this.handleMinSalary}
-              value={this.state.minSalary}
-            />
-          </div>
-          <div className="field">
-            <input
-              className="input"
-              type="number"
-              name="search"
-              placeholder="Maximum salary"
-              onChange={this.handleMaxSalary}
-              value={this.state.maxSalary}
-            />
-          </div>
-          <div className="field columns is-multiline is-mobile">
-            {Technologies.frontend.map((technology) =>
-              <div key={technology.name} className="column is-one-fifth-mobile">
-                <label className="checkbox">
-                  <i className={technology.icon}></i>
-                  <input
-                    className="techBox"
-                    type="checkbox"
-                    onChange={this.handleCheck}
-                    name={technology.name}
-                  />
-                </label>
-              </div>
-            )}
-            {Technologies.backend.map((technology) =>
-              <div key={technology.name} className="column is-one-fifth-mobile">
-                <label className="checkbox">
-                  <i className={technology.icon}></i>
-                  <input
-                    className="techBox"
-                    type="checkbox"
-                    onChange={this.handleCheck}
-                    name={technology.name}
-                  />
-                </label>
-              </div>
-            )}
-          </div>
-          <button className="button" onClick={this.toggleFilters}>{this.state.filtersApplied ? 'Clear Filters' : 'Apply Filters'}</button>
-        </form>
+        <SearchFilter handleSearchInput={this.handleSearchInput} handleCheck={this.handleCheck} />
+
         <hr />
         <ul className="columns is-mobile is-multiline">
           {this.filterJobs().map((job) =>
@@ -209,7 +142,9 @@ class JobIndex extends React.Component {
                       <h3><strong>Location:</strong> {job.location}</h3>
                       <h3><strong>Type:</strong> {job.type}</h3>
                       <h3><strong>Created:</strong> {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                      <h3><strong>Primary skills required:</strong> {job.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
+                      <h3><strong>Primary skills needed:</strong> {job.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
+                      <h3><strong>Would be nice:</strong> {job.technologies.secondary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
+                      <h3><strong>Salary:</strong> {job.salary}</h3>
                     </div>
                   </div>
                 </Link>

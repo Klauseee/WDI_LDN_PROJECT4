@@ -9,7 +9,6 @@ import EmployerJobListings from './EmployerJobListings';
 
 import { Link } from 'react-router-dom';
 
-// we need state so this will be a classical component
 class EmployerShow extends React.Component {
 
   state = {
