@@ -65,7 +65,14 @@ class JobIndex extends React.Component {
     this.handleFavorite(e.target.getAttribute('data-id'));
     e.target.classList.add('slideOutRight');
     setTimeout(() => this.swipeRemove(e.target), 700);
+    // console.log(e.target);
   }
+
+  // findListItem = (element, class) => {
+  //   if(element.classList.contains(class)) return element;
+  //   else(while((element = element.parentNode) && !element.classlist.contains(class)));
+  //   return element;
+  // }
 
   swipeRemove = (target) => {
     target.parentNode.removeChild(target);
@@ -123,7 +130,7 @@ class JobIndex extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container extra">
         <h1 className="title">Active jobs</h1>
         <h2 className="subtitle">Add a job to your favorites or click through to see more. Swipe right to add to favourites, or swipe left to dismiss.</h2>
         <hr />
@@ -139,26 +146,34 @@ class JobIndex extends React.Component {
               onSwipeRight={this.handleSwipeRight}
               className="column is-one-third-desktop is-half-tablet is-full-mobile animated">
               <li data-id={job._id}>
-                <Link to={`/jobs/${job._id}`}>
-                  <div className="card">
-                    <div className="card-content">
-                      <h3><strong>{job.title}</strong></h3>
-                      <h3><strong>Location:</strong> {job.location}</h3>
-                      <h3><strong>Type:</strong> {job.type}</h3>
-                      <h3><strong>Created:</strong> {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
-                      <h3><strong>Primary skills needed:</strong> {job.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
-                      <h3><strong>Would be nice:</strong> {job.technologies.secondary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
-                      <h3><strong>Salary:</strong> {job.salary}</h3>
+                <div className="cta-caddy">
+                  {/* only show star to USERS */}
+                  {Auth.getPayload().role === 'users' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
+                    ?
+                    <div className="cta-fave">
+                      <button className="button is-info" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/favorite.svg"/></button>
                     </div>
-                  </div>
-                </Link>
-                {/* only show star to USERS */}
-                {Auth.getPayload().role === 'users' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
-                  ?
-                  <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img  className="star" src="/assets/images/favorite.svg"/></button>
-                  :
-                  <button className="button is-primary" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
-                }
+                    :
+                    <div className="cta-fave">
+                      <button className="button is-info" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
+                    </div>
+                  }
+                  <Link to={`/jobs/${job._id}`}>
+                    <div className="card">
+                      <div className="card-content">
+                        <h3 className="cta-partner-sml"><strong>{job.title}</strong></h3>
+
+                        <h3><strong>Location:</strong> {job.location}</h3>
+                        <h3><strong>Type:</strong> <span className="capitalize">{job.type}</span></h3>
+                        <h3><strong>Primary skills needed:</strong> {job.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
+                        <h3><strong>Would be nice:</strong> {job.technologies.secondary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
+                        <h3><strong>Salary:</strong> {`£${job.salary} `}{job.type === 'permanent' ? 'per annum' : 'per day'}</h3>
+                        <p className="low-opacity"><small>Created: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</small></p>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+
               </li>
             </Hammer>
           )}

@@ -122,7 +122,7 @@ class EmployerRegister extends React.Component {
                 {/* <label htmlFor="info">Company Info</label> */}
                 <div className="control has-icons-left">
                   <textarea
-                    className="textarea textAreaPad"
+                    className="textarea text-area-pad"
                     placeholder="A little blurb about your company"
                     name="info"
                     onChange={this.handleChange}

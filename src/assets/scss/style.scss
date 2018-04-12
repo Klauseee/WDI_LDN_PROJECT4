@@ -55,32 +55,69 @@ body {
     background-repeat: no-repeat;
   }
 
-  // EMPLOYER SHOW PAGE
-  .employer-logo {
-    width: 100%;
+  // EMPLOYER REGISTER/ EDIT
+  .text-area-pad {
+    padding-left: 35px;
   }
 
-  // EMPLOYER REGISTER/ EDIT
-  .textAreaPad {
-    padding-left: 35px;
+  // JOBS NEW PAGE
+  table {
+  width: 100%;
+    tr {
+      td {
+        text-align: center;
+      }
+    }
+  }
+
+  // JOBS SHOW PAGE
+  .icons-li {
+    text-align: center;
+    padding: 0px 8px;
   }
 
   // REUSABLE STYLES
   .cta-caddy {
     position: relative;
     min-height: 40px;
-    .cta-partner {
+    .cta-partner-lrg {
       max-width: calc(100% - 140px);
+    }
+    .cta-partner-sml {
+      max-width: calc(100% - 55px);
     }
     .cta {
       position: absolute;
       top: 0;
       right: 0;
+      z-index: 2;
     }
+    .cta-fave {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 2;
+    }
+  }
+
+  .max-width {
+    width: 100%;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .low-opacity {
+    opacity: 0.5;
   }
 
   .capitalize {
     text-transform: capitalize;
+  }
+
+  .underline {
+    text-decoration: underline;
   }
 }
 
@@ -101,3 +138,23 @@ body {
 }
 
 // LOGIN/REGISTER SPLASH PAGE
+.login-register {
+  display: flex;
+  justify-content: center;
+  height: 320px;
+  margin: 0 auto;
+  max-width: 600px;
+  div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    h2 {
+      text-align: center;
+    }
+    .button {
+      width: 300px;
+      margin-top: 10px;
+    }
+  }
+}
