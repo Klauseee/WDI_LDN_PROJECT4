@@ -10,7 +10,7 @@ class Navbar extends React.Component {
     registerRequest: false
   }
 
-  componentWillReceiveProps() {
+  componentDidMount() {
     if(Auth.isAuthenticated()) this.setState({ userType: Auth.getPayload().role }, () => console.log('current user type', this.state.userType));
   }
 

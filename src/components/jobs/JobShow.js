@@ -38,7 +38,6 @@ class JobShow extends React.Component {
     // console.log('did mount');
     axios.get(`/api/jobs/${this.props.match.params.id}`)
       .then(res => this.setState(res.data))
-      .then(() => console.log(this.state))
       .then(() => this.setState({ currentUser: User.getUser() }));
   }
 
