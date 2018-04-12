@@ -12,7 +12,7 @@ mongoose.connect(dbURI);
 app.use(bodyParser.json());
 
 app.use('/api', router);
-app.use('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html `));
+app.use('/*', (req, res) => res.sendFile(`${__dirname}/public`));
 
 app.use(errorHandler);
 
