@@ -6,7 +6,8 @@ import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 import User from '../../lib/User';
 
-import InterestedUser from './InterestedUser';
+// import InterestedUser from './InterestedUser';
+import UserCard from '../common/UserCard';
 
 import { Link } from 'react-router-dom';
 
@@ -39,7 +40,7 @@ class JobShow extends React.Component {
     // console.log('did mount');
     axios.get(`/api/jobs/${this.props.match.params.id}`)
       .then(res => this.setState(res.data))
-      .then(() => this.setState({ currentUser: User.getUser() }));
+      .then(() => this.setState({ currentUser: User.getUser() }, console.log(this.state)));
   }
 
   handleFavorite = (jobId) => {
@@ -190,15 +191,26 @@ class JobShow extends React.Component {
         <div>
           <hr />
           <h2 className="title">Interested Jobblians</h2>
-          {this.state.interestedUsers.map((user) =>
-            <InterestedUser
-              key={user._id}
-              user={user}
-              handleAccept={this.handleAccept}
-              handleReject={this.handleReject}
-              Link={Link}
-            />
-          )}
+          <div className="columns is-multiline">
+            {this.state.interestedUsers && this.state.interestedUsers.map((user, i) =>
+              <div key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile">
+                <div className="cta-caddy">
+                  <div className="cta-fave">
+                    <button className="button" onClick={() => this.handleAccept(user)}>Accept</button>
+                    {' '}
+                    <button className="button" onClick={() => this.handleReject(user)}>Reject</button>
+                  </div>
+                  <UserCard
+                    Link={Link}
+                    user={user}
+                    ctaButtons="lrg"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* )} */}
         </div>
         }
       </div>

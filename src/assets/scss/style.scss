@@ -8,7 +8,7 @@ $seventh-color: #8C93FE;
 $eigth-color: #DEECF9;
 $ninth-color: #ECF4FE; // text color against first color,
 
-* {
+*, button {
   font-family: 'Tajawal', sans-serif;
 }
 
@@ -20,11 +20,8 @@ body {
   .container {
     background-color: $eigth-color;
     &.extra {
-      padding: 8px;
+      padding: 16px;
     }
-    // ~ .container.extra {
-    //   margin-top: -24px;
-    // }
   }
 
   // NAVBAR STYLES
@@ -32,6 +29,17 @@ body {
     background-color: $first-color;
     border-bottom: 2px solid $third-color;
     color: $ninth-color;
+    .navbar-home-link {
+      width: 100px;
+      img {
+        padding-right: 10px;
+      }
+      span {
+        font-size: 18px;
+        font-weight: 800;
+        padding-top: 10px;
+      }
+    }
     a {
       color: $ninth-color;
       transition: 0.4s;
@@ -76,6 +84,11 @@ body {
     padding: 0px 8px;
   }
 
+  // JOB CARDS
+  .card-content p {
+    padding-bottom: 2px;
+  }
+
   // REUSABLE STYLES
   .cta-caddy {
     position: relative;
@@ -118,6 +131,15 @@ body {
 
   .underline {
     text-decoration: underline;
+  }
+
+  // LOGO INVERT COLOR
+  .white-out:hover {
+  filter: brightness(1) invert(0);
+  }
+
+  .white-out {
+    filter: brightness(0) invert(1);
   }
 }
 

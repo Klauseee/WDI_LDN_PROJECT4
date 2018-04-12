@@ -28,6 +28,7 @@ class Login extends React.Component {
     return (
       <div className="container extra">
         <h1 className="title">Log in</h1>
+        <hr/>
         <form onSubmit={this.handleSubmit}>
 
           <div className="field">
@@ -56,7 +57,7 @@ class Login extends React.Component {
               <span className="icon is-small is-left"><i className="fas fa-unlock"></i></span>
             </div>
           </div>
-          <button className="button is-primary">Submit</button>
+          <button className="button">Submit</button>
         </form>
 
       </div>

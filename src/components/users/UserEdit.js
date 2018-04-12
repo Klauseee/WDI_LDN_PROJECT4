@@ -145,7 +145,6 @@ class UserEdit extends React.Component {
             {Technologies.frontend.map((technology) =>
               <div key={technology.name} className="column is-2">
                 <label className="checkbox">
-                  <i className={technology.icon}></i> {technology.print} &nbsp;
                   <input
                     type="checkbox"
                     name="frontend"
@@ -153,6 +152,7 @@ class UserEdit extends React.Component {
                     value={technology.name}
                     checked={this.state.technologies.frontend.includes(technology.name)}
                   />
+                  &nbsp; <i className={technology.icon}></i> {technology.print}
                 </label>
               </div>
             )}
@@ -163,7 +163,6 @@ class UserEdit extends React.Component {
             {Technologies.backend.map((technology) =>
               <div key={technology.name} className="column is-2">
                 <label className="checkbox">
-                  <i className={technology.icon}></i> {technology.print} &nbsp;
                   <input
                     type="checkbox"
                     name="backend"
@@ -171,13 +170,14 @@ class UserEdit extends React.Component {
                     value={technology.name}
                     checked={this.state.technologies.backend.includes(technology.name)}
                   />
+                  &nbsp; <i className={technology.icon}></i> {technology.print}
                 </label>
               </div>
             )}
 
           </div>
 
-          <button className="button is-primary">Submit</button>
+          <button className="button">Submit</button>
         </form>
       </div>
     );

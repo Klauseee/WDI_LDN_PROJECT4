@@ -1,29 +1,28 @@
 import React from 'react';
+import JobCard from '../common/JobCard';
 
-const EmployerJobListings = ({ employer, moment, Link }) => {
+const EmployerJobListings = ({ employer, Link, Auth }) => {
   return(
     <div>
-      <h1 className="title">Welcome, {employer.name}</h1>
-      <h2 className="subtitle">Looking for developers?</h2>
-      <div className="cta-caddy">
-        <h2 className="subtitle cta-partner-lrg"><strong>Live listings:</strong> </h2>
-        <Link to={'/jobs/new'} className="button cta">Add a Job</Link>
-      </div>
+      {Auth.getPayload().sub === employer._id &&
+        <div>
+          <h1 className="title">Welcome, {employer.name}</h1>
+          <h2 className="subtitle">Looking for developers?</h2>
+          <div className="cta-caddy">
+            <h2 className="subtitle cta-partner-lrg"><strong>Live listings:</strong> </h2>
+            <Link to={'/jobs/new'} className="button cta">Add a Job</Link>
+          </div>
+        </div>
+      }
+      {Auth.getPayload().role === 'users' && <h1 className="title">Here are {employer.name}&apos;s live listings</h1>}
       <ul className="columns is-multiline">
-        {employer.listings.map((listing, i) =>
+        {employer.listings.map((job, i) =>
           <li key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile animated">
-            <Link to={`/jobs/${listing._id}`}>
-              <div className="card">
-                <div className="card-content">
-                  <h3><strong>{listing.title}</strong></h3>
-                  <h3>Location: <strong>{listing.location}</strong></h3>
-                  <h3>Type: <span className="capitalize"><strong>{listing.type}</strong></span></h3>
-                  <h3>Skills required:<br/> <strong>{listing.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</strong></h3>
-                  <h3>Would be nice:<br/> <strong>{listing.technologies.secondary.map((skill, i) => <span key={i}>{skill} </span>)}</strong></h3>
-                  <p className="low-opacity"><small>Created: {moment(listing.createdAt).format('DD-MMM-YY HH:mm:ss')}</small></p>
-                </div>
-              </div>
-            </Link>
+            <JobCard
+              job={job}
+              Link={Link}
+              ctaButtons="sml"
+            />
           </li>
         )}
       </ul>

@@ -41,8 +41,8 @@ class Navbar extends React.Component {
     return (
       <nav className="navbar">
         <div className="navbar-brand">
-          <Link className="navbar-item" to="/">
-            <img src="/assets/images/jbly-final-white.svg" /> &nbsp; &nbsp; &nbsp; Jobbly
+          <Link className="navbar-item navbar-home-link" to="/">
+            <img src="/assets/images/jbly-final-white.svg" /> <span>Jbly</span>
           </Link>
           <div
             onClick={this.handleToggle}
@@ -55,7 +55,7 @@ class Navbar extends React.Component {
         </div>
         <div className={`navbar-menu ${this.state.navIsOpen ? 'is-active' : ''}`}>
           <div className="navbar-end">
-            {(!Auth.isAuthenticated() || Auth.getPayload().role === 'users') && <Link
+            {Auth.getPayload().role === 'users' && <Link
               className="navbar-item"
               to="/employers">
               All Employers
@@ -74,7 +74,7 @@ class Navbar extends React.Component {
               </Link>
             }
 
-            {Auth.isAuthenticated() && <Link className="navbar-item" to="/employers" onClick={Auth.logout}>Logout</Link>}
+            {Auth.isAuthenticated() && <Link className="navbar-item" to="/" onClick={Auth.logout}>Logout</Link>}
 
             {(this.state.loginRequest && !Auth.isAuthenticated()) && <div>
               <Link

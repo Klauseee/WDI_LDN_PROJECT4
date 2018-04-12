@@ -21,7 +21,7 @@ const Homepage = () => {
       // IF USER IS EMPLOYER, ADD INSTRUCTIONS ON HOW TO ADD LISTINGS
         <div>
           <h1 className="title">Welcome Employer!</h1>
-          <h2 className="subtitle">Head to your profile to start adding jobs!</h2><br/>
+          <h2 className="subtitle">Head to your profile to start adding jobs.</h2><br/>
         </div>
       }
 
@@ -29,8 +29,8 @@ const Homepage = () => {
       // IF USER IS SEEKER, ADD INSTRUCTIONS
         <div>
           <h1 className="title">Welcome Jobblians!</h1>
+          <h2 className="subtitle">Update your profile using the profile link on the top right.</h2><br/>
           <h2 className="subtitle">Head to Jobs to look at the live listings.</h2><br/>
-          <h2 className="subtitle">Or update your profile using the profile link on the top right.</h2><br/>
         </div>
       }
 

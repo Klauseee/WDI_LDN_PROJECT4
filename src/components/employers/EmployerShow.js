@@ -6,6 +6,7 @@ import Flash from '../../lib/Flash';
 import moment from 'moment';
 
 import EmployerJobListings from './EmployerJobListings';
+// import JobCard from '../common/JobCard';
 
 import { Link } from 'react-router-dom';
 
@@ -44,10 +45,15 @@ class EmployerShow extends React.Component {
           {/* VIEW FOR SHOW PAGE OWNER */}
           {Auth.getPayload().sub === this.state.employer._id && (
             <div className="container extra">
-              <EmployerJobListings employer={this.state.employer} moment={moment} Link={Link}/>
+              <EmployerJobListings
+                employer={this.state.employer}
+                moment={moment}
+                Link={Link}
+                Auth={Auth}
+              />
               <hr />
               <div className="cta-caddy">
-                <h1 className="title cta-partner-lrg">Here&apos;s what other users can see</h1>
+                <h1 className="title cta-partner-lrg">Here&apos;s what job seekers see</h1>
                 {!this.state.deletePressed ? (
                   <div className="cta">
                     {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button">Edit</Link>}
@@ -72,14 +78,14 @@ class EmployerShow extends React.Component {
               <div className='column'>
                 <img className="max-width" src={this.state.employer.logo}/>
                 {/* <h2 className="subtitle"><strong>Company:</strong> {this.state.employer.name}</h2> */}
-                <h2 className="subtitle">Location: <strong>{this.state.employer.location}</strong></h2>
-                <h2 className="subtitle">Info: <strong>{this.state.employer.info}</strong></h2>
-                <h2 className="subtitle">Perks:
-                <ul>
-                  {this.state.employer.perks.map((perk, i) =>
-                    <li key={i}>{perk}</li>
-                  )}
-                </ul>
+                <h2 className="subtitle"><strong>Location:</strong> {this.state.employer.location}</h2>
+                <h2 className="subtitle"><strong>Info:</strong> {this.state.employer.info}</h2>
+                <h2 className="subtitle"><strong>Perks:</strong>
+                  <ul>
+                    {this.state.employer.perks.map((perk, i) =>
+                      <li key={i}>{perk}</li>
+                    )}
+                  </ul>
                 </h2>
               </div>
               <div className="column">
@@ -92,6 +98,7 @@ class EmployerShow extends React.Component {
 
               </div>
             </div>
+
           </div>
         </div>
       ) : (
