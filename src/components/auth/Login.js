@@ -18,7 +18,9 @@ class Login extends React.Component {
     axios.post(`/api${this.props.location.pathname}`, this.state)
       .then(res => {
         Auth.setToken(res.data.token);
-        User.setUser(res.data.user);
+        // User.setUser(res.data.user);
+        // res.data.user ? User.setUser(res.data.user) : User.setUser(res.data.employer);
+        console.log(res.data);
       })
       .then(() => Flash.setMessage('success', 'Welcome back!'))
       .then(() => this.props.history.push('/'));
