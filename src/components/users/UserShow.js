@@ -39,7 +39,7 @@ class UserShow extends React.Component {
     axios.post(`/api/jobs/${job._id}/apply`, null, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
-      .then(res => console.log(res));
+      .then(res => this.setState({ user: { matchedJobs: res.data.matchedJobs }}));
   }
 
   handleDismiss = (jobId) => {

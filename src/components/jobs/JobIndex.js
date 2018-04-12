@@ -32,6 +32,9 @@ class JobIndex extends React.Component {
         newJobs.forEach((job, i) => {
           if(this.state.currentUser.rejectedJobs.includes(job._id)) newJobs.splice(i, 1);
         });
+        newJobs.forEach((job, i) => {
+          if(this.state.currentUser.appliedJobs.includes(job._id)) newJobs.splice(i, 1);
+        });
         this.setState({ jobs: newJobs }, () => console.log(this.state));
       }));
   }

@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
   favoriteJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
   matchedJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
   rejectedJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
+  appliedJobs: [{ type: mongoose.Schema.ObjectId, ref: 'Job' }],
   cv: { type: String }
 }, {
   timestamps: true

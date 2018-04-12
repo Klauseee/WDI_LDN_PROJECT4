@@ -39,7 +39,7 @@ class EmployerEdit extends React.Component {
     // set token inside local storage
       // .then(res => localStorage.setItem('token', res.data.token)) // replace using helper methods created in lib/Auth
       // .then(res => Auth.setToken(res.data.token))
-      .then(() => Flash.setMessage('success', 'Thanks for registering!'))
+      .then(() => Flash.setMessage('success', 'Profile edited'))
       .then(() => this.props.history.push(`/employers/${this.props.match.params.id}`));
   }
 
