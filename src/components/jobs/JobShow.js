@@ -85,7 +85,9 @@ class JobShow extends React.Component {
     newFavoriteJobs.splice(jobIndex, 1);
     const newInterestedUsers = this.state.interestedUsers.slice();
     newInterestedUsers.splice(userIndex, 1);
-    axios.put(`/api/users/${user._id}`, { favoriteJobs: newFavoriteJobs })
+    const newRejectedJobs = this.state.interestedUsers[userIndex].rejectedJobs.slice();
+    newRejectedJobs.push(this.state._id);
+    axios.put(`/api/users/${user._id}`, { favoriteJobs: newFavoriteJobs, rejectedJobs: newRejectedJobs })
       .then(res => console.log(res.data));
     this.setState({ interestedUsers: newInterestedUsers });
   }
@@ -157,7 +159,7 @@ class JobShow extends React.Component {
             <button onClick={this.handleToggle} className="button">Cancel</button>
           </div>
         )}
-        
+
         {/* LIST OF INTERESTED USERS */}
         {Auth.getPayload().role === 'employers' &&
         <div>

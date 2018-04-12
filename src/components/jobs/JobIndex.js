@@ -26,13 +26,14 @@ class JobIndex extends React.Component {
     axios.get('/api/jobs')
       .then(res => this.setState({ jobs: res.data, currentUser: User.getUser() }, () => {
         const newJobs = this.state.jobs.slice();
-        newJobs.forEach(job => {
-          const jobIndex = this.state.currentUser.matchedJobs.indexOf(job._id);
-          if(jobIndex !== -1) newJobs.splice(jobIndex, 1);
+        newJobs.forEach((job, i) => {
+          if(this.state.currentUser.matchedJobs.includes(job._id)) newJobs.splice(i, 1);
         });
-        this.setState({ jobs: newJobs });
+        newJobs.forEach((job, i) => {
+          if(this.state.currentUser.rejectedJobs.includes(job._id)) newJobs.splice(i, 1);
+        });
+        this.setState({ jobs: newJobs }, () => console.log(this.state));
       }));
-
   }
 
   handleFavorite = (jobId) => {
