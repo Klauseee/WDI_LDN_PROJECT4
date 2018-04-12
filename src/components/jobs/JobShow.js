@@ -36,9 +36,10 @@ class JobShow extends React.Component {
 
   // GET JOB OBJECT AND THE CURRENT USER (for favorites logic)
   componentDidMount() {
+    // console.log('did mount');
     axios.get(`/api/jobs/${this.props.match.params.id}`)
       .then(res => this.setState(res.data))
-      .then(() => this.setState({ currentUser: User.getUser() }, () => console.log(this.state)));
+      .then(() => this.setState({ currentUser: User.getUser() }));
   }
 
   handleFavorite = (jobId) => {
@@ -71,7 +72,10 @@ class JobShow extends React.Component {
     newFavoriteJobs.splice(jobIndex, 1);
     const newInterestedUsers = this.state.interestedUsers.slice();
     newInterestedUsers.splice(userIndex, 1);
-    axios.put(`/api/users/${user._id}`, { matchedJobs: this.state._id, favoriteJobs: newFavoriteJobs })
+    const newMatchedJobs = user.matchedJobs.slice();
+    newMatchedJobs.push(this.state._id);
+    console.log(newMatchedJobs);
+    axios.put(`/api/users/${user._id}`, { matchedJobs: newMatchedJobs, favoriteJobs: newFavoriteJobs })
       .then(res => console.log(res.data));
     this.setState({ interestedUsers: newInterestedUsers });
   }
@@ -86,7 +90,9 @@ class JobShow extends React.Component {
     newFavoriteJobs.splice(jobIndex, 1);
     const newInterestedUsers = this.state.interestedUsers.slice();
     newInterestedUsers.splice(userIndex, 1);
-    axios.put(`/api/users/${user._id}`, { favoriteJobs: newFavoriteJobs })
+    const newRejectedJobs = this.state.interestedUsers[userIndex].rejectedJobs.slice();
+    newRejectedJobs.push(this.state._id);
+    axios.put(`/api/users/${user._id}`, { favoriteJobs: newFavoriteJobs, rejectedJobs: newRejectedJobs })
       .then(res => console.log(res.data));
     this.setState({ interestedUsers: newInterestedUsers });
   }

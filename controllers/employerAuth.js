@@ -23,7 +23,8 @@ function login(req, res, next){
       const token = jwt.sign({ sub: employer._id, role: 'employers' }, secret, {expiresIn: '6h'});
       res.json({
         message: `Welcome back ${employer.name}`,
-        token
+        token,
+        employer
       });
     })
     .catch(next);

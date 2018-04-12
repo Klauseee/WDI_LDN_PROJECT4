@@ -9,7 +9,7 @@ const employerAuth = require('../controllers/employerAuth');
 // JOB ROUTES
 router.route('/jobs')
   .get(jobs.index)
-  .post(secureRoute, jobs.create);
+  .post(jobs.create);
 
 router.route('/jobs/:id')
   .get(jobs.show)

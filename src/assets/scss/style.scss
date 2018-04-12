@@ -8,6 +8,10 @@ $seventh-color: #8C93FE;
 $eigth-color: #DEECF9;
 $ninth-color: #ECF4FE; // text color against first color,
 
+* {
+  font-family: 'Tajawal', sans-serif;
+}
+
 body {
   // BROAD STYLES
   background-color: $first-color;
