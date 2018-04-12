@@ -1,7 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import ReactFilestack from 'filestack-react';
+
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
+
+import RegisterForm from './RegisterForm';
 
 import Repeater from '../common/Repeater.js';
 
@@ -9,8 +13,8 @@ class EmployerRegister extends React.Component {
 
   state = {
     photos: [''],
-    perks: [''],
-    listings: []
+    perks: ['']
+    // listings: []
   }
 
   handleChange = ({ target: { name, value }}) => {
@@ -25,6 +29,7 @@ class EmployerRegister extends React.Component {
       .then(() => this.props.history.push('/employers'));
   }
 
+  // REPEATER COMPONENT FUNCTIONS =================================================
   handleRepeaterChange = (property, array, index, e) => {
     const newArray = array.slice();
     newArray[index] = e.target.value;
@@ -41,100 +46,120 @@ class EmployerRegister extends React.Component {
     this.setState({ [property]: array.filter((item, i) => item[i] !== item[index])}
     );
   }
+  // ==============================================================================
+
+  // FILESTACK SETTINGS/ FUNCTIONS ================================================
+  options = {
+    fromSources: ['local_file_system','url','imagesearch','facebook','instagram','googledrive','dropbox','gmail'],
+    accept: ['image/*','.pdf'],
+    maxFiles: 1,
+    transformations: {
+      crop: {
+        force: true,
+        aspectRatio: 1
+      }
+    }
+  };
+
+  handleFilestack = (result) => {
+    this.setState({ logo: result.filesUploaded[0].url });
+  }
+  // ==============================================================================
 
   render() {
     return (
-      <div className="container">
+      <div className="container extra">
+        <h1 className="title">Employer registration</h1>
         <form onSubmit={this.handleSubmit}>
-          {/* THIS WILL BE INITIAL REGISTER */}
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input
-              className="input"
-              placeholder="example@email.com"
-              name="email"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="password">Password</label>
-            <input
-              className="input"
-              placeholder="********"
-              name="password"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="passwordConfirmation">Confirm Password</label>
-            <input
-              className="input"
-              placeholder="********"
-              name="passwordConfirmation"
-              onChange={this.handleChange}
-            />
+
+          <div className="columns">
+
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+
+              <RegisterForm handleChange={this.handleChange}/><br/>
+              <div className="field columns">
+                <div className="column">
+                  <label htmlFor="logo"><i className="fas fa-upload"></i>&nbsp; Upload Company Logo</label><br />
+                  <ReactFilestack
+                    apikey='AWp9DCV3vTIOqEGF0KjsPz'
+                    buttonText="Click to upload"
+                    buttonClass="button"
+                    options={this.options}
+                    onSuccess={res => this.handleFilestack(res)}
+                  />
+                </div>
+                {this.state.logo && <p className="column">Preview your current logo: <br/> <img src={this.state.logo} /></p>}
+              </div>
+
+            </div>
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+
+              <div className="field">
+                {/* <label htmlFor="name">Company Name</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    className="input"
+                    placeholder="Company Name"
+                    name="name"
+                    onChange={this.handleChange}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-building"></i></span>
+                </div>
+              </div>
+              <div className="field">
+                {/* <label htmlFor="location">Company Location</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    className="input"
+                    placeholder="Company location"
+                    name="location"
+                    onChange={this.handleChange}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-map-marker"></i></span>
+                </div>
+              </div>
+              <div className="field">
+                {/* <label htmlFor="info">Company Info</label> */}
+                <div className="control has-icons-left">
+                  <textarea
+                    className="textarea text-area-pad"
+                    placeholder="A little blurb about your company"
+                    name="info"
+                    onChange={this.handleChange}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-info-circle"></i></span>
+                </div>
+              </div>
+
+            </div>
+
           </div>
 
-          {/* REST OF THE HENCH FORM */}
+
           <div className="field">
-            <label htmlFor="name">Company Name</label>
-            <input
-              className="input"
-              placeholder="My company"
-              name="name"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="logo">Company Logo</label>
-            <input
-              className="input"
-              placeholder="In the form of a link.. REMEMBER TO ADD FILESTACK OPTION"
-              name="logo"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="location">Company Location</label>
-            <input
-              className="input"
-              placeholder="Where are you situated?"
-              name="location"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="info">Company Info</label>
-            <input
-              className="input"
-              placeholder="Write a little blurb about your company"
-              name="info"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="photos">Company Photos</label>
+            {/* <label htmlFor="photos">Company Photos</label> */}
             <Repeater
               handleRepeaterChange={this.handleRepeaterChange}
               addRepeaterInput={this.addRepeaterInput}
               removeRepeaterInput={this.removeRepeaterInput}
               array={this.state.photos}
               property='photos'
+              placeholderText='Company photo link'
+              icon='image'
             />
           </div>
+
           <div className="field">
-            <label htmlFor="photos">Company Perks</label>
+            {/* <label htmlFor="photos">Company Perks</label> */}
             <Repeater
               handleRepeaterChange={this.handleRepeaterChange}
               addRepeaterInput={this.addRepeaterInput}
               removeRepeaterInput={this.removeRepeaterInput}
               array={this.state.perks}
               property='perks'
+              placeholderText='Company perks'
+              icon='thumbs-up'
             />
-          </div>
-          <div className="field">
-            <label htmlFor="listings">Company Job Listings</label>
-            <p>Add a job, ADD FUNCTIONALITY FOR THIS TO HAPPEN, SAVE JOB ID TO THIS.STATE.LISTINGS ARRAY</p>
           </div>
 
           <button className="button is-primary">Submit</button>

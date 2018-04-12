@@ -9,7 +9,7 @@ module.exports = [{
     frontend: ['angularjs', 'javascript', 'react'],
     backend: ['nodejs', 'php']
   },
-  favouriteJobs: [],
+  favoriteJobs: [],
   matchedJobs: [],
   cv: ''
 }, {
@@ -23,7 +23,7 @@ module.exports = [{
     frontend: ['html', 'css', 'javascript'],
     backend: ['nodejs', 'ruby']
   },
-  favouriteJobs: [],
+  favoriteJobs: [],
   matchedJobs: [],
   cv: ''
 }, {
@@ -37,7 +37,7 @@ module.exports = [{
     frontend: ['angularjs', 'javascript', 'react'],
     backend: ['php']
   },
-  favouriteJobs: [],
+  favoriteJobs: [],
   matchedJobs: [],
   cv: ''
 }, {
@@ -51,7 +51,7 @@ module.exports = [{
     frontend: ['javascript', 'react'],
     backend: ['java']
   },
-  favouriteJobs: [],
+  favoriteJobs: [],
   matchedJobs: [],
   cv: ''
 }];

@@ -9,10 +9,10 @@ const employerSchema = new mongoose.Schema({
   info: { type: String, required: 'You must provide information'},
   photos: [{ type: String }],
   perks: [{ type: String }],
-  location: { type: String, required: 'You must provide a location'},
-  user: { type: Boolean, default: false }
+  location: { type: String, required: 'You must provide a location'}
 }, { timestamps: true });
 
+// search through Jobs collection, check employer field, look for matching id.
 employerSchema.virtual('listings', {
   localField: '_id',
   foreignField: 'employer',

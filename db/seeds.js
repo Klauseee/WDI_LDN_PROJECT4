@@ -11,9 +11,7 @@ mongoose.connect(dbURI, (err, db) => {
   db.dropDatabase();
   User.create(userData)
     .then(users => console.log(`${users.length} users created!`))
-    .catch(err => console.log(err))
-    .finally(() => mongoose.connection.close());
-  Employer.create(employerData)
+    .then(() => Employer.create(employerData))
     .then(employers => console.log(`${employers.length} employers created`))
     .catch(err => console.log(err))
     .finally(() => mongoose.connection.close());

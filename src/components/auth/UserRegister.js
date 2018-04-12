@@ -1,8 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+
+import ReactFilestack from 'filestack-react';
+
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 import Technologies from '../../lib/Technologies';
+
+import RegisterForm from './RegisterForm';
 
 class UserRegister extends React.Component {
 
@@ -38,101 +43,124 @@ class UserRegister extends React.Component {
       .then(() => this.props.history.push('/'));
   }
 
+  // FILESTACK SETTINGS/ FUNCTIONS ================================================
+  options = {
+    fromSources: ['local_file_system','url','facebook','googledrive','dropbox','evernote','github','gmail','onedrive'],
+    accept: ['.pdf','.doc','.docx','.docm','text/plain'],
+    maxFiles: 1
+  };
+
+  handleFilestack = (result) => {
+    this.setState({ cv: result.filesUploaded[0].url });
+  }
+  // ==============================================================================
+
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="field">
-          <label htmlFor="jobTitle">Job Title</label>
-          <input className="input"
-            placeholder="Job Title"
-            name="jobTitle"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="email">Email</label>
-          <input
-            className="input"
-            placeholder="Email"
-            name="email"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="input"
-            placeholder="Password"
-            name="password"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="passwordConfirmation">Password Confirmation</label>
-          <input
-            type="password"
-            className="input"
-            placeholder="Password Confirmation"
-            name="passwordConfirmation"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="summary">Summary</label>
-          <textarea
-            className="input"
-            placeholder="Write a short summary about yourself"
-            name="summary"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="yearsExp">Years of Experience</label>
-          <input
-            type="number"
-            className="input"
-            placeholder="Years of experience"
-            name="yearsExp"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="field columns is-multiline">
-          <label htmlFor="frontend">Frontend Technologies</label>
-          {Technologies.frontend.map((technology) =>
-            <div key={technology.name} className="column">
-              <label className="checkbox">
-                <i className={technology.icon}></i>
-                <input
-                  type="checkbox"
-                  name="frontend"
-                  onChange={this.handleCheck}
-                  value={technology.name}
-                />
-              </label>
-            </div>
-          )}
+      <div className="container extra">
+        <form onSubmit={this.handleSubmit}>
+          <h1 className="title">User registration</h1>
 
-        </div>
-        <div className="field columns is-multiline">
-          <label htmlFor="backend">Backend Technologies</label>
-          {Technologies.backend.map((technology) =>
-            <div key={technology.name} className="column">
-              <label className="checkbox">
-                <i className={technology.icon}></i>
-                <input
-                  type="checkbox"
-                  name="backend"
-                  onChange={this.handleCheck}
-                  value={technology.name}
+          <div className="columns">
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+              <RegisterForm handleChange={this.handleChange}/><br/>
+              <div className="field">
+                <label htmlFor="cv"><i className="fas fa-upload"></i>&nbsp; Upload your CV</label> <br />
+                {this.state.cv && <p><a target="_blank" href={this.state.cv}>Preview your CV here</a></p>}
+                <ReactFilestack
+                  apikey='AWp9DCV3vTIOqEGF0KjsPz'
+                  buttonText="Click to upload"
+                  buttonClass="button"
+                  options={this.options}
+                  onSuccess={res => this.handleFilestack(res)}
                 />
-              </label>
+              </div>
             </div>
-          )}
-        </div>
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+              <div className="field">
+                {/* <label htmlFor="jobTitle">Job Title</label> */}
+                <div className="control has-icons-left">
+                  <input className="input"
+                    placeholder="Current Job Title"
+                    name="jobTitle"
+                    onChange={this.handleChange}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-id-badge"></i></span>
+                </div>
+              </div>
 
-        <button className="button is-primary">Submit</button>
-      </form>
+              <div className="field">
+                {/* <label htmlFor="yearsExp">Years of Experience</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    type="number"
+                    className="input"
+                    placeholder="Years of Experience"
+                    name="yearsExp"
+                    onChange={this.handleChange}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-graduation-cap"></i></span>
+                </div>
+              </div>
+
+              <div className="field">
+                {/* <label htmlFor="summary">Summary</label> */}
+                <div className="control has-icons-left">
+                  <textarea
+                    className="textarea text-area-pad"
+                    placeholder="Write a short bio"
+                    name="summary"
+                    onChange={this.handleChange}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-info-circle"></i></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="field">
+            <label className="subtitle">SHOW ME WOT U GOT:</label>
+          </div>
+          <div className="field columns is-multiline">
+            <label className="column is-2" htmlFor="frontend">Frontend</label>
+            {Technologies.frontend.map((technology) =>
+              <div key={technology.name} className="column is-2">
+                <label className="checkbox">
+                  <i className={technology.icon}></i> {technology.print} &nbsp;
+                  <input
+                    type="checkbox"
+                    name="frontend"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                  />
+                </label>
+              </div>
+            )}
+
+          </div>
+          <div className="field columns is-multiline">
+            <label className="column is-2" htmlFor="backend">Backend</label>
+            {Technologies.backend.map((technology) =>
+              <div key={technology.name} className="column is-2">
+                <label className="checkbox">
+                  <i className={technology.icon}></i> {technology.print} &nbsp;
+                  <input
+                    type="checkbox"
+                    name="backend"
+                    onChange={this.handleCheck}
+                    value={technology.name}
+                  />
+                </label>
+              </div>
+            )}
+
+          </div>
+
+          <button className="button is-primary">Submit</button>
+        </form>
+
+      </div>
     );
   }
 }

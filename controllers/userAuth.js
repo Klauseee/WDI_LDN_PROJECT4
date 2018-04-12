@@ -8,7 +8,8 @@ function register(req, res, next){
       const token = jwt.sign({ sub: user._id, role: 'users' }, secret, {expiresIn: '6h'});
       res.json({
         message: 'Thank you for registering',
-        token
+        token,
+        user
       });
     })
     .catch(next);
@@ -17,14 +18,14 @@ function register(req, res, next){
 function login(req, res, next){
   User.findOne({ email: req.body.email })
     .then(user => {
-      console.log(user);
       if(!user || !user.validatePassword(req.body.password)){
         return res.status(401).json({ message: 'Unauthorised' });
       }
       const token = jwt.sign({ sub: user._id, role: 'users' }, secret, {expiresIn: '6h'});
       res.json({
         message: 'Welcome back',
-        token
+        token,
+        user
       });
     })
     .catch(next);

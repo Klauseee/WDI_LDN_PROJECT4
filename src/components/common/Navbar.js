@@ -4,16 +4,19 @@ import Auth from '../../lib/Auth';
 
 class Navbar extends React.Component {
   state = {
+    userType: '',
     navIsOpen: false,
-    currentUser: '',
     loginRequest: false,
     registerRequest: false
   }
 
   componentWillReceiveProps() {
-    if(Auth.isAuthenticated()) this.setState({ currentUser: Auth.getPayload().role }, () => console.log(this.state.currentUser));
+    if(Auth.isAuthenticated()) this.setState({ userType: Auth.getPayload().role }, () => console.log('current user type', this.state.userType));
   }
 
+  componentDidMount() {
+    if(Auth.isAuthenticated()) this.setState({ userType: Auth.getPayload().role }, () => console.log('current user type', this.state.userType));
+  }
 
   handleToggle = () => {
     this.setState({ navIsOpen: !this.state.navIsOpen });
@@ -39,7 +42,7 @@ class Navbar extends React.Component {
       <nav className="navbar">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
-          Jibbly Jobbly (logged in as {Auth.getPayload().role})
+          Jobbly
           </Link>
           <div
             onClick={this.handleToggle}
@@ -62,6 +65,15 @@ class Navbar extends React.Component {
               to="/jobs">
               Jobs
             </Link>}
+
+            {Auth.isAuthenticated() &&
+              <Link
+                className="navbar-item"
+                to={`/${this.state.userType}/${Auth.getPayload().sub}`}>
+                Profile
+              </Link>
+            }
+
             {Auth.isAuthenticated() && <Link className="navbar-item" to="/employers" onClick={Auth.logout}>Logout</Link>}
 
             {(this.state.loginRequest && !Auth.isAuthenticated()) && <div>
@@ -99,13 +111,6 @@ class Navbar extends React.Component {
 
             {(!this.state.registerRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleRegisterRequest}>Register</a>}
 
-            {Auth.isAuthenticated() &&
-              <Link
-                className="navbar-item"
-                to={`/${this.state.currentUser}/${Auth.getPayload().sub}`}>
-                Profile
-              </Link>
-            }
           </div>
         </div>
       </nav>

@@ -3,20 +3,21 @@ import axios from 'axios';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 
+import moment from 'moment';
+
+import EmployerJobListings from './EmployerJobListings';
+
 import { Link } from 'react-router-dom';
 
-// we need state so this will be a classical component
-class ShowRoute extends React.Component {
+class EmployerShow extends React.Component {
 
   state = {
     employer: null,
     deletePressed: false
   };
 
+  // GET THE EMPLOYER OBJECT
   componentDidMount() {
-    // react router has given us props in the background.
-    // console.log(this.props); // everything here has been created by the router
-    // console.log(this.props.match.params.id); // contains the :id parameter!
     axios.get(`/api/employers/${this.props.match.params.id}`)
       .then(res => this.setState({ employer: res.data }, () => console.log(this.state)));
   }
@@ -28,59 +29,74 @@ class ShowRoute extends React.Component {
   handleDelete = () => {
     axios({
       method: 'DELETE',
-      url: `/api/bangers/${this.props.match.params.id}`,
+      url: `/api/employers/${this.props.match.params.id}`,
       headers: { Authorization: `Bearer ${Auth.getToken()}`}
     })
-      .then(() => Flash.setMessage('success', 'Banger deleted'))
-      .then(() => this.props.history.push('/bangers'));
+      .then(() => Flash.setMessage('success', 'Employer account deleted'))
+      .then(() => this.props.history.push('/'));
   }
 
   render() {
     return (
       // to add a different screen whilst the employer is loading.. use a ternary operator
       this.state.employer ? (
-        <div className="container">
-          <h1 className="title">{this.state.employer.name}</h1>
-          <h2 className="subtitle">{this.state.employer.info}</h2>
-          <h2 className="subtitle">{this.state.employer.location}</h2>
-          <img src={this.state.employer.logo}/>
-          <h2 className="subtitle">Perks</h2>
-          <ul>
-            {this.state.employer.perks.map((perk, i) =>
-              <li key={i}>{perk}</li>
-            )}
-          </ul>
-          <ul>
-            {this.state.employer.photos.map((photo, i) =>
-              <li key={i}><img src={photo} /></li>
-            )}
-          </ul>
-          <ul>
-            {this.state.employer.listings.map((listing) =>
-              <Link key={listing._id} to={`/jobs/${listing._id}`}><li>{listing.title}</li></Link>
-            )}
-          </ul>
-
-
-          {!this.state.deletePressed ? (
-            <div>
-              <Link to={'/jobs/new'} className="button is-success">New Job</Link>
-              {' '}
-              {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button is-primary">Edit</Link>}
-              {' '}
-              <button onClick={this.handleToggle} className="button is-danger">Delete</button>
-            </div>
-          ) : (
-            <div>
-              <button onClick={this.handleDelete} className="button is-primary">I&apos;m sure</button>
-              {' '}
-              <button onClick={this.handleToggle} className="button is-danger">Not yet</button>
+        <div>
+          {/* VIEW FOR SHOW PAGE OWNER */}
+          {Auth.getPayload().sub === this.state.employer._id && (
+            <div className="container extra">
+              <EmployerJobListings employer={this.state.employer} moment={moment} Link={Link}/>
+              <hr />
+              <div className="cta-caddy">
+                <h1 className="title cta-partner-lrg">Here&apos;s what other users can see</h1>
+                {!this.state.deletePressed ? (
+                  <div className="cta">
+                    {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button">Edit</Link>}
+                    {' '}
+                    {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button">Delete</button>}
+                  </div>
+                ) : (
+                  <div className="cta">
+                    {/* <p>Are you sure?</p> */}
+                    <button onClick={this.handleDelete} className="button">Confirm</button>
+                    {' '}
+                    <button onClick={this.handleToggle} className="button">Cancel</button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
+          {/* VIEW FOR USERS */}
+          <div className="container extra">
+            {Auth.getPayload().role === 'users' && <h1 className="title">Employer profile</h1>}
+            <div className="columns">
+              <div className='column'>
+                <img className="max-width" src={this.state.employer.logo}/>
+                {/* <h2 className="subtitle"><strong>Company:</strong> {this.state.employer.name}</h2> */}
+                <h2 className="subtitle">Location: <strong>{this.state.employer.location}</strong></h2>
+                <h2 className="subtitle">Info: <strong>{this.state.employer.info}</strong></h2>
+                <h2 className="subtitle">Perks:
+                <ul>
+                  {this.state.employer.perks.map((perk, i) =>
+                    <li key={i}>{perk}</li>
+                  )}
+                </ul>
+                </h2>
+              </div>
+              <div className="column">
+                {/* <h2 className="subtitle"><strong>Photos:</strong> </h2> */}
+                <ul>
+                  {this.state.employer.photos.map((photo, i) =>
+                    <li key={i} className="subtitle"><img src={photo} /></li>
+                  )}
+                </ul>
 
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
-        <div className="container">
+        // LOADING VIEW
+        <div className="container extra">
           <h1 className="title">LOADING</h1>
         </div>
       )
@@ -88,4 +104,4 @@ class ShowRoute extends React.Component {
   }
 }
 
-export default ShowRoute;
+export default EmployerShow;

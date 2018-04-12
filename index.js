@@ -13,6 +13,13 @@ app.use(bodyParser.json());
 app.use('/api', router);
 app.use('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html `));
 
+app.use((err, req, res, next) => {
+  if (err.name === 'ValidationError') {
+    return res.status(422).json({ message: 'Unprocessable Entity' });
+  }
+  res.status(500).json({ message: 'Internal Server Error' });
+  next();
+});
 
 app.use(express.static(`${__dirname}/public`));
 

@@ -2,6 +2,7 @@ const User = require('../models/user');
 
 function indexRoute(req,res,next){
   User.find()
+    .populate('favoriteJobs matchedJobs')
     .then(users => res.json(users))
     .catch(next);
 }
@@ -15,8 +16,16 @@ function createRoute(req,res,next){
 
 function showRoute(req, res, next) {
   User.findById(req.params.id)
+    .populate('favoriteJobs')
+    .populate({
+      path: 'matchedJobs',
+      populate: {
+        path: 'employer',
+        model: 'Employer'
+      }
+    })
     .then(user => res.json(user))
-    .then(() => console.log(req.currentUser))
+    // .then(() => console.log(req.currentUser))
     .catch(next);
 }
 
@@ -39,6 +48,7 @@ module.exports = {
   index: indexRoute,
   create: createRoute,
   show: showRoute,
+  // email: email,
   update: updateRoute,
   delete: deleteRoute
 };

@@ -1,22 +1,29 @@
 import React from 'react';
 
-const Repeater = ({ handleRepeaterChange, addRepeaterInput, removeRepeaterInput, array, property }) => {
+const Repeater = ({ handleRepeaterChange, addRepeaterInput, removeRepeaterInput, array, property, placeholderText, icon }) => {
 
   return (
     <div>
       {array.map((item, i) =>
         <div key={i}>
-          <input
-            className="input"
-            placeholder={`Add ${property}`}
-            name={property}
-            value={item}
-            onChange={(e) => handleRepeaterChange(property, array, i, e)}
-          />
-          <p onClick={() => removeRepeaterInput(property, array, i)}>- remove</p>
+          <div className="control has-icons-left">
+            <div className="cta-caddy">
+              <input
+                className="input cta-partner-lrg"
+                placeholder={`${placeholderText}`}
+                name={property}
+                value={item}
+                onChange={(e) => handleRepeaterChange(property, array, i, e)}
+              />
+              <span className="icon is-small is-left"><i className={`fas fa-${icon}`}></i></span>
+              <p className="button cta" onClick={() => removeRepeaterInput(property, array, i)}>Remove</p>
+            </div>
+          </div>
         </div>
       )}
-      <p onClick={() => addRepeaterInput(property, array)}>{`+ add ${property}`}</p>
+      <div className="cta-caddy">
+        <p className="button cta" onClick={() => addRepeaterInput(property, array)}>{`Add ${property}`}</p>
+      </div>
     </div>
   );
 };

@@ -16,15 +16,18 @@ class JobEdit extends React.Component {
     }
   }
 
+  // GET THE JOB OBJECT
   componentDidMount() {
     axios.get(`/api/jobs/${this.props.match.params.id}`)
       .then(res => this.setState(res.data, () => console.log(this.state)));
   }
 
+  // SET STATE AFTER CHANGES TO THE JOB OBJECT IS MADE
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value }, () => console.log(this.state));
   }
 
+  // HANDLE CHECKBOXES
   handleCheck = ({ target: { name, value, checked }}) => {
     let newTechnologies;
     if(checked) {
@@ -38,142 +41,170 @@ class JobEdit extends React.Component {
     this.setState({ technologies: { [name]: newTechnologies, [other]: this.state.technologies[other] }}, () => console.log(this.state.technologies));
   }
 
+  // UPDATE JOB RECORD
   handleSubmit = (e) => {
     e.preventDefault();
     axios.put(`/api/jobs/${this.state._id}`, this.state)
-      .then(() => Flash.setMessage('success', 'Job edited'))
-      .then(() => this.props.history.push('/'));
+      .then(() => Flash.setMessage('success', 'Your changes have been saved!'))
+      .then(() => this.props.history.push(`/jobs/${this.props.match.params.id}`));
   }
 
   render() {
     return(
-      <div className="container">
+      <div className="container extra">
+        <h1 className="title">Edit your job listing</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className="field">
-            <label htmlFor="title">Title</label>
-            <input
-              className="input"
-              placeholder="Whats the title of this role?"
-              name="title"
-              onChange={this.handleChange}
-              value={this.state.title}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="location">Location</label>
-            <input
-              className="input"
-              placeholder="Where would this role be located?"
-              name="location"
-              onChange={this.handleChange}
-              value={this.state.location}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="type">Type of Role</label><br />
-            <label className="radio">
-              <input
-                type="radio"
-                name="type"
-                value="permanent"
-                onChange={this.handleChange}
-                checked={this.state.type === 'permanent'}
-              />
-              &nbsp; Permanent
-            </label>
-            <label className="radio">
-              <input
-                type="radio"
-                name="type"
-                value="contract"
-                onChange={this.handleChange}
-                checked={this.state.type === 'contract'}
-              />
-              &nbsp; Contract
-            </label>
-          </div>
-          <div className="field columns is-multiline">
-            <label htmlFor="logo">Primary Skills</label>
-            {Technologies.frontend.map(technology =>
-              <div key={technology.name} className="column">
-                <label className="checkbox">
-                  <i className={technology.icon}></i>
+
+          <div className="columns">
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+
+              <div className="field">
+                {/* <label htmlFor="title">Title</label> */}
+                <div className="control has-icons-left">
                   <input
-                    type="checkbox"
-                    name="primary"
-                    onChange={this.handleCheck}
-                    value={technology.name}
-                    checked={this.state.technologies.primary.includes(technology.name)}
+                    className="input"
+                    placeholder="Job Title"
+                    name="title"
+                    onChange={this.handleChange}
+                    value={this.state.title}
                   />
+                  <span className="icon is-small is-left"><i className="fas fa-id-badge"></i></span>
+                </div>
+              </div>
+
+              <div className="field">
+                {/* <label htmlFor="location">Location</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    className="input"
+                    placeholder="Job Location"
+                    name="location"
+                    onChange={this.handleChange}
+                    value={this.state.location}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-map-marker"></i></span>
+                </div>
+              </div>
+
+              <div className="field">
+                <label htmlFor="type"><strong>Type of Role</strong></label><br />
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="type"
+                    value="permanent"
+                    onChange={this.handleChange}
+                    checked={this.state.type === 'permanent'}
+                  />
+                  &nbsp; Permanent
+                </label>
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="type"
+                    value="contract"
+                    onChange={this.handleChange}
+                    checked={this.state.type === 'contract'}
+                  />
+                  &nbsp; Contract
                 </label>
               </div>
-            )}
-            {Technologies.backend.map(technology =>
-              <div key={technology.name} className="column">
-                <label className="checkbox">
-                  <i className={technology.icon}></i>
-                  <input
-                    type="checkbox"
-                    name="primary"
-                    onChange={this.handleCheck}
-                    value={technology.name}
-                    checked={this.state.technologies.primary.includes(technology.name)}
+
+              <div className="field">
+                {/* <label htmlFor="summary">Job Summary</label> */}
+                <div className="control has-icons-left">
+                  <textarea
+                    className="textarea text-area-pad"
+                    placeholder="Write a short summary about this job"
+                    name="summary"
+                    onChange={this.handleChange}
+                    value={this.state.summary}
                   />
-                </label>
+                  <span className="icon is-small is-left"><i className="fas fa-info-circle"></i></span>
+                </div>
               </div>
-            )}
-          </div>
-          <div className="field columns is-multiline">
-            <label htmlFor="logo">Secondary Skills</label>
-            {Technologies.frontend.map(technology =>
-              <div key={technology.name} className="column">
-                <label className="checkbox">
-                  <i className={technology.icon}></i>
+
+              <div className="field">
+                {/* <label htmlFor="salary">Salary</label> */}
+                <div className="control has-icons-left">
                   <input
-                    type="checkbox"
-                    name="secondary"
-                    onChange={this.handleCheck}
-                    value={technology.name}
-                    checked={this.state.technologies.secondary.includes(technology.name)}
+                    type="number"
+                    className="input"
+                    placeholder={this.state.type === 'contract' ? 'Pay per day' : 'Pay per annum'}
+                    name="salary"
+                    onChange={this.handleChange}
+                    value={this.state.salary}
                   />
-                </label>
+                  <span className="icon is-small is-left"><i className="fas fa-money-bill-alt"></i></span>
+                </div>
               </div>
-            )}
-            {Technologies.backend.map(technology =>
-              <div key={technology.name} className="column">
-                <label className="checkbox">
-                  <i className={technology.icon}></i>
-                  <input
-                    type="checkbox"
-                    name="secondary"
-                    onChange={this.handleCheck}
-                    value={technology.name}
-                    checked={this.state.technologies.secondary.includes(technology.name)}
-                  />
-                </label>
-              </div>
-            )}
-          </div>
-          <div className="field">
-            <label htmlFor="summary">Job Summary</label>
-            <textarea
-              className="textarea"
-              placeholder="Write a summary about this role"
-              name="summary"
-              onChange={this.handleChange}
-              value={this.state.summary}
-            ></textarea>
-          </div>
-          <div className="field">
-            <label htmlFor="salary">Salary</label>
-            <input
-              type="number"
-              className="input"
-              placeholder="Pay per annum, make this change according to what was selected for type (ie: day rate/ annual wage)"
-              name="salary"
-              onChange={this.handleChange}
-              value={this.state.salary}
-            />
+
+            </div>
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+
+              <table>
+                <tbody>
+                  <tr>
+                    <td className="underline">Frontend</td>
+                    <td><strong>Primary</strong></td>
+                    <td><strong>Secondary</strong></td>
+                  </tr>
+                  {Technologies.frontend.map((technology, i) =>
+                    <tr key={i}>
+                      <td><i className={technology.icon}></i> {technology.print}</td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="primary"
+                          onChange={this.handleCheck}
+                          value={technology.name}
+                          checked={this.state.technologies.primary.includes(technology.name)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="secondary"
+                          onChange={this.handleCheck}
+                          value={technology.name}
+                          checked={this.state.technologies.secondary.includes(technology.name)}
+                        />
+                      </td>
+                    </tr>
+                  )}
+                  <tr>
+                    <td className="underline">Backend</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  {Technologies.backend.map((technology, i) =>
+                    <tr key={i}>
+                      <td><i className={technology.icon}></i> {technology.print}</td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="primary"
+                          onChange={this.handleCheck}
+                          value={technology.name}
+                          checked={this.state.technologies.primary.includes(technology.name)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="secondary"
+                          onChange={this.handleCheck}
+                          value={technology.name}
+                          checked={this.state.technologies.secondary.includes(technology.name)}
+                        />
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
+            </div>
+
           </div>
 
           <button className="button is-primary">Submit</button>
