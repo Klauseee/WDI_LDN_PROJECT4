@@ -65,7 +65,14 @@ class JobIndex extends React.Component {
     this.handleFavorite(e.target.getAttribute('data-id'));
     e.target.classList.add('slideOutRight');
     setTimeout(() => this.swipeRemove(e.target), 700);
+    // console.log(e.target);
   }
+
+  // findListItem = (element, class) => {
+  //   if(element.classList.contains(class)) return element;
+  //   else(while((element = element.parentNode) && !element.classlist.contains(class)));
+  //   return element;
+  // }
 
   swipeRemove = (target) => {
     target.parentNode.removeChild(target);

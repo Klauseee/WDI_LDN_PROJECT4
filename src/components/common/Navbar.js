@@ -16,6 +16,7 @@ class Navbar extends React.Component {
 
   componentDidMount() {
     if(Auth.isAuthenticated()) this.setState({ userType: Auth.getPayload().role }, () => console.log('current user type', this.state.userType));
+    console.log(this.props.location.pathname);
   }
 
   handleToggle = () => {
@@ -76,7 +77,7 @@ class Navbar extends React.Component {
 
             {Auth.isAuthenticated() && <Link className="navbar-item" to="/" onClick={Auth.logout}>Logout</Link>}
 
-            {(this.state.loginRequest && !Auth.isAuthenticated()) && <div>
+            {/* {(this.state.loginRequest && !Auth.isAuthenticated()) && <div>
               <Link
                 className="navbar-item"
                 to="/users/login"
@@ -90,10 +91,11 @@ class Navbar extends React.Component {
                 Employer Login
               </Link>
               <a className="navbar-item" onClick={this.handleLoginRequest}>Cancel</a>
-            </div>}
-            {(!this.state.loginRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleLoginRequest}>Login</a>}
+            </div>} */}
+            {/* {(!this.state.loginRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleLoginRequest}>Login</a>} */}
+            {(!Auth.isAuthenticated() && this.props.location.pathname !== '/loginregister') && <Link className="navbar-item" to="/loginregister">Login / Register</Link>}
 
-            {(this.state.registerRequest && !Auth.isAuthenticated()) && <div>
+            {/* {(this.state.registerRequest && !Auth.isAuthenticated()) && <div>
               <Link
                 className="navbar-item"
                 to="/users/register"
@@ -109,7 +111,7 @@ class Navbar extends React.Component {
               <a className="navbar-item" onClick={this.handleRegisterRequest}>Cancel</a>
             </div>}
 
-            {(!this.state.registerRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleRegisterRequest}>Register</a>}
+            {(!this.state.registerRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleRegisterRequest}>Register</a>} */}
 
           </div>
         </div>
