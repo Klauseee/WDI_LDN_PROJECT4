@@ -7,9 +7,9 @@ import Auth from '../../lib/Auth';
 import User from '../../lib/User';
 // import Technologies from '../../lib/Technologies';
 
-import SearchFilter from './SearchFilter';
+import JobCard from '../common/JobCard';
 
-import moment from 'moment';
+import SearchFilter from './SearchFilter';
 
 import { Link } from 'react-router-dom';
 
@@ -151,20 +151,10 @@ class JobIndex extends React.Component {
                       <button className="button is-info" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
                     </div>
                   }
-                  <Link to={`/jobs/${job._id}`}>
-                    <div className="card">
-                      <div className="card-content">
-                        <h3 className="cta-partner-sml"><strong>{job.title}</strong></h3>
-
-                        <h3><strong>Location:</strong> {job.location}</h3>
-                        <h3><strong>Type:</strong> <span className="capitalize">{job.type}</span></h3>
-                        <h3><strong>Primary skills needed:</strong> {job.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
-                        <h3><strong>Would be nice:</strong> {job.technologies.secondary.map((skill, i) => <span key={i}>{skill} </span>)}</h3>
-                        <h3><strong>Salary:</strong> {`£${job.salary} `}{job.type === 'permanent' ? 'per annum' : 'per day'}</h3>
-                        <p className="low-opacity"><small>Created: {moment(job.createdAt).format('DD-MMM-YY HH:mm:ss')}</small></p>
-                      </div>
-                    </div>
-                  </Link>
+                  <JobCard
+                    Link={Link}
+                    job={job}
+                  />
                 </div>
 
               </li>

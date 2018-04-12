@@ -16,10 +16,11 @@ const EmployerJobListings = ({ employer, moment, Link }) => {
               <div className="card">
                 <div className="card-content">
                   <h3><strong>{listing.title}</strong></h3>
-                  <h3>Created: {moment(listing.createdAt).format('DD-MMM-YY HH:mm:ss')}</h3>
                   <h3>Location: <strong>{listing.location}</strong></h3>
                   <h3>Type: <span className="capitalize"><strong>{listing.type}</strong></span></h3>
-                  <h3>Primary skills required: <strong>{listing.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</strong></h3>
+                  <h3>Skills required:<br/> <strong>{listing.technologies.primary.map((skill, i) => <span key={i}>{skill} </span>)}</strong></h3>
+                  <h3>Would be nice:<br/> <strong>{listing.technologies.secondary.map((skill, i) => <span key={i}>{skill} </span>)}</strong></h3>
+                  <p className="low-opacity"><small>Created: {moment(listing.createdAt).format('DD-MMM-YY HH:mm:ss')}</small></p>
                 </div>
               </div>
             </Link>
