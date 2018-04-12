@@ -54,7 +54,7 @@ class App extends React.Component {
               <Route path="/users/:id" component={UserShow} />
               <UserProtectedRoute path="/jobs" component={JobIndex}/>
               <Route path="/employers" component={EmployerIndex} />
-              <Route path="/login" component={LoginSplash} />
+              <Route path="/loginregister" component={LoginSplash} />
               <Route path="/" component={Homepage} />
               <Route component={NotFound} />
             </Switch>
