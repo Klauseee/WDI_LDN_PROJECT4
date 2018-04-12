@@ -1,9 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-import Technologies from '../../lib/Technologies';
-import UserMatchedJobs from './UserMatchedJobs';
-import Auth from '../../lib/Auth';
 import _ from 'lodash';
+
+import Technologies from '../../lib/Technologies';
+import Auth from '../../lib/Auth';
+import Flash from '../../lib/Flash';
+
+import UserMatchedJobs from './UserMatchedJobs';
+import UserFaveJobs from './UserFaveJobs';
 
 import { Link } from 'react-router-dom';
 
@@ -15,7 +19,8 @@ class UserShow extends React.Component {
       frontend: [],
       backend: []
     },
-    mailOptions: {}
+    mailOptions: {},
+    deletePressed: false
   }
 
   //
@@ -31,7 +36,7 @@ class UserShow extends React.Component {
         Technologies.backend.map(technology => {
           if(this.state.user.technologies.backend.includes(technology.name)) backendTechs.push(technology);
         });
-        this.setState({ technologies: { frontend: frontendTechs, backend: backendTechs }}, () => console.log(this.state.user));
+        this.setState({ technologies: { frontend: frontendTechs, backend: backendTechs }}, () => console.log(this.state));
       });
   }
 
@@ -48,31 +53,74 @@ class UserShow extends React.Component {
       .then(res => console.log(res.data)));
   }
 
+  handleToggle = () => {
+    this.setState({ deletePressed: !this.state.deletePressed });
+  }
+
+  handleDelete = () => {
+    axios({
+      method: 'DELETE',
+      url: `/api/users/${this.props.match.params.id}`,
+      headers: { Authorization: `Bearer ${Auth.getToken()}`}
+    })
+      .then(() => Flash.setMessage('success', 'Employer account deleted'))
+      .then(() => this.props.history.push('/'));
+  }
+
   render() {
     return(
-      <div className="container">
-        <h1 className="title">Your user profile</h1>
-        <h1 className="title">{this.state.user.jobTitle}</h1>
-        <h2 className="subtitle">Summary</h2>
-        <p>{this.state.user.summary}</p>
-        <h2 className="subtitle">Frontend Skills</h2>
-        <ul>
-          {this.state.technologies.frontend.map((technology, i) =>
-            <li key={i}>{technology.name}<i className={technology.icon}></i></li>
+      <div className="container extra">
+        <div className="cta-caddy">
+          <h1 className="title cta-partner-lrg">Your user profile</h1>
+          {/* EDIT/ DELETE BUTTONS */}
+          {!this.state.deletePressed ? (
+            <div className="cta">
+              {Auth.getPayload().sub === this.state.user._id && <Link to={`/users/${this.state.user._id}/edit`} className="button">Edit</Link>}
+              {' '}
+              {Auth.getPayload().sub === this.state.user._id && <button onClick={this.handleToggle} className="button">Delete</button>}
+            </div>
+          ) : (
+            <div className="cta">
+              {/* <p>Are you sure?</p> */}
+              <button onClick={this.handleDelete} className="button">Confirm</button>
+              {' '}
+              <button onClick={this.handleToggle} className="button">Cancel</button>
+            </div>
           )}
-        </ul>
-        <h2 className="subtitle">Backend Skills</h2>
-        <ul>
-          {this.state.technologies.backend.map((technology, i) =>
-            <li key={i}>{technology.name}<i className={technology.icon}></i></li>
-          )}
-        </ul>
-        <h2 className="subtitle"><a target="_blank" href={this.state.user.cv}>View your CV</a></h2>
-        {Auth.getPayload().sub === this.state.user._id && <Link
-          to={`/users/${this.state.user._id}/edit`}
-          className="button is-primary">
-          Edit
-        </Link>}
+        </div>
+
+        <div className="columns">
+          <div className="column is-half-desktop is-half-tablet is-full-mobile">
+            <h1 className="title">{this.state.user.jobTitle}</h1>
+            <p><strong>{this.state.user.yearsExp} years(s) experience</strong></p>
+            {/* <h2 className="subtitle">Summary</h2> */}
+            <p>Summary: <strong>{this.state.user.summary}</strong></p>
+            {this.state.user.cv && <p><strong><a target="_blank" href={this.state.user.cv}>View your CV</a></strong></p>}
+            {!this.state.user.cv && <p><strong>You have not yet uploaded a CV!<br/> Click the edit button on the top right to do that now</strong></p>}
+
+          </div>
+          <div className="column is-half-desktop is-half-tablet is-full-mobile">
+
+            <h2>Frontend skills:</h2>
+            <ul className="columns is-centered is-multiline">
+              {this.state.technologies.frontend.map((technology, i) =>
+                <li key={i}><i className={`column ${technology.icon}`}></i>&nbsp; {technology.print}</li>
+              )}
+            </ul>
+            <h2>Backend skills:</h2>
+            <ul className="columns is-centered is-multiline">
+              {this.state.technologies.backend.map((technology, i) =>
+                <li key={i}><i className={`column ${technology.icon}`}></i>&nbsp; {technology.print}</li>
+              )}
+            </ul>
+
+          </div>
+        </div>
+
+        <UserFaveJobs
+          jobs={this.state.user.favoriteJobs}
+        />
+
         <UserMatchedJobs
           jobs={this.state.user.matchedJobs}
           handleApply={this.handleApply}

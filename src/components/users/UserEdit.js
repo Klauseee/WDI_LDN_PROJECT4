@@ -52,55 +52,100 @@ class UserEdit extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container extra">
         <h1 className="title">Edit your user profile</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className="field">
-            <label htmlFor="jobTitle">Job Title</label>
-            <input className="input"
-              placeholder="Job Title"
-              name="jobTitle"
-              value={this.state.jobTitle}
-              onChange={this.handleChange}
-            />
+
+          <div className="columns">
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+
+              {/* email */}
+              <div className="field">
+                {/* <label htmlFor="email">Email</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    className="input"
+                    placeholder="Email"
+                    name="email"
+                    onChange={this.handleChange}
+                    value={this.state.email}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-envelope"></i></span>
+                </div>
+              </div>
+
+              {/* cv */}
+              <div className="field">
+                <label htmlFor="cv"><i className="fas fa-upload"></i>&nbsp; Upload your CV</label> <br />
+                {this.state.cv && <p><a target="_blank" href={this.state.cv}>Preview your CV here</a></p>}
+                <ReactFilestack
+                  apikey='AWp9DCV3vTIOqEGF0KjsPz'
+                  buttonText="Click to upload"
+                  buttonClass="button"
+                  options={this.options}
+                  onSuccess={res => this.handleFilestack(res)}
+                />
+              </div>
+
+            </div>
+            <div className="column is-half-desktop is-half-tablet is-full-mobile">
+              {/* job title */}
+              <div className="field">
+                {/* <label htmlFor="jobTitle">Job Title</label> */}
+                <div className="control has-icons-left">
+                  <input className="input"
+                    placeholder="Current Job Title"
+                    name="jobTitle"
+                    onChange={this.handleChange}
+                    value={this.state.jobTitle}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-id-badge"></i></span>
+                </div>
+              </div>
+
+              {/* years exp */}
+              <div className="field">
+                {/* <label htmlFor="yearsExp">Years of Experience</label> */}
+                <div className="control has-icons-left">
+                  <input
+                    type="number"
+                    className="input"
+                    placeholder="Years of Experience"
+                    name="yearsExp"
+                    onChange={this.handleChange}
+                    value={this.state.yearsExp}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-graduation-cap"></i></span>
+                </div>
+              </div>
+
+              {/* summary */}
+              <div className="field">
+                {/* <label htmlFor="summary">Summary</label> */}
+                <div className="control has-icons-left">
+                  <textarea
+                    className="textarea text-area-pad"
+                    placeholder="Write a short bio"
+                    name="summary"
+                    onChange={this.handleChange}
+                    value={this.state.summary}
+                  />
+                  <span className="icon is-small is-left"><i className="fas fa-info-circle"></i></span>
+                </div>
+
+              </div>
+            </div>
           </div>
+
           <div className="field">
-            <label htmlFor="email">Email</label>
-            <input
-              className="input"
-              placeholder="Email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="summary">Summary</label>
-            <textarea
-              className="textarea"
-              placeholder="Write a short summary about yourself"
-              name="summary"
-              value={this.state.summary}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="yearsExp">Years of Experience</label>
-            <input
-              type="number"
-              className="input"
-              placeholder="Years of experience"
-              name="yearsExp"
-              value={this.state.yearsExp}
-              onChange={this.handleChange}
-            />
+            <label className="subtitle">SHOW ME WOT U GOT:</label>
           </div>
           <div className="field columns is-multiline">
-            <label htmlFor="frontend">Frontend Technologies</label>
+            <label className="column is-2" htmlFor="frontend">Frontend</label>
             {Technologies.frontend.map((technology) =>
-              <div key={technology.name} className="column">
+              <div key={technology.name} className="column is-2">
                 <label className="checkbox">
-                  <i className={technology.icon}></i>
+                  <i className={technology.icon}></i> {technology.print} &nbsp;
                   <input
                     type="checkbox"
                     name="frontend"
@@ -114,11 +159,11 @@ class UserEdit extends React.Component {
 
           </div>
           <div className="field columns is-multiline">
-            <label htmlFor="backend">Backend Technologies</label>
+            <label className="column is-2" htmlFor="backend">Backend</label>
             {Technologies.backend.map((technology) =>
-              <div key={technology.name} className="column">
+              <div key={technology.name} className="column is-2">
                 <label className="checkbox">
-                  <i className={technology.icon}></i>
+                  <i className={technology.icon}></i> {technology.print} &nbsp;
                   <input
                     type="checkbox"
                     name="backend"
@@ -129,17 +174,7 @@ class UserEdit extends React.Component {
                 </label>
               </div>
             )}
-          </div>
-          <div className="field">
-            <label htmlFor="cv">Upload your CV</label> <br />
-            {this.state.cv && <p><a target="_blank" href={this.state.cv}>Preview your CV here</a></p>}
-            <ReactFilestack
-              apikey='AWp9DCV3vTIOqEGF0KjsPz'
-              buttonText="Click to upload"
-              buttonClass="button"
-              options={this.options}
-              onSuccess={res => this.handleFilestack(res)}
-            />
+
           </div>
 
           <button className="button is-primary">Submit</button>

@@ -1,11 +1,11 @@
 import React from 'react';
 
 
-const UserMatchedJobs = ({ jobs, handleApply, handleDismiss }) => {
+const UserMatchedJobs = ({ jobs }) => {
   console.log(jobs);
   return(
     <div>
-      {jobs && <h2 className="subtitle">Your matched jobs</h2>}
+      {jobs && <h2 className="subtitle">Your favorited jobs</h2> }
       {jobs && jobs.map(job =>
         <div key={job.title} className="card">
           <div className="card-content">
@@ -13,8 +13,6 @@ const UserMatchedJobs = ({ jobs, handleApply, handleDismiss }) => {
             <h2 className="subtitle">{job.location}</h2>
             <p>{job.summary}</p>
             <h2 className="subtitle"><strong>Salary:</strong> £{job.salary}</h2>
-            <button className="button is-primary" onClick={() => handleApply(job)}>Apply</button>
-            <button className="button is-danger" onClick={() => handleDismiss(job)}>Dismiss</button>
           </div>
         </div>
       )}

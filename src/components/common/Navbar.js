@@ -43,7 +43,7 @@ class Navbar extends React.Component {
       <nav className="navbar">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
-          Jobbly
+            <img src="/assets/images/jbly-final-white.svg" /> &nbsp; &nbsp; &nbsp; Jobbly
           </Link>
           <div
             onClick={this.handleToggle}

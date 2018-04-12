@@ -6,18 +6,18 @@ const InterestedUser = ({ user, handleAccept, handleReject, Link }) => {
     <Link to={`/users/${user._id}`}>
       <div className="card">
         <div className="card-content">
-          <h2 className="title">{user.jobTitle}</h2>
           <div className="cta-caddy">
-            <h2 className="subtitle cta-partner-lrg">{user.summary}</h2>
+            <h2 className="title cta-partner-lrg">{user.jobTitle}</h2>
             <div className="cta">
               <button className="button" onClick={() => handleAccept(user)}>Accept</button>
               {' '}
               <button className="button" onClick={() => handleReject(user)}>Reject</button>
             </div>
           </div>
-          <ul>
-            {user.technologies.frontend.map((skill, i) => <li key={i}>{skill}</li>)}
-          </ul>
+          <p>{user.yearsExp} year(s) experience</p>
+          <p>{user.summary}</p>
+          <p>Frontend skills:<br/> <strong>{user.technologies.frontend.map((skill, i) => <span key={i}>{skill} </span>)}</strong></p>
+          <p>Backend skills:<br/> <strong>{user.technologies.backend.map((skill, i) => <span key={i}>{skill} </span>)}</strong></p>
         </div>
       </div>
     </Link>

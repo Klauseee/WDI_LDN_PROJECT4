@@ -58,8 +58,8 @@ class UserRegister extends React.Component {
   render() {
     return (
       <div className="container extra">
+        <h1 className="title">User registration</h1>
         <form onSubmit={this.handleSubmit}>
-          <h1 className="title">User registration</h1>
 
           <div className="columns">
             <div className="column is-half-desktop is-half-tablet is-full-mobile">
