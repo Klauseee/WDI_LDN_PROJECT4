@@ -6,7 +6,7 @@ const EmployerJobListings = ({ employer, moment, Link }) => {
       <h1 className="title">Welcome, {employer.name}</h1>
       <h2 className="subtitle">Looking for developers?</h2>
       <div className="cta-caddy">
-        <h2 className="subtitle cta-partner"><strong>Live listings:</strong> </h2>
+        <h2 className="subtitle cta-partner-lrg"><strong>Live listings:</strong> </h2>
         <Link to={'/jobs/new'} className="button cta">Add a Job</Link>
       </div>
       <ul className="columns is-multiline">
