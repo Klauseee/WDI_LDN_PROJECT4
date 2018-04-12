@@ -18,20 +18,21 @@ class JobIndex extends React.Component {
   state = {
     jobs: [],
     currentUser: {},
-    // searchEmployerName: '',
-    // searchTitle: '',
-    // searchLocation: '',
-    // searchType: '',
-    // searchMinSalary: '',
-    // searchMaxSalary: '',
-    // orderBy: ''
     searchTech: []
   }
 
   // GET ALL JOBS AND CURRENT USER
   componentDidMount() {
     axios.get('/api/jobs')
-      .then(res => this.setState({ jobs: res.data, currentUser: User.getUser() }));
+      .then(res => this.setState({ jobs: res.data, currentUser: User.getUser() }, () => {
+        const newJobs = this.state.jobs.slice();
+        newJobs.forEach(job => {
+          const jobIndex = this.state.currentUser.matchedJobs.indexOf(job._id);
+          if(jobIndex !== -1) newJobs.splice(jobIndex, 1);
+        });
+        this.setState({ jobs: newJobs });
+      }));
+
   }
 
   handleFavorite = (jobId) => {
@@ -64,7 +65,6 @@ class JobIndex extends React.Component {
 
   swipeRemove = (target) => {
     target.parentNode.removeChild(target);
-    console.log('swipe occurred');
   }
   // ==============================================================================
 
