@@ -28,7 +28,7 @@ const Homepage = () => {
       {Auth.isAuthenticated() && Auth.getPayload().role === 'users' &&
       // IF USER IS SEEKER, ADD INSTRUCTIONS
         <div>
-          <h1 className="title">Welcome Job Seeker!</h1>
+          <h1 className="title">Welcome Jobblians!</h1>
           <h2 className="subtitle">Head to Jobs to look at the live listings.</h2><br/>
           <h2 className="subtitle">Or update your profile using the profile link on the top right.</h2><br/>
         </div>

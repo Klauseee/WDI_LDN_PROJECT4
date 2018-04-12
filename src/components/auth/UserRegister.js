@@ -107,8 +107,8 @@ class UserRegister extends React.Component {
                 {/* <label htmlFor="summary">Summary</label> */}
                 <div className="control has-icons-left">
                   <textarea
-                    className="textarea"
-                    placeholder="&nbsp; &nbsp; &nbsp; &nbsp;Write a short bio"
+                    className="textarea text-area-pad"
+                    placeholder="Write a short bio"
                     name="summary"
                     onChange={this.handleChange}
                   />

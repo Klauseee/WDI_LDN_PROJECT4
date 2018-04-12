@@ -1,19 +1,26 @@
 import React from 'react';
 // import Technologies from '../../../lib/Technologies';
 
-const InterestedUser = ({ user, handleAccept, handleReject }) => {
+const InterestedUser = ({ user, handleAccept, handleReject, Link }) => {
   return(
-    <div className="card">
-      <div className="card-content">
-        <h2 className="title">{user.jobTitle}</h2>
-        <h2 className="subtitle">{user.summary}</h2>
-        <ul>
-          {user.technologies.frontend.map((skill, i) => <li key={i}>{skill}</li>)}
-        </ul>
-        <button className="button is-primary" onClick={() => handleAccept(user)}>Yes</button>
-        <button className="button is-danger" onClick={() => handleReject(user)}>No</button>
+    <Link to={`/users/${user._id}`}>
+      <div className="card">
+        <div className="card-content">
+          <h2 className="title">{user.jobTitle}</h2>
+          <div className="cta-caddy">
+            <h2 className="subtitle cta-partner-lrg">{user.summary}</h2>
+            <div className="cta">
+              <button className="button" onClick={() => handleAccept(user)}>Accept</button>
+              {' '}
+              <button className="button" onClick={() => handleReject(user)}>Reject</button>
+            </div>
+          </div>
+          <ul>
+            {user.technologies.frontend.map((skill, i) => <li key={i}>{skill}</li>)}
+          </ul>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

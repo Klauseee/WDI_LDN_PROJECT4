@@ -9,7 +9,7 @@ const Repeater = ({ handleRepeaterChange, addRepeaterInput, removeRepeaterInput,
           <div className="control has-icons-left">
             <div className="cta-caddy">
               <input
-                className="input cta-partner"
+                className="input cta-partner-lrg"
                 placeholder={`${placeholderText}`}
                 name={property}
                 value={item}

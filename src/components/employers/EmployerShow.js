@@ -47,7 +47,7 @@ class EmployerShow extends React.Component {
               <EmployerJobListings employer={this.state.employer} moment={moment} Link={Link}/>
               <hr />
               <div className="cta-caddy">
-                <h1 className="title cta-partner">Here&apos;s what other users can see</h1>
+                <h1 className="title cta-partner-lrg">Here&apos;s what other users can see</h1>
                 {!this.state.deletePressed ? (
                   <div className="cta">
                     {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button">Edit</Link>}
@@ -70,7 +70,7 @@ class EmployerShow extends React.Component {
             {Auth.getPayload().role === 'users' && <h1 className="title">Employer profile</h1>}
             <div className="columns">
               <div className='column'>
-                <img className="employer-logo" src={this.state.employer.logo}/>
+                <img className="max-width" src={this.state.employer.logo}/>
                 {/* <h2 className="subtitle"><strong>Company:</strong> {this.state.employer.name}</h2> */}
                 <h2 className="subtitle">Location: <strong>{this.state.employer.location}</strong></h2>
                 <h2 className="subtitle">Info: <strong>{this.state.employer.info}</strong></h2>
