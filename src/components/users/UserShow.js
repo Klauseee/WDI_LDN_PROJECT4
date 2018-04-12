@@ -70,7 +70,12 @@ class UserShow extends React.Component {
     return(
       <div className="container extra">
         <div className="cta-caddy">
-          {Auth.getPayload().sub === this.state.user._id && <h1 className="title cta-partner-lrg">Your user profile</h1> }
+          {Auth.getPayload().sub === this.state.user._id &&
+            <div>
+              <h1 className="title cta-partner-lrg">Your user profile</h1>
+              <hr/>
+            </div>
+          }
           {/* EDIT/ DELETE BUTTONS */}
           {!this.state.deletePressed ? (
             <div className="cta">
@@ -91,22 +96,22 @@ class UserShow extends React.Component {
         <div className="columns">
           <div className="column is-half-desktop is-half-tablet is-full-mobile">
             <h1 className="title">{this.state.user.jobTitle}</h1>
-            <p><strong>{this.state.user.yearsExp} years(s) experience</strong></p>
+            <p>{this.state.user.yearsExp} years(s) experience</p>
             {/* <h2 className="subtitle">Summary</h2> */}
-            <p>Summary: <strong>{this.state.user.summary}</strong></p>
+            <p><strong>Summary:</strong> {this.state.user.summary}</p>
             {this.state.user.cv && <p><strong><a target="_blank" href={this.state.user.cv}>View your CV</a></strong></p>}
-            {!this.state.user.cv && <p><strong>You have not yet uploaded a CV!<br/> Click the edit button on the top right to do that now</strong></p>}
+            {!this.state.user.cv && <p><strong>You have not yet uploaded a CV!<br/> Click the edit button on the top right to do that & apply for your matched jobs.</strong></p>}
 
           </div>
           <div className="column is-half-desktop is-half-tablet is-full-mobile">
 
-            <h2>Frontend skills:</h2>
+            <h2><strong>Frontend skills:</strong></h2>
             <ul className="columns is-centered is-multiline">
               {this.state.technologies.frontend.map((technology, i) =>
                 <li key={i}><i className={`column ${technology.icon}`}></i>&nbsp; {technology.print}</li>
               )}
             </ul>
-            <h2>Backend skills:</h2>
+            <h2><strong>Backend skills:</strong></h2>
             <ul className="columns is-centered is-multiline">
               {this.state.technologies.backend.map((technology, i) =>
                 <li key={i}><i className={`column ${technology.icon}`}></i>&nbsp; {technology.print}</li>
@@ -120,7 +125,7 @@ class UserShow extends React.Component {
           <div>
             <hr />
 
-            <h2 className="subtitle">Your favorited jobs</h2>
+            <h2 className="subtitle"><strong>Your favorited jobs</strong></h2>
             <div className="columns is-multiline">
               {this.state.user.favoriteJobs && this.state.user.favoriteJobs.map((job, i) =>
                 <div key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -135,7 +140,7 @@ class UserShow extends React.Component {
 
             <hr />
 
-            <h2 className="subtitle">Your matched jobs</h2>
+            <h2 className="subtitle"><strong>Your matched jobs</strong></h2>
             <div className="columns is-multiline">
               {this.state.user.matchedJobs && this.state.user.matchedJobs.map((job, i) =>
                 <div key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -157,7 +162,7 @@ class UserShow extends React.Component {
 
             <hr />
 
-            <h2 className="subtitle">Your unsuccessful applications</h2>
+            <h2 className="subtitle"><strong>Your unsuccessful applications</strong></h2>
             <div className="columns is-multiline">
               {this.state.user.rejectedJobs && this.state.user.rejectedJobs.map((job, i) =>
                 <div key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile">

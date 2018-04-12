@@ -73,7 +73,12 @@ class EmployerShow extends React.Component {
           )}
           {/* VIEW FOR USERS */}
           <div className="container extra">
-            {Auth.getPayload().role === 'users' && <h1 className="title">Employer profile</h1>}
+            {Auth.getPayload().role === 'users' &&
+            <div>
+              <h1 className="title">Employer profile</h1>
+              <hr/>
+            </div>
+            }
             <div className="columns">
               <div className='column'>
                 <img className="max-width" src={this.state.employer.logo}/>

@@ -131,6 +131,7 @@ class JobIndex extends React.Component {
         <SearchFilter handleSearchInput={this.handleSearchInput} handleCheck={this.handleCheck} />
 
         <hr />
+        <h2 className="subtitle"><strong>All listings</strong></h2>
         <ul className="columns is-mobile is-multiline">
           {this.filterJobs().map((job) =>
             <Hammer
@@ -144,11 +145,11 @@ class JobIndex extends React.Component {
                   {Auth.getPayload().role === 'users' && this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(job._id)
                     ?
                     <div className="cta-fave">
-                      <button className="button is-info" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/favorite.svg"/></button>
+                      <button className="button" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/favorite.svg"/></button>
                     </div>
                     :
                     <div className="cta-fave">
-                      <button className="button is-info" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
+                      <button className="button" onClick={() => this.handleFavorite(job._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
                     </div>
                   }
                   <JobCard

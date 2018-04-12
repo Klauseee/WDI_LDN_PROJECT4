@@ -8,11 +8,31 @@ $seventh-color: #8C93FE;
 $eigth-color: #DEECF9;
 $ninth-color: #ECF4FE; // text color against first color,
 
-*, button {
+$jbly-dark: #60B9EF;
+$jbly-light: #2691D3;
+$danger: #AB0D7C;
+
+*, button, h1, h2, h3, h4, h5, h6, li, input, .title, .subtitle, p {
   font-family: 'Tajawal', sans-serif;
+  color: $first-color;
 }
 
 body {
+  // DIVIDERS & COLOR
+  hr {
+    height: 3px;
+    background-color: $third-color;
+  }
+
+  .success {
+    background-color: $third-color;
+    color: $ninth-color;
+  }
+
+  .warning {
+    background-color: $danger;
+    color: $ninth-color;
+  }
   // BROAD STYLES
   background-color: $first-color;
   width: 100vw;
@@ -44,12 +64,13 @@ body {
       color: $ninth-color;
       transition: 0.4s;
       &:hover {
-        background-color: $fourth-color;
+        background-color: $jbly-light;
         color: $first-color;
         transition: 0.4s;
       }
     }
   }
+
   .navbar-menu.is-active {
     text-align: center;
     background-color: $first-color;
@@ -131,6 +152,16 @@ body {
 
   .underline {
     text-decoration: underline;
+  }
+
+  .padding-top {
+    padding-top: 10px;
+  }
+
+  // HOMEPAGE
+  .hero {
+    max-width: 200px;
+    margin: 16px 16px 32px 16px;
   }
 
   // LOGO INVERT COLOR

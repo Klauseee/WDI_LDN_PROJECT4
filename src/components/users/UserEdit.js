@@ -54,6 +54,7 @@ class UserEdit extends React.Component {
     return (
       <div className="container extra">
         <h1 className="title">Edit your user profile</h1>
+        <hr/>
         <form onSubmit={this.handleSubmit}>
 
           <div className="columns">
@@ -76,8 +77,8 @@ class UserEdit extends React.Component {
 
               {/* cv */}
               <div className="field">
-                <label htmlFor="cv"><i className="fas fa-upload"></i>&nbsp; Upload your CV</label> <br />
-                {this.state.cv && <p><a target="_blank" href={this.state.cv}>Preview your CV here</a></p>}
+                <label htmlFor="cv"><i className="fas fa-upload"></i>&nbsp; <strong>Upload your CV</strong></label> <br />
+                {this.state.cv && <p><a target="_blank" href={this.state.cv}><strong>Preview your CV here</strong></a></p>}
                 <ReactFilestack
                   apikey='AWp9DCV3vTIOqEGF0KjsPz'
                   buttonText="Click to upload"
@@ -141,7 +142,7 @@ class UserEdit extends React.Component {
             <label className="subtitle">SHOW ME WOT U GOT:</label>
           </div>
           <div className="field columns is-multiline">
-            <label className="column is-2" htmlFor="frontend">Frontend</label>
+            <label className="column is-2" htmlFor="frontend"><strong>Frontend</strong></label>
             {Technologies.frontend.map((technology) =>
               <div key={technology.name} className="column is-2">
                 <label className="checkbox">
@@ -159,7 +160,7 @@ class UserEdit extends React.Component {
 
           </div>
           <div className="field columns is-multiline">
-            <label className="column is-2" htmlFor="backend">Backend</label>
+            <label className="column is-2" htmlFor="backend"><strong>Backend</strong></label>
             {Technologies.backend.map((technology) =>
               <div key={technology.name} className="column is-2">
                 <label className="checkbox">

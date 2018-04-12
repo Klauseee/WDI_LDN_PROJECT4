@@ -7,14 +7,21 @@ const EmployerJobListings = ({ employer, Link, Auth }) => {
       {Auth.getPayload().sub === employer._id &&
         <div>
           <h1 className="title">Welcome, {employer.name}</h1>
-          <h2 className="subtitle">Looking for developers?</h2>
+          <p className="subtitle">Looking for developers?</p>
+          <hr/>
           <div className="cta-caddy">
-            <h2 className="subtitle cta-partner-lrg"><strong>Live listings:</strong> </h2>
+            <p className="title cta-partner-lrg"><strong>Your live listings:</strong> </p>
             <Link to={'/jobs/new'} className="button cta">Add a Job</Link>
           </div>
         </div>
       }
-      {Auth.getPayload().role === 'users' && <h1 className="title">Here are {employer.name}&apos;s live listings</h1>}
+      {Auth.getPayload().role === 'users' &&
+      <div>
+        <h1 className="title">{employer.name}&apos;s live listings</h1>
+        <hr/>
+      </div>
+      }
+
       <ul className="columns is-multiline">
         {employer.listings.map((job, i) =>
           <li key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile animated">

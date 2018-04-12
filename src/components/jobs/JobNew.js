@@ -59,6 +59,7 @@ class JobNew extends React.Component {
     return (
       <div className="container extra">
         <h1 className="title">Create a new listing</h1>
+        <hr/>
         <form onSubmit={this.handleSubmit}>
 
           <div className="columns">
@@ -145,7 +146,7 @@ class JobNew extends React.Component {
               <table>
                 <tbody>
                   <tr>
-                    <td className="underline">Frontend</td>
+                    <td><strong>Frontend</strong></td>
                     <td><strong>Primary</strong></td>
                     <td><strong>Secondary</strong></td>
                   </tr>
@@ -171,7 +172,7 @@ class JobNew extends React.Component {
                     </tr>
                   )}
                   <tr>
-                    <td className="underline">Backend</td>
+                    <td className="padding-top"><strong>Backend</strong></td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -203,7 +204,7 @@ class JobNew extends React.Component {
 
           </div>
 
-          <button className="button is-primary">Submit</button>
+          <button className="button">Submit</button>
         </form>
 
       </div>
