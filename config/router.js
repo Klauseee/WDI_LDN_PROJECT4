@@ -49,6 +49,7 @@ router.route('/employers/login')
   .post(employerAuth.login);
 
 
+
 router.route('/*')
   .all((req, res) => res.status(404).json({ message: 'Not found' }));
 
