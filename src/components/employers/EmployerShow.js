@@ -56,9 +56,9 @@ class EmployerShow extends React.Component {
                 <h1 className="title cta-partner-lrg">Here&apos;s what job seekers see</h1>
                 {!this.state.deletePressed ? (
                   <div className="cta">
-                    {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button">Edit</Link>}
+                    {Auth.getPayload().sub === this.state.employer._id && <Link to={`/employers/${this.state.employer._id}/edit`} className="button info">Edit</Link>}
                     {' '}
-                    {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button">Delete</button>}
+                    {Auth.getPayload().sub === this.state.employer._id && <button onClick={this.handleToggle} className="button warning">Delete</button>}
                   </div>
                 ) : (
                   <div className="cta">

@@ -204,7 +204,9 @@ class JobNew extends React.Component {
 
           </div>
 
-          <button className="button">Submit</button>
+          <div className="cta-caddy">
+            <button className="button success cta">Submit</button>
+          </div>
         </form>
 
       </div>

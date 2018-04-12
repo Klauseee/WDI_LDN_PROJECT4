@@ -10,8 +10,8 @@ const EmployerJobListings = ({ employer, Link, Auth }) => {
           <p className="subtitle">Looking for developers?</p>
           <hr/>
           <div className="cta-caddy">
-            <p className="title cta-partner-lrg"><strong>Your live listings:</strong> </p>
-            <Link to={'/jobs/new'} className="button cta">Add a Job</Link>
+            <p className="title cta-partner-lrg"><strong>Your live listings</strong> </p>
+            <Link to={'/jobs/new'} className="button info cta">Add Job</Link>
           </div>
         </div>
       }

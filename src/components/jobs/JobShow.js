@@ -125,16 +125,16 @@ class JobShow extends React.Component {
           {/* EDIT & DELETE BUTTONS */}
           {!this.state.deletePressed ? (
             <div className="cta">
-              {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button">Edit</Link>}
+              {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button info">Edit</Link>}
               {' '}
-              {Auth.getPayload().sub === this.state.employer._id && <button className="button" onClick={this.handleToggle}>Delete</button>}
+              {Auth.getPayload().sub === this.state.employer._id && <button className="button warning" onClick={this.handleToggle}>Delete</button>}
             </div>
           ) : (
             <div className="cta">
               {/* <p>Are you sure?</p> */}
-              <button onClick={this.handleDelete} className="button">Confirm</button>
+              <button onClick={this.handleDelete} className="button warning">Confirm</button>
               {' '}
-              <button onClick={this.handleToggle} className="button">Cancel</button>
+              <button onClick={this.handleToggle} className="button info">Cancel</button>
             </div>
           )}
 
@@ -144,9 +144,9 @@ class JobShow extends React.Component {
           <div className="cta">
             {this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(this.state._id)
               ?
-              <button className="button" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/favorite.svg"/></button>
+              <button className="button info" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/favorite.svg"/></button>
               :
-              <button className="button" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
+              <button className="button info" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
             }
           </div>
           }
@@ -198,9 +198,9 @@ class JobShow extends React.Component {
               <div key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile">
                 <div className="cta-caddy">
                   <div className="cta-fave">
-                    <button className="button" onClick={() => this.handleAccept(user)}>Accept</button>
+                    <button className="button success" onClick={() => this.handleAccept(user)}>Accept</button>
                     {' '}
-                    <button className="button" onClick={() => this.handleReject(user)}>Reject</button>
+                    <button className="button warning" onClick={() => this.handleReject(user)}>Reject</button>
                   </div>
                   <UserCard
                     Link={Link}

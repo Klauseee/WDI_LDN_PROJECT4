@@ -79,16 +79,16 @@ class UserShow extends React.Component {
           {/* EDIT/ DELETE BUTTONS */}
           {!this.state.deletePressed ? (
             <div className="cta">
-              {Auth.getPayload().sub === this.state.user._id && <Link to={`/users/${this.state.user._id}/edit`} className="button">Edit</Link>}
+              {Auth.getPayload().sub === this.state.user._id && <Link to={`/users/${this.state.user._id}/edit`} className="button info">Edit</Link>}
               {' '}
-              {Auth.getPayload().sub === this.state.user._id && <button onClick={this.handleToggle} className="button">Delete</button>}
+              {Auth.getPayload().sub === this.state.user._id && <button onClick={this.handleToggle} className="button warning">Delete</button>}
             </div>
           ) : (
             <div className="cta">
               {/* <p>Are you sure?</p> */}
-              <button onClick={this.handleDelete} className="button">Confirm</button>
+              <button onClick={this.handleDelete} className="button warning">Confirm</button>
               {' '}
-              <button onClick={this.handleToggle} className="button">Cancel</button>
+              <button onClick={this.handleToggle} className="button info">Cancel</button>
             </div>
           )}
         </div>
@@ -146,9 +146,9 @@ class UserShow extends React.Component {
                 <div key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile">
                   <div className="cta-caddy">
                     <div className="cta-fave">
-                      <button className="button" onClick={() => this.handleApply(job)}>Apply</button>
+                      <button className="button success" onClick={() => this.handleApply(job)}>Apply</button>
                       {' '}
-                      <button className="button" onClick={() => this.handleDismiss(job)}>Dismiss</button>
+                      <button className="button warning" onClick={() => this.handleDismiss(job)}>Dismiss</button>
                     </div>
                     <JobCard
                       job={job}

@@ -57,7 +57,9 @@ class Login extends React.Component {
               <span className="icon is-small is-left"><i className="fas fa-unlock"></i></span>
             </div>
           </div>
-          <button className="button">Submit</button>
+          <div className="cta-caddy">
+            <button className="button success cta">Submit</button>
+          </div>
         </form>
 
       </div>
