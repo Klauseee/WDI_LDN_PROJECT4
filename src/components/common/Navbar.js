@@ -93,7 +93,8 @@ class Navbar extends React.Component {
               <a className="navbar-item" onClick={this.handleLoginRequest}>Cancel</a>
             </div>} */}
             {/* {(!this.state.loginRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleLoginRequest}>Login</a>} */}
-            {(!Auth.isAuthenticated() && this.props.location.pathname !== '/loginregister') && <Link className="navbar-item" to="/loginregister">Login / Register</Link>}
+
+            {(!Auth.isAuthenticated() && {/*this.props.location.pathname !== '/loginregister'*/}) && <Link className="navbar-item" to="/loginregister">Login / Register</Link>}
 
             {/* {(this.state.registerRequest && !Auth.isAuthenticated()) && <div>
               <Link

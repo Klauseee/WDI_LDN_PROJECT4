@@ -27,40 +27,42 @@ class Login extends React.Component {
   render() {
     return (
       <div className="container extra">
-        <h1 className="title">Log in</h1>
+        <h1 className="title login-title">Log in</h1>
         <hr/>
-        <form onSubmit={this.handleSubmit}>
+        <div className="login-container">
+          <form onSubmit={this.handleSubmit}>
 
-          <div className="field">
-            {/* <label htmlFor="email">Email</label> */}
-            <div className="control has-icons-left">
-              <input
-                className="input"
-                placeholder="Email"
-                name="email"
-                onChange={this.handleChange}
-              />
-              <span className="icon is-small is-left"><i className="fas fa-envelope"></i></span>
+            <div className="field">
+              {/* <label htmlFor="email">Email</label> */}
+              <div className="control has-icons-left">
+                <input
+                  className="input"
+                  placeholder="Email"
+                  name="email"
+                  onChange={this.handleChange}
+                />
+                <span className="icon is-small is-left"><i className="fas fa-envelope"></i></span>
+              </div>
             </div>
-          </div>
 
-          <div className="field">
-            {/* <label htmlFor="password">Password</label> */}
-            <div className="control has-icons-left">
-              <input
-                type="password"
-                className="input"
-                placeholder="Password"
-                name="password"
-                onChange={this.handleChange}
-              />
-              <span className="icon is-small is-left"><i className="fas fa-unlock"></i></span>
+            <div className="field">
+              {/* <label htmlFor="password">Password</label> */}
+              <div className="control has-icons-left">
+                <input
+                  type="password"
+                  className="input"
+                  placeholder="Password"
+                  name="password"
+                  onChange={this.handleChange}
+                />
+                <span className="icon is-small is-left"><i className="fas fa-unlock"></i></span>
+              </div>
             </div>
-          </div>
-          <div className="cta-caddy">
-            <button className="button success cta">Submit</button>
-          </div>
-        </form>
+            <div className="cta-caddy">
+              <button className="button success cta">Submit</button>
+            </div>
+          </form>
+        </div>
 
       </div>
     );

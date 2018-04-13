@@ -1,4 +1,4 @@
-$first-color: #032139; // background,
+$primary-color: #032139; // background,
 $second-color: #47AECC;
 $third-color: #134D72; // border detail,
 $fourth-color: #5CBAD7; // navbar hover color,
@@ -6,7 +6,7 @@ $fifth-color: #8C7DFC;
 $sixth-color: #3C67A6;
 $seventh-color: #8C93FE;
 $eigth-color: #DEECF9;
-$ninth-color: #ECF4FE; // text color against first color,
+$ninth-color: #ECF4FE; // text color against primary color,
 
 $jbly-dark: #60B9EF;
 $jbly-light: #2691D3;
@@ -14,8 +14,10 @@ $danger: #AB0D7C;
 
 *, button, h1, h2, h3, h4, h5, h6, li, input, .title, .subtitle, p {
   font-family: 'Tajawal', sans-serif;
-  color: $first-color;
+  color: $primary-color;
 }
+
+
 
 body {
   // DIVIDERS & COLOR
@@ -38,9 +40,9 @@ body {
     background-color: $jbly-light;
     color: $ninth-color;
   }
-  
+
   // BROAD STYLES
-  background-color: $first-color;
+  background-color: $primary-color;
   width: 100vw;
   min-height: 100vh;
   .container {
@@ -52,9 +54,15 @@ body {
 
   // NAVBAR STYLES
   nav.navbar {
-    background-color: $first-color;
+    background-color: $primary-color;
     border-bottom: 2px solid $third-color;
     color: $ninth-color;
+    .navbar-brand span {
+      color: $ninth-color;
+    }
+    .navbar-burger span {
+      color: $ninth-color;
+    }
     .navbar-home-link {
       width: 100px;
       img {
@@ -71,7 +79,7 @@ body {
       transition: 0.4s;
       &:hover {
         background-color: $jbly-light;
-        color: $first-color;
+        color: $primary-color;
         transition: 0.4s;
       }
     }
@@ -79,7 +87,28 @@ body {
 
   .navbar-menu.is-active {
     text-align: center;
-    background-color: $first-color;
+    background-color: $primary-color;
+  }
+
+  // LOGIN/ LOGIN SPLASH
+  .login-title {
+    max-width: 50vw;
+    margin: 0 auto;
+  }
+  .login-container {
+    max-width: 50vw;
+    margin: 0 auto;
+    text-align: center;
+    .sign-up-btn {
+      padding-top: 20px;
+      margin: 10px;
+      transition: 0.4s;
+      &:hover {
+        background-color: $jbly-light;
+        color: $ninth-color;
+        transition: 0.4s;
+      }
+    }
   }
 
   // RESIZING IMAGES ON EMPLOYERS INDEX
@@ -177,6 +206,11 @@ body {
 
   .white-out {
     filter: brightness(0) invert(1);
+  }
+
+  // SLIGHTLY BIGGER
+  .bigger {
+    font-size: 1.5em;
   }
 }
 
