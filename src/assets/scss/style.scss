@@ -48,7 +48,7 @@ body {
   .container {
     background-color: $eigth-color;
     &.extra {
-      padding: 16px;
+      padding: 40px 16px;
     }
   }
 
@@ -102,6 +102,7 @@ body {
     .sign-up-btn {
       padding-top: 20px;
       margin: 10px;
+      color: $ninth-color;
       transition: 0.4s;
       &:hover {
         background-color: $jbly-light;

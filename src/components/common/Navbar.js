@@ -59,7 +59,7 @@ class Navbar extends React.Component {
             {Auth.getPayload().role === 'users' && <Link
               className="navbar-item"
               to="/employers">
-              All Employers
+              Employers
             </Link>}
             {Auth.getPayload().role === 'users' && <Link
               className="navbar-item"
