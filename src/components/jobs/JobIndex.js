@@ -57,22 +57,19 @@ class JobIndex extends React.Component {
 
   // HAMMER GESTURE FUNCTIONS =====================================================
   handleSwipeLeft = (e) => {
+    // if(!('ontouchstart' in window)) return false;// put this in to only work on mobile (not good for testing on laptop)
+    while(!e.target.classList.contains('animated')) e.target = e.target.parentNode;
     e.target.classList.add('slideOutLeft');
     setTimeout(() => this.swipeRemove(e.target), 700);
   }
 
   handleSwipeRight = (e) => {
+    // if(!('ontouchstart' in window)) return false;// put this in to only work on mobile (not good for testing on laptop)
+    while(!e.target.classList.contains('animated')) e.target = e.target.parentNode;
     this.handleFavorite(e.target.getAttribute('data-id'));
     e.target.classList.add('slideOutRight');
     setTimeout(() => this.swipeRemove(e.target), 700);
-    // console.log(e.target);
   }
-
-  // findListItem = (element, class) => {
-  //   if(element.classList.contains(class)) return element;
-  //   else(while((element = element.parentNode) && !element.classlist.contains(class)));
-  //   return element;
-  // }
 
   swipeRemove = (target) => {
     target.parentNode.removeChild(target);
