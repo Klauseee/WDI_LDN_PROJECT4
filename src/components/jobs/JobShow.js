@@ -155,7 +155,7 @@ class JobShow extends React.Component {
         <div className="columns">
           <div className="column is-half-desktop is-half-tablet is-full-mobile">
 
-            <p><strong>Employer:</strong> <Link to={`/employers/${this.state.employer.id}`}>Google</Link></p>
+            <p><strong>Employer:</strong> <Link to={`/employers/${this.state.employer.id}`}>{this.state.employer.name}</Link></p>
             <p><strong>Location:</strong> {this.state.location}</p>
             <p><strong>Type:</strong> <span className="capitalize">{this.state.type}</span></p>
             <p><strong>Salary:</strong> £{this.state.salary} {this.state.type === 'contract' ? 'per day' : 'per annum'} </p>
