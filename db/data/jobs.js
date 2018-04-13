@@ -27,7 +27,7 @@ module.exports = [{
     secondary: ['react', 'mongodb', 'erlang', 'wordpress']
   },
   summary: 'Bacon ipsum dolor amet burgdoggen tail flank, shoulder tongue cupim shankle pork chop tenderloin pork loin pig. Kielbasa bresaola picanha sausage, jowl salami frankfurter fatback. Frankfurter meatball hamburger pork chop. Prosciutto pork pork belly shoulder.',
-  salary: 67000
+  salary: 400
 }, {
   title: 'React Dev',
   location: 'Liverpool',
@@ -57,7 +57,7 @@ module.exports = [{
     secondary: ['react', 'mongodb', 'jquery']
   },
   summary: 'Boudin ham hock shoulder filet mignon. Cupim chicken buffalo capicola kevin short ribs spare ribs tri-tip venison shoulder chuck turducken landjaeger. Frankfurter andouille ground round prosciutto tenderloin shank meatball landjaeger pastrami bresaola jerky. Buffalo landjaeger frankfurter fatback, brisket beef cupim ham hock bresaola short loin andouille cow tail strip steak jowl. Shank beef prosciutto landjaeger hamburger short ribs capicola porchetta tenderloin buffalo spare ribs jerky.',
-  salary: 28000
+  salary: 200
 }, {
   title: 'Full Stack Developer',
   location: 'London',
@@ -67,5 +67,5 @@ module.exports = [{
     secondary: ['react', 'mongodb', 'jquery']
   },
   summary: 'Rump swine alcatra pork belly meatball ham filet mignon ball tip pastrami salami landjaeger t-bone. Pork loin sirloin burgdoggen porchetta flank. Ball tip biltong sausage shankle swine chicken prosciutto tri-tip hamburger. Biltong shankle ball tip meatloaf prosciutto, shank pork belly. Landjaeger shank cupim, meatball tri-tip sausage beef ribs chicken ribeye frankfurter biltong shankle. Pork chop short ribs biltong, pork loin turkey sirloin shank ribeye.',
-  salary: 54000
+  salary: 450
 }];
