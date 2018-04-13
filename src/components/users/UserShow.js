@@ -35,7 +35,7 @@ class UserShow extends React.Component {
         Technologies.backend.map(technology => {
           if(this.state.user.technologies.backend.includes(technology.name)) backendTechs.push(technology);
         });
-        this.setState({ technologies: { frontend: frontendTechs, backend: backendTechs }}, () => console.log(this.state.user.favoriteJobs));
+        this.setState({ technologies: { frontend: frontendTechs, backend: backendTechs }}, () => console.log(this.state.user));
       });
   }
 
@@ -43,7 +43,9 @@ class UserShow extends React.Component {
     axios.post(`/api/jobs/${job._id}/apply`, null, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
-      .then(res => this.setState({ user: { matchedJobs: res.data.matchedJobs }}));
+      .then(res => {
+        this.setState({ user: { ...this.state.user, matchedJobs: res.data.matchedJobs } }, () => console.log(this.state.user));
+      });
   }
 
   handleDismiss = (jobId) => {

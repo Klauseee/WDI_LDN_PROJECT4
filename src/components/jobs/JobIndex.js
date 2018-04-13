@@ -78,7 +78,6 @@ class JobIndex extends React.Component {
 
   // FILTER FUNCTIONS =============================================================
   handleSearchInput = (e, searchAttribute) => {
-    console.log(`${searchAttribute}: ${e.target.value}`);
     this.setState({ [searchAttribute]: e.target.value });
   }
 
