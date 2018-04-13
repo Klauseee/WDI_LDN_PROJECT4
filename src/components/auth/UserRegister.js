@@ -59,14 +59,15 @@ class UserRegister extends React.Component {
     return (
       <div className="container extra">
         <h1 className="title">User registration</h1>
+        <hr/>
         <form onSubmit={this.handleSubmit}>
 
           <div className="columns">
             <div className="column is-half-desktop is-half-tablet is-full-mobile">
               <RegisterForm handleChange={this.handleChange}/><br/>
               <div className="field">
-                <label htmlFor="cv"><i className="fas fa-upload"></i>&nbsp; Upload your CV</label> <br />
-                {this.state.cv && <p><a target="_blank" href={this.state.cv}>Preview your CV here</a></p>}
+                <label htmlFor="cv"><i className="fas fa-upload"></i>&nbsp; <strong>Upload your CV</strong></label> <br />
+                {this.state.cv && <p><a target="_blank" href={this.state.cv}><strong>Preview your CV here</strong></a></p>}
                 <ReactFilestack
                   apikey='AWp9DCV3vTIOqEGF0KjsPz'
                   buttonText="Click to upload"
@@ -123,41 +124,43 @@ class UserRegister extends React.Component {
             <label className="subtitle">SHOW ME WOT U GOT:</label>
           </div>
           <div className="field columns is-multiline">
-            <label className="column is-2" htmlFor="frontend">Frontend</label>
+            <label className="column is-2" htmlFor="frontend"><strong>Frontend</strong></label>
             {Technologies.frontend.map((technology) =>
               <div key={technology.name} className="column is-2">
                 <label className="checkbox">
-                  <i className={technology.icon}></i> {technology.print} &nbsp;
                   <input
                     type="checkbox"
                     name="frontend"
                     onChange={this.handleCheck}
                     value={technology.name}
                   />
+                  &nbsp; <i className={technology.icon}></i> {technology.print}
                 </label>
               </div>
             )}
 
           </div>
           <div className="field columns is-multiline">
-            <label className="column is-2" htmlFor="backend">Backend</label>
+            <label className="column is-2" htmlFor="backend"><strong>Backend</strong></label>
             {Technologies.backend.map((technology) =>
               <div key={technology.name} className="column is-2">
                 <label className="checkbox">
-                  <i className={technology.icon}></i> {technology.print} &nbsp;
                   <input
                     type="checkbox"
                     name="backend"
                     onChange={this.handleCheck}
                     value={technology.name}
                   />
+                  &nbsp; <i className={technology.icon}></i> {technology.print}
                 </label>
               </div>
             )}
 
           </div>
 
-          <button className="button is-primary">Submit</button>
+          <div className="cta-caddy">
+            <button className="button success cta">Submit</button>
+          </div>
         </form>
 
       </div>

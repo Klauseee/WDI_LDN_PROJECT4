@@ -123,13 +123,13 @@ const SearchFilter = ({ handleSearchInput, handleCheck }) => {
         {Technologies.frontend.map((technology) =>
           <div key={technology.name} className="column is-one-fifth-mobile">
             <label className="checkbox text-center">
-              <i className={technology.icon}></i><br/> {technology.print}<br/>
               <input
                 className="techBox"
                 type="checkbox"
                 onChange={handleCheck}
                 name={technology.name}
               />
+              &nbsp; <i className={technology.icon}></i><br/> {technology.print}<br/>
             </label>
           </div>
         )}
@@ -138,13 +138,13 @@ const SearchFilter = ({ handleSearchInput, handleCheck }) => {
         {Technologies.backend.map((technology) =>
           <div key={technology.name} className="column is-one-fifth-mobile">
             <label className="checkbox text-center">
-              <i className={technology.icon}></i><br/> {technology.print}<br/>
               <input
                 className="techBox"
                 type="checkbox"
                 onChange={handleCheck}
                 name={technology.name}
               />
+              &nbsp; <i className={technology.icon}></i><br/> {technology.print}<br/>
             </label>
           </div>
         )}

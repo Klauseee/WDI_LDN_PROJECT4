@@ -53,6 +53,7 @@ class JobEdit extends React.Component {
     return(
       <div className="container extra">
         <h1 className="title">Edit your job listing</h1>
+        <hr/>
         <form onSubmit={this.handleSubmit}>
 
           <div className="columns">
@@ -145,7 +146,7 @@ class JobEdit extends React.Component {
               <table>
                 <tbody>
                   <tr>
-                    <td className="underline">Frontend</td>
+                    <td><strong>Frontend</strong></td>
                     <td><strong>Primary</strong></td>
                     <td><strong>Secondary</strong></td>
                   </tr>
@@ -173,7 +174,7 @@ class JobEdit extends React.Component {
                     </tr>
                   )}
                   <tr>
-                    <td className="underline">Backend</td>
+                    <td className="padding-top"><strong>Backend</strong></td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -207,7 +208,9 @@ class JobEdit extends React.Component {
 
           </div>
 
-          <button className="button is-primary">Submit</button>
+          <div className="cta-caddy">
+            <button className="button success cta">Submit</button>
+          </div>
         </form>
 
       </div>

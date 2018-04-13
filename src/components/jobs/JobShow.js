@@ -6,7 +6,8 @@ import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 import User from '../../lib/User';
 
-import InterestedUser from './InterestedUser';
+// import InterestedUser from './InterestedUser';
+import UserCard from '../common/UserCard';
 
 import { Link } from 'react-router-dom';
 
@@ -39,7 +40,7 @@ class JobShow extends React.Component {
     // console.log('did mount');
     axios.get(`/api/jobs/${this.props.match.params.id}`)
       .then(res => this.setState(res.data))
-      .then(() => this.setState({ currentUser: User.getUser() }));
+      .then(() => this.setState({ currentUser: User.getUser() }, console.log(this.state.interestedUsers.length)));
   }
 
   handleFavorite = (jobId) => {
@@ -117,32 +118,35 @@ class JobShow extends React.Component {
     return(
       <div className="container extra">
         <h1 className="title">{this.state.title}</h1>
+        <hr/>
         <div className="cta-caddy">
+          {Auth.getPayload().role === 'users' && <h2 className="subtitle cta-partner"><strong>About the job</strong></h2>}
           {Auth.getPayload().sub === this.state.employer.id && <h2 className="subtitle cta-partner-lrg">This is your job listing, posted on {moment(this.state.createdAt).format('DD-MMM-YY HH:mm:ss')}</h2>}
           {/* EDIT & DELETE BUTTONS */}
           {!this.state.deletePressed ? (
             <div className="cta">
-              {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button">Edit</Link>}
+              {Auth.getPayload().sub === this.state.employer._id && <Link to={`/jobs/${this.state._id}/edit`} className="button info">Edit</Link>}
               {' '}
-              {Auth.getPayload().sub === this.state.employer._id && <button className="button" onClick={this.handleToggle}>Delete</button>}
+              {Auth.getPayload().sub === this.state.employer._id && <button className="button warning" onClick={this.handleToggle}>Delete</button>}
             </div>
           ) : (
             <div className="cta">
               {/* <p>Are you sure?</p> */}
-              <button onClick={this.handleDelete} className="button">Confirm</button>
+              <button onClick={this.handleDelete} className="button warning">Confirm</button>
               {' '}
-              <button onClick={this.handleToggle} className="button">Cancel</button>
+              <button onClick={this.handleToggle} className="button info">Cancel</button>
             </div>
           )}
 
           {/* FAVOURITE STUFF */}
           {Auth.getPayload().role === 'users' &&
+
           <div className="cta">
             {this.state.currentUser.favoriteJobs && this.state.currentUser.favoriteJobs.includes(this.state._id)
               ?
-              <button className="button is-primary" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/favorite.svg"/></button>
+              <button className="button info" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/favorite.svg"/></button>
               :
-              <button className="button is-primary" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
+              <button className="button info" onClick={() => this.handleFavorite(this.state._id)}><img className="star" src="/assets/images/unfavorite.svg"/></button>
             }
           </div>
           }
@@ -151,16 +155,15 @@ class JobShow extends React.Component {
         <div className="columns">
           <div className="column is-half-desktop is-half-tablet is-full-mobile">
 
-            <h2 className="subtitle">About the job</h2>
-            <p>Employer: <strong><Link to={`/employers/${this.state.employer.id}`}>Google</Link></strong></p>
-            <p>Location: <strong>{this.state.location}</strong></p>
-            <p>Type: <strong className="capitalize">{this.state.type}</strong></p>
-            <p>Salary: <strong>£{this.state.salary} {this.state.type === 'contract' ? 'per day' : 'per annum'} </strong></p>
+            <p><strong>Employer:</strong> <Link to={`/employers/${this.state.employer.id}`}>Google</Link></p>
+            <p><strong>Location:</strong> {this.state.location}</p>
+            <p><strong>Type:</strong> <span className="capitalize">{this.state.type}</span></p>
+            <p><strong>Salary:</strong> £{this.state.salary} {this.state.type === 'contract' ? 'per day' : 'per annum'} </p>
 
           </div>
           <div className="column is-half-desktop is-half-tablet is-full-mobile">
 
-            <h2>Primary requirements:</h2>
+            <h2><strong>Primary requirements:</strong></h2>
             <ul className="columns is-centered is-multiline">
               {Technologies.frontend.map(technology =>
                 this.state.technologies.primary.includes(technology.name) && <li className="icons-li" key={technology.name}><i className={`column ${technology.icon}`}></i>&nbsp; {technology.print}</li>
@@ -169,7 +172,7 @@ class JobShow extends React.Component {
                 this.state.technologies.primary.includes(technology.name) && <li className="icons-li" key={technology.name}><i className={`column ${technology.icon}`}></i> &nbsp; {technology.print}</li>
               )}
             </ul>
-            <h2>Would be nice:</h2>
+            <h2><strong>Would be nice:</strong></h2>
             <ul className="columns is-centered is-multiline">
               {Technologies.frontend.map(technology =>
                 this.state.technologies.secondary.includes(technology.name) && <li className="icons-li" key={technology.name}><i className={`column ${technology.icon}`}></i> &nbsp; {technology.print}</li>
@@ -182,23 +185,33 @@ class JobShow extends React.Component {
           </div>
         </div>
 
-        <p>Summary: </p>
-        <p><strong>{this.state.summary}</strong></p>
+        <p><strong>Summary:</strong> </p>
+        <p>{this.state.summary}</p>
 
         {/* LIST OF INTERESTED USERS */}
-        {Auth.getPayload().sub === this.state.employer._id &&
+        {Auth.getPayload().sub === this.state.employer._id && this.state.interestedUsers.length !== 0 &&
         <div>
           <hr />
           <h2 className="title">Interested Jobblians</h2>
-          {this.state.interestedUsers.map((user) =>
-            <InterestedUser
-              key={user._id}
-              user={user}
-              handleAccept={this.handleAccept}
-              handleReject={this.handleReject}
-              Link={Link}
-            />
-          )}
+          <div className="columns is-multiline">
+            {this.state.interestedUsers && this.state.interestedUsers.map((user, i) =>
+              <div key={i} className="column is-one-third-desktop is-half-tablet is-full-mobile">
+                <div className="cta-caddy">
+                  <div className="cta-fave">
+                    <button className="button success" onClick={() => this.handleAccept(user)}>Accept</button>
+                    {' '}
+                    <button className="button warning" onClick={() => this.handleReject(user)}>Reject</button>
+                  </div>
+                  <UserCard
+                    Link={Link}
+                    user={user}
+                    ctaButtons="lrg"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
         </div>
         }
       </div>

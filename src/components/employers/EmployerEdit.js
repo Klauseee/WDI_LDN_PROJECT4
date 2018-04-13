@@ -85,6 +85,7 @@ class EmployerEdit extends React.Component {
     return (
       <div className="container extra">
         <h1 className="title">Edit your employer profile</h1>
+        <hr/>
         <form onSubmit={this.handleSubmit}>
 
           <div className="columns">
@@ -106,7 +107,7 @@ class EmployerEdit extends React.Component {
 
               <div className="field columns">
                 <div className="column">
-                  <label htmlFor="logo"><i className="fas fa-upload"></i>&nbsp; Upload Company Logo</label><br />
+                  <label htmlFor="logo"><i className="fas fa-upload"></i>&nbsp; <strong>Upload Company Logo</strong></label><br />
                   <ReactFilestack
                     apikey='AWp9DCV3vTIOqEGF0KjsPz'
                     buttonText="Click to upload"
@@ -115,7 +116,7 @@ class EmployerEdit extends React.Component {
                     onSuccess={res => this.handleFilestack(res)}
                   />
                 </div>
-                {this.state.logo && <p className="column">Preview your current logo: <br/> <img src={this.state.logo} /></p>}
+                {this.state.logo && <p className="column"><strong>Preview your current logo:</strong> <br/> <img src={this.state.logo} /></p>}
               </div>
 
             </div>
@@ -190,7 +191,9 @@ class EmployerEdit extends React.Component {
             />
           </div>
 
-          <button className="button is-primary">Submit</button>
+          <div className="cta-caddy">
+            <button className="button success cta">Submit</button>
+          </div>
         </form>
 
       </div>

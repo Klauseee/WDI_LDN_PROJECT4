@@ -42,8 +42,8 @@ class Navbar extends React.Component {
     return (
       <nav className="navbar">
         <div className="navbar-brand">
-          <Link className="navbar-item" to="/">
-            <img src="/assets/images/jbly-final-white.svg" /> &nbsp; &nbsp; &nbsp; Jobbly
+          <Link className="navbar-item navbar-home-link" to="/">
+            <img src="/assets/images/jbly-final-white.svg" /> <span>Jbly</span>
           </Link>
           <div
             onClick={this.handleToggle}
@@ -56,7 +56,7 @@ class Navbar extends React.Component {
         </div>
         <div className={`navbar-menu ${this.state.navIsOpen ? 'is-active' : ''}`}>
           <div className="navbar-end">
-            {(Auth.isAuthenticated() || Auth.getPayload().role === 'users') && <Link
+            {Auth.getPayload().role === 'users' && <Link
               className="navbar-item"
               to="/employers">
               All Employers
@@ -93,7 +93,7 @@ class Navbar extends React.Component {
               <a className="navbar-item" onClick={this.handleLoginRequest}>Cancel</a>
             </div>} */}
             {/* {(!this.state.loginRequest && !Auth.isAuthenticated()) && <a className="navbar-item" onClick={this.handleLoginRequest}>Login</a>} */}
-            {(!Auth.isAuthenticated() && this.props.location.pathname !== '/loginregister') && <Link className="navbar-item" to="/loginregister">Login/Register</Link>}
+            {(!Auth.isAuthenticated() && this.props.location.pathname !== '/loginregister') && <Link className="navbar-item" to="/loginregister">Login / Register</Link>}
 
             {/* {(this.state.registerRequest && !Auth.isAuthenticated()) && <div>
               <Link

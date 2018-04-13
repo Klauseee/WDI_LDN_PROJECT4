@@ -8,11 +8,37 @@ $seventh-color: #8C93FE;
 $eigth-color: #DEECF9;
 $ninth-color: #ECF4FE; // text color against first color,
 
-* {
+$jbly-dark: #60B9EF;
+$jbly-light: #2691D3;
+$danger: #AB0D7C;
+
+*, button, h1, h2, h3, h4, h5, h6, li, input, .title, .subtitle, p {
   font-family: 'Tajawal', sans-serif;
+  color: $first-color;
 }
 
 body {
+  // DIVIDERS & COLOR
+  hr {
+    height: 3px;
+    background-color: $third-color;
+  }
+
+  .success {
+    background-color: $third-color;
+    color: $ninth-color;
+  }
+
+  .warning {
+    background-color: $danger;
+    color: $ninth-color;
+  }
+
+  .info {
+    background-color: $jbly-light;
+    color: $ninth-color;
+  }
+  
   // BROAD STYLES
   background-color: $first-color;
   width: 100vw;
@@ -20,11 +46,8 @@ body {
   .container {
     background-color: $eigth-color;
     &.extra {
-      padding: 8px;
+      padding: 16px;
     }
-    // ~ .container.extra {
-    //   margin-top: -24px;
-    // }
   }
 
   // NAVBAR STYLES
@@ -32,16 +55,28 @@ body {
     background-color: $first-color;
     border-bottom: 2px solid $third-color;
     color: $ninth-color;
+    .navbar-home-link {
+      width: 100px;
+      img {
+        padding-right: 10px;
+      }
+      span {
+        font-size: 18px;
+        font-weight: 800;
+        padding-top: 10px;
+      }
+    }
     a {
       color: $ninth-color;
       transition: 0.4s;
       &:hover {
-        background-color: $fourth-color;
+        background-color: $jbly-light;
         color: $first-color;
         transition: 0.4s;
       }
     }
   }
+
   .navbar-menu.is-active {
     text-align: center;
     background-color: $first-color;
@@ -74,6 +109,11 @@ body {
   .icons-li {
     text-align: center;
     padding: 0px 8px;
+  }
+
+  // JOB CARDS
+  .card-content p {
+    padding-bottom: 2px;
   }
 
   // REUSABLE STYLES
@@ -118,6 +158,25 @@ body {
 
   .underline {
     text-decoration: underline;
+  }
+
+  .padding-top {
+    padding-top: 10px;
+  }
+
+  // HOMEPAGE
+  .hero {
+    max-width: 200px;
+    margin: 16px 16px 32px 16px;
+  }
+
+  // LOGO INVERT COLOR
+  .white-out:hover {
+  filter: brightness(1) invert(0);
+  }
+
+  .white-out {
+    filter: brightness(0) invert(1);
   }
 }
 

@@ -21,6 +21,7 @@ class EmployerIndex extends React.Component {
     return (
       <div className="container extra">
         <h1 className="title">Registered employers</h1>
+        <hr/>
         <ul className="columns is-mobile is-multiline">
           {this.state.employers.map((employer) =>
             <li key={employer.name} className="column is-one-quarter-desktop is-one-third-tablet is-full-mobile animated">
